@@ -167,9 +167,9 @@ export default function Home() {
         </div>
         
         <div className="container-grid relative z-10 w-full">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+          <div className="relative">
             {/* Left: Text Content */}
-            <div className="lg:pl-12">
+            <div className="lg:pl-12 lg:max-w-[50%]">
               <motion.div 
                 initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -211,17 +211,18 @@ export default function Home() {
               </motion.div>
             </div>
 
-            {/* Right: Hero Stack Visual */}
+            {/* Right: Hero Stack Visual - positioned to extend beyond viewport */}
             <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
+              initial={{ opacity: 0, x: 40 }}
+              animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2, duration: 1, ease: [0.25, 0.1, 0.25, 1] }}
-              className="hidden lg:flex justify-center items-center"
+              className="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 w-[55%] pointer-events-none"
+              style={{ right: '-5%' }}
             >
               <img 
                 src={heroStack} 
                 alt="Platform visualization" 
-                className="w-full max-w-lg object-contain"
+                className="w-full object-contain"
               />
             </motion.div>
           </div>
