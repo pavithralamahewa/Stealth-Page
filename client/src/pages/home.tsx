@@ -268,139 +268,62 @@ export default function Home() {
         </div>
       </section>
 
-      {/* PROBLEM - Award-winning dramatic section */}
-      <section id="problem" className="py-44 lg:py-56 overflow-hidden relative">
-        {/* Subtle gradient orb as visual anchor */}
-        <motion.div 
-          className="absolute top-1/2 right-0 w-[600px] h-[600px] -translate-y-1/2 translate-x-1/2 pointer-events-none"
-          initial={{ opacity: 0, scale: 0.8 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1.5, ease: "easeOut" }}
-        >
-          <div className="w-full h-full rounded-full bg-gradient-to-br from-accent/[0.03] via-transparent to-transparent blur-3xl" />
-        </motion.div>
+      {/* PROBLEM - Balanced editorial section */}
+      <section id="problem" className="py-36 lg:py-44 overflow-hidden">
+        <div className="container-grid">
+          <div className="grid lg:grid-cols-12 gap-12 lg:gap-16">
+            {/* Left: Headline */}
+            <div className="lg:col-span-6">
+              <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true, margin: "-10%" }}
+                transition={{ duration: 0.5 }}
+                className="flex items-center gap-3 mb-8"
+              >
+                <div className="w-1.5 h-1.5 rounded-full bg-accent" />
+                <div className="w-8 h-[1px] bg-black/15" />
+                <span className="text-[10px] font-mono text-muted-foreground tracking-[0.25em]">II — PROBLEM</span>
+              </motion.div>
+              
+              <motion.h2 
+                className="text-[clamp(2.5rem,5vw,4.5rem)] leading-[1] font-serif tracking-[-0.02em]"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
+              >
+                AI can generate content.
+                <br/>
+                <span className="text-muted-foreground/60">Learning requires </span>
+                <em className="italic text-foreground">execution.</em>
+              </motion.h2>
+            </div>
 
-        <div className="container-grid relative z-10">
-          {/* Section label with animated line */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true, margin: "-10%" }}
-            transition={{ duration: 0.6 }}
-            className="mb-16 lg:mb-24 flex items-center gap-4"
-          >
-            <motion.div 
-              className="h-[1px] bg-accent/40"
-              initial={{ width: 0 }}
-              whileInView={{ width: 40 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-            />
-            <span className="text-[10px] font-mono text-muted-foreground tracking-[0.25em]">II — PROBLEM</span>
-          </motion.div>
-
-          {/* Dramatic headline with word-by-word animation */}
-          <div className="mb-20 lg:mb-32">
-            <h2 className="text-5xl md:text-6xl lg:text-[5.5rem] xl:text-[6.5rem] font-serif leading-[0.95] tracking-[-0.02em]">
-              <span className="block overflow-hidden">
-                {["AI", "can", "generate", "content."].map((word, i) => (
-                  <motion.span
-                    key={i}
-                    className="inline-block mr-[0.25em]"
-                    initial={{ y: "100%", opacity: 0 }}
-                    whileInView={{ y: 0, opacity: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ 
-                      duration: 0.6, 
-                      delay: i * 0.08,
-                      ease: [0.25, 0.1, 0.25, 1] 
-                    }}
-                  >
-                    {word}
-                  </motion.span>
-                ))}
-              </span>
-              <span className="block overflow-hidden mt-2">
-                {["Learning", "requires"].map((word, i) => (
-                  <motion.span
-                    key={i}
-                    className="inline-block mr-[0.25em] text-muted-foreground/50"
-                    initial={{ y: "100%", opacity: 0 }}
-                    whileInView={{ y: 0, opacity: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ 
-                      duration: 0.6, 
-                      delay: 0.4 + i * 0.08,
-                      ease: [0.25, 0.1, 0.25, 1] 
-                    }}
-                  >
-                    {word}
-                  </motion.span>
-                ))}
-                <motion.em
-                  className="inline-block italic text-foreground"
-                  initial={{ y: "100%", opacity: 0 }}
-                  whileInView={{ y: 0, opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ 
-                    duration: 0.7, 
-                    delay: 0.6,
-                    ease: [0.25, 0.1, 0.25, 1] 
-                  }}
-                >
-                  execution.
-                </motion.em>
-              </span>
-            </h2>
-          </div>
-
-          {/* Supporting content with staggered reveals */}
-          <div className="grid lg:grid-cols-12 gap-12 lg:gap-20">
-            <motion.div 
-              className="lg:col-span-7"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-10%" }}
-              transition={{ duration: 0.7, delay: 0.5 }}
-            >
-              <p className="text-xl md:text-2xl lg:text-[1.75rem] text-muted-foreground leading-[1.5] max-w-2xl">
-                Learning systems fail when the hard parts are treated as an afterthought: 
-                <span className="text-foreground font-medium"> context, policy, progress, accountability,</span> and 
-                <span className="text-foreground font-medium"> human judgment.</span>
-              </p>
-            </motion.div>
-
-            <motion.div 
-              className="lg:col-span-5 flex flex-col justify-end"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-10%" }}
-              transition={{ duration: 0.7, delay: 0.65 }}
-            >
-              <div className="relative lg:pl-10">
-                {/* Animated border */}
-                <motion.div 
-                  className="absolute left-0 top-0 w-[1px] bg-gradient-to-b from-accent/40 to-transparent hidden lg:block"
-                  initial={{ height: 0 }}
-                  whileInView={{ height: "100%" }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.8, delay: 0.7 }}
-                />
-                <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-                  Most AI experiences are impressive in a demo and fragile in deployment.
+            {/* Right: Supporting content */}
+            <div className="lg:col-span-6 flex flex-col justify-end">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-10%" }}
+                transition={{ duration: 0.7, delay: 0.15 }}
+              >
+                <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-8">
+                  Learning systems fail when the hard parts are treated as an afterthought: 
+                  <span className="text-foreground"> context, policy, progress, accountability,</span> and 
+                  <span className="text-foreground"> human judgment.</span>
                 </p>
-                <motion.p 
-                  className="text-xl md:text-2xl font-serif italic text-accent relative"
-                  initial={{ opacity: 0, x: -10 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: 0.85 }}
-                >
-                  Vericora exists to make learning agents operational.
-                </motion.p>
-              </div>
-            </motion.div>
+                
+                <div className="border-l border-black/10 pl-6">
+                  <p className="text-muted-foreground leading-relaxed mb-4">
+                    Most AI experiences are impressive in a demo and fragile in deployment.
+                  </p>
+                  <p className="text-lg font-serif italic text-accent">
+                    Vericora exists to make learning agents operational.
+                  </p>
+                </div>
+              </motion.div>
+            </div>
           </div>
         </div>
       </section>
@@ -409,8 +332,12 @@ export default function Home() {
       <section id="insight" className="py-44 lg:py-56 framed-module bg-secondary/20">
         <div className="container-grid">
           <ScrollReveal className="max-w-4xl mx-auto text-center">
-            <span className="text-[10px] font-mono text-muted-foreground tracking-[0.25em] mb-10 block">III — INSIGHT</span>
-            <h2 className="text-4xl md:text-5xl lg:text-[3.5rem] font-serif mb-12 leading-[1.05]">
+            <div className="flex items-center justify-center gap-3 mb-10">
+              <div className="w-1.5 h-1.5 rounded-full bg-accent" />
+              <div className="w-8 h-[1px] bg-black/15" />
+              <span className="text-[10px] font-mono text-muted-foreground tracking-[0.25em]">III — INSIGHT</span>
+            </div>
+            <h2 className="text-[clamp(2.2rem,4.5vw,4rem)] font-serif mb-12 leading-[1.05]">
               What's missing is not intelligence.<br/>
               It's an <em className="text-accent italic">operating layer.</em>
             </h2>
@@ -428,8 +355,12 @@ export default function Home() {
       <section id="platform" className="py-36 lg:py-44">
         <div className="container-grid">
           <ScrollReveal className="mb-20">
-            <span className="text-[10px] font-mono text-muted-foreground tracking-[0.25em] mb-8 block">IV — PLATFORM</span>
-            <h2 className="text-5xl md:text-6xl lg:text-7xl font-serif">Vericora</h2>
+            <div className="flex items-center gap-3 mb-8">
+              <div className="w-1.5 h-1.5 rounded-full bg-accent" />
+              <div className="w-8 h-[1px] bg-black/15" />
+              <span className="text-[10px] font-mono text-muted-foreground tracking-[0.25em]">IV — PLATFORM</span>
+            </div>
+            <h2 className="text-[clamp(2.8rem,6vw,5rem)] font-serif">Vericora</h2>
             <p className="text-xl text-muted-foreground mt-6 max-w-2xl">
               An integrity-first execution core for agentic learning systems.
             </p>
@@ -464,8 +395,12 @@ export default function Home() {
         <div className="container-grid">
           <div className="grid lg:grid-cols-12 gap-20">
             <ScrollReveal className="lg:col-span-4">
-              <span className="text-[10px] font-mono text-muted-foreground tracking-[0.25em] mb-8 block">V — AGENTS</span>
-              <h2 className="text-4xl md:text-5xl font-serif leading-[1.05] lg:sticky lg:top-36">
+              <div className="flex items-center gap-3 mb-8">
+                <div className="w-1.5 h-1.5 rounded-full bg-accent" />
+                <div className="w-8 h-[1px] bg-black/15" />
+                <span className="text-[10px] font-mono text-muted-foreground tracking-[0.25em]">V — AGENTS</span>
+              </div>
+              <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-serif leading-[1.05] lg:sticky lg:top-36">
                 Learning agents that operate across domains.
               </h2>
               <p className="mt-10 text-lg text-muted-foreground lg:sticky lg:top-72">
@@ -523,8 +458,12 @@ export default function Home() {
             
             <div className="order-1 lg:order-2">
               <ScrollReveal>
-                <span className="text-[10px] font-mono text-muted-foreground tracking-[0.25em] mb-8 block">VI — BUILDER</span>
-                <h2 className="text-4xl md:text-5xl font-serif mb-8 leading-[1.05]">Build and deploy without code.</h2>
+                <div className="flex items-center gap-3 mb-8">
+                  <div className="w-1.5 h-1.5 rounded-full bg-accent" />
+                  <div className="w-8 h-[1px] bg-black/15" />
+                  <span className="text-[10px] font-mono text-muted-foreground tracking-[0.25em]">VI — BUILDER</span>
+                </div>
+                <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-serif mb-8 leading-[1.05]">Build and deploy without code.</h2>
                 <p className="text-lg text-muted-foreground mb-12 leading-relaxed">
                   Vericora includes a no-code builder to define agent behavior, lesson structure, evaluation logic, and guardrails. Teams can author learning flows once and deploy them consistently at scale.
                 </p>
@@ -554,8 +493,12 @@ export default function Home() {
         <div className="container-grid">
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-20">
             <ScrollReveal className="lg:col-span-4">
-              <span className="text-[10px] font-mono text-white/30 tracking-[0.25em] mb-8 block">VII — PRINCIPLES</span>
-              <h2 className="text-4xl md:text-5xl lg:text-[3.5rem] font-serif text-white/90 leading-[1.05]">
+              <div className="flex items-center gap-3 mb-8">
+                <div className="w-1.5 h-1.5 rounded-full bg-white/40" />
+                <div className="w-8 h-[1px] bg-white/20" />
+                <span className="text-[10px] font-mono text-white/40 tracking-[0.25em]">VII — PRINCIPLES</span>
+              </div>
+              <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-serif text-white/90 leading-[1.05]">
                 Built on a few non-negotiables.
               </h2>
             </ScrollReveal>
@@ -587,8 +530,12 @@ export default function Home() {
       <section id="audience" className="py-36 lg:py-44">
         <div className="container-grid">
           <ScrollReveal className="max-w-3xl mx-auto text-center mb-20">
-            <span className="text-[10px] font-mono text-muted-foreground tracking-[0.25em] mb-8 block">VIII — CONTEXTS</span>
-            <h2 className="text-4xl md:text-5xl font-serif mb-8 leading-[1.05]">Designed for environments where outcomes matter.</h2>
+            <div className="flex items-center justify-center gap-3 mb-8">
+              <div className="w-1.5 h-1.5 rounded-full bg-accent" />
+              <div className="w-8 h-[1px] bg-black/15" />
+              <span className="text-[10px] font-mono text-muted-foreground tracking-[0.25em]">VIII — CONTEXTS</span>
+            </div>
+            <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-serif mb-8 leading-[1.05]">Designed for environments where outcomes matter.</h2>
             <p className="text-lg text-muted-foreground">
               Vericora is built for organizations deploying AI for learning and capability development in high-accountability contexts, including:
             </p>
@@ -617,8 +564,12 @@ export default function Home() {
           <div className="framed-module py-24">
             <div className="grid lg:grid-cols-2 gap-20">
               <ScrollReveal>
-                <span className="text-[10px] font-mono text-accent tracking-[0.25em] mb-8 block">IX — STATUS</span>
-                <h2 className="text-3xl md:text-4xl font-serif mb-8">Currently in private development.</h2>
+                <div className="flex items-center gap-3 mb-8">
+                  <div className="w-1.5 h-1.5 rounded-full bg-accent" />
+                  <div className="w-8 h-[1px] bg-black/15" />
+                  <span className="text-[10px] font-mono text-accent tracking-[0.25em]">IX — STATUS</span>
+                </div>
+                <h2 className="text-[clamp(1.8rem,3.5vw,2.5rem)] font-serif mb-8">Currently in private development.</h2>
                 <p className="text-muted-foreground max-w-md leading-relaxed">
                   We're working with a small group of design partners.<br/>
                   We're intentionally quiet. We're getting the core right.
