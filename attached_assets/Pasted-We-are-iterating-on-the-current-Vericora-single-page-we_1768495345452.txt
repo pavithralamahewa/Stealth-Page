@@ -1,0 +1,78 @@
+We are iterating on the current Vericora single-page website (white/off-white theme) shown in the provided build.
+
+Goal: upgrade from “clean template” to “award-winning” by copying execution-level cues from:
+- withdavid.ai: editorial grid, chapter-like scroll rhythm, left-side progress/spine, line-based structure, calm micro-animations
+- cofounder.co: refined card styling, slightly softened friendliness, subtle paper/grid textures used sparingly, clear grouping
+
+DO NOT change the core copy. Keep all section order and text the same.
+ONLY improve: layout system, typographic rhythm, spacing, line system, card styling, and scroll interactions.
+
+HIGH-IMPACT CHANGES TO IMPLEMENT:
+
+1) GRID + SPACING SYSTEM
+- Implement a 12-column layout grid with max width 1200–1280px and consistent gutters.
+- Increase vertical section padding significantly (make the page breathe).
+- Use a consistent spacing scale across the site.
+
+2) LINE SYSTEM (STRUCTURAL)
+- Define a consistent hairline rule style (1px with low opacity).
+- Add a subtle left-side “spine” alignment rule that carries through multiple sections.
+- Use vertical dividers inside key sections (especially Design/Govern/Execute and the Agents cards grid).
+- Add framed “chapter” sections using top/bottom rules to create narrative beats.
+
+3) HERO UPGRADE (ONE SIGNATURE VISUAL)
+- Keep the big serif headline.
+- Add ONE minimal signature motif to the hero:
+  Option A: a “layer stack” diagram (3 translucent planes labeled Design / Govern / Execute) with subtle motion
+  Option B: a left-side section index/progress indicator using roman numerals that updates on scroll
+Choose one and execute it elegantly.
+
+4) TYPOGRAPHY RHYTHM
+- Preserve serif headline + sans body pairing.
+- Increase heading sizes in mid-page sections slightly to create stronger hierarchy.
+- Improve line-height and measure (keep body text comfortably readable).
+- Use italic emphasis sparingly for key phrases, consistent with DavidAI.
+
+5) CTA POLISH
+- Improve the primary button style: better padding, subtle radius, refined hover state.
+- Make secondary CTA a text link style with understated hover underline.
+- Add a tiny arrow icon on primary CTA (subtle).
+
+6) PLATFORM SECTION (Design/Govern/Execute)
+- Convert into a framed 3-column module with vertical separators.
+- Add small step labels (01, 02, 03) above each.
+- Animate columns entering sequentially on scroll.
+
+7) AGENTS SECTION (CARDS)
+- Redesign the 4 cards to feel premium:
+  - light border
+  - more padding
+  - subtle corner radius
+  - tiny glyph/icon per card (simple dot/line)
+  - micro hover: slight lift + border darken
+- Keep the text content exactly the same.
+
+8) NO-CODE BUILDER VISUAL
+- Replace the current blurred placeholder with a minimal monochrome UI schematic:
+  - fake builder canvas
+  - blocks/nodes for Outcomes, Lesson structure, Policies, Evaluation, Delivery mode
+  - keep it subtle and stealthy (no screenshots)
+
+9) “NON-NEGOTIABLES” SECTION
+- Either:
+  A) keep dark theme but make it feel intentional: bigger type, clear grid, refined dividers
+  OR
+  B) keep it light theme and use a framed panel instead
+Choose the best option for overall harmony and execute cleanly.
+
+10) SCROLL + REVEAL EFFECTS
+- Apply calm scroll reveals across sections: fade + slight translate, staggered children.
+- Ensure animations feel premium and consistent (no bounce, no excessive duration).
+
+Deliverables:
+- Updated page with improved visual hierarchy and polish
+- Consistent grid and spacing
+- Strong line-based structure
+- Premium card styling
+- A hero signature motif
+- Refined scroll behavior
