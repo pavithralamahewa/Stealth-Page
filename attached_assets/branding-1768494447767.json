@@ -1,0 +1,87 @@
+{
+  "colorScheme": "light",
+  "fonts": [
+    {
+      "family": "af",
+      "count": 76
+    },
+    {
+      "family": "af Fallback",
+      "count": 76
+    },
+    {
+      "family": "ppmondwest",
+      "count": 5
+    },
+    {
+      "family": "ppmondwest Fallback",
+      "count": 5
+    }
+  ],
+  "colors": {
+    "primary": "#6A7282",
+    "accent": "#7DACDA",
+    "background": "#FEFFFC",
+    "textPrimary": "#2C2C2C",
+    "link": "#7DACDA"
+  },
+  "typography": {
+    "fontFamilies": {
+      "primary": "af",
+      "heading": "ppmondwest"
+    },
+    "fontStacks": {
+      "body": [
+        "af",
+        "af Fallback"
+      ],
+      "heading": [
+        "ppmondwest",
+        "ppmondwest Fallback"
+      ],
+      "paragraph": [
+        "af",
+        "af Fallback"
+      ]
+    },
+    "fontSizes": {
+      "h1": "90px",
+      "h2": "24px",
+      "body": "15px"
+    }
+  },
+  "spacing": {
+    "baseUnit": 8,
+    "borderRadius": "0px"
+  },
+  "components": {},
+  "images": {
+    "logo": "File saved at: attached_assets/logo.svg",
+    "favicon": "File saved at: attached_assets/favicon.ico",
+    "ogImage": "File saved at: attached_assets/ogImage.png"
+  },
+  "__framework_hints": [],
+  "__llm_logo_reasoning": {
+    "selectedIndex": 0,
+    "reasoning": "Strong indicators: header logo linking to homepage, header location, visible, reasonable size, SVG format. Score: 93 (clear winner by 70 points)",
+    "confidence": 0.9
+  },
+  "__llm_button_reasoning": {
+    "primary": {
+      "index": -1,
+      "text": "N/A",
+      "reasoning": "LLM failed"
+    },
+    "secondary": {
+      "index": -1,
+      "text": "N/A",
+      "reasoning": "LLM failed"
+    },
+    "confidence": 0
+  },
+  "confidence": {
+    "buttons": 0,
+    "colors": 0,
+    "overall": 0
+  }
+}

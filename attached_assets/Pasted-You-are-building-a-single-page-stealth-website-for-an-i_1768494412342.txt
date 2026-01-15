@@ -1,0 +1,209 @@
+You are building a single-page stealth website for an investor audience.
+
+Brand: VERICORA  
+Theme: white / off-white, calm, premium, editorial-infrastructure.
+
+PRIMARY REFERENCE SITES (YOU MUST ANALYZE AND EXTRACT FROM THESE):
+1) https://www.withdavid.ai/
+2) https://cofounder.co/
+
+IMPORTANT: Before generating the site, visually analyze these reference websites and extract their layout, typography, spacing, and interaction patterns. Apply those patterns intentionally as described below.
+
+GOAL / OUTCOME
+Produce a polished, responsive, production-quality one-page website that feels like a serious infrastructure company.
+The site must NOT feel like:
+- an LMS
+- an EdTech marketing page
+- a chatbot demo
+- a loud startup landing page
+
+The site SHOULD feel like:
+- learning infrastructure
+- an operating layer
+- a calm, confident, investor-ready system
+
+REFERENCE EXTRACTION INSTRUCTIONS (VERY IMPORTANT)
+
+From https://www.withdavid.ai/, extract and apply:
+- Very large editorial serif headlines paired with clean sans-serif body text
+- Generous whitespace and calm layout rhythm
+- Thin lines and rules used as structural elements (section dividers, subtle vertical rules)
+- Narrative scroll behavior where sections feel like chapters
+- Polished scroll-based reveals (fade + slight translate, no gimmicks)
+- Optional left-side section index or progress indicator that updates on scroll
+- Overall “research-grade, thoughtful, serious” tone
+
+From https://cofounder.co/, extract and apply:
+- Clean, friendly card layouts for grouped content (soft borders, rounded corners, minimal shadows)
+- Slightly humanized UI feel without becoming playful or quirky
+- Subtle paper/grid-like background textures used sparingly
+- Clear visual grouping of concepts using cards and spacing rather than heavy graphics
+- A sense of approachability layered on top of a professional foundation
+
+DO NOT copy illustrations, imagery, or brand-specific visuals from the references.
+ONLY extract layout logic, spacing, typography hierarchy, and interaction style.
+
+VISUAL SYSTEM REQUIREMENTS
+- Background: warm white or off-white (not pure white)
+- Text: near-black primary, muted gray secondary
+- Accent color: ONE only (muted teal or soft electric blue)
+- Headline font: elegant serif, very large sizes
+- Body/UI font: clean modern sans-serif
+- Italics may be used sparingly in serif headlines for emphasis
+- Lines are the primary graphic language:
+  - thin horizontal section dividers
+  - occasional vertical rules
+  - very subtle grid/graph-paper texture in 1–2 sections only
+
+INTERACTION / SCROLL BEHAVIOR
+- Each section should reveal smoothly on scroll (fade + slight Y-translation)
+- Stagger reveals for cards and lists
+- Motion should feel “museum-grade”: calm, intentional, restrained
+- No aggressive parallax, no bouncing, no flashy animations
+
+SITE STRUCTURE (IN ORDER)
+1) Hero  
+2) Problem  
+3) Insight  
+4) What Vericora Is (Design / Govern / Execute)  
+5) What It Enables (Agents across domains)  
+6) No-Code Builder  
+7) Principles  
+8) Who It’s For  
+9) Status (Private Development)  
+10) Contact + Footer  
+
+COPY (USE EXACTLY — ONLY ADJUST LINE BREAKS FOR DESIGN)
+
+SECTION 1: HERO
+Logo text: VERICORA
+
+Headline (choose ONE):
+- The operating layer for agentic learning.
+- The execution core for governed learning agents.
+- Where learning agents become reliable.
+
+Subhead:
+Vericora is building an integrity-first platform to design, govern, and run learning agents across real environments, with human oversight built in.
+
+Microline (small):
+Built by a team with a decade of experience deploying learning systems in institutions and complex organizations.
+
+CTA:
+Primary: Request access  
+Secondary: Contact
+
+SECTION 2: PROBLEM
+Title:
+AI can generate content. Learning requires execution.
+
+Body:
+Learning systems fail when the hard parts are treated as an afterthought: context, policy, progress, accountability, and human judgment.
+Most AI experiences are impressive in a demo and fragile in deployment.
+Vericora exists to make learning agents operational.
+
+SECTION 3: INSIGHT
+Title:
+What’s missing is not intelligence. It’s an operating layer.
+
+Body:
+To scale responsibly, learning agents need a layer that separates what should happen (design), what’s allowed (governance), and what actually happens (execution).
+That’s the layer Vericora is building.
+
+SECTION 4: WHAT VERICORA IS
+Title:
+Vericora
+
+Definition:
+An integrity-first execution core for agentic learning systems.
+
+Pillars (display as three blocks separated by thin lines):
+Design — Define lessons, journeys, outcomes, and progression.  
+Govern — Set policies, constraints, oversight, and auditability.  
+Execute — Run agent behavior reliably across learners, cohorts, teams, and programs.
+
+Small line:
+Model-agnostic. Delivery-agnostic. Built for institutional deployment.
+
+SECTION 5: WHAT IT ENABLES
+Title:
+Learning agents that operate across domains.
+
+Body:
+Vericora powers structured agent roles that show up wherever learning happens: education, workforce enablement, certification, and public programs.
+
+Cards:
+Instruction Agents — Deliver structured learning and guidance with pacing and context.  
+Evaluation Agents — Measure readiness, mastery, and progress with consistent criteria.  
+Guidance Agents — Support coaching, onboarding, and decision support within guardrails.  
+Pathway Agents — Assemble learning journeys and progression logic for roles and outcomes.
+
+Small note:
+Not isolated chatbots. Orchestrated systems.
+
+SECTION 6: NO-CODE BUILDER
+Title:
+Build and deploy without code.
+
+Body:
+Vericora includes a no-code builder to define agent behavior, lesson structure, evaluation logic, and guardrails. Teams can author learning flows once and deploy them consistently at scale.
+
+Bullets:
+Outcomes & mastery criteria  
+Lesson structure & progression  
+Policies & constraints  
+Feedback & evaluation logic  
+Delivery mode (async, live, hybrid)
+
+SECTION 7: PRINCIPLES
+Title:
+Built on a few non-negotiables.
+
+Bullets:
+Integrity by design, not patchwork controls  
+Human governance first, not autonomous guesswork  
+Context-aware execution, not generic responses  
+Separation of concerns: design, govern, execute  
+Outcomes over output: mastery, not chatter  
+Scale without compromise: trust and velocity together  
+
+SECTION 8: WHO IT’S FOR
+Title:
+Designed for environments where outcomes matter.
+
+Body:
+Vericora is built for organizations deploying AI for learning and capability development in high-accountability contexts, including:
+
+Education systems and institutions  
+Enterprise training and enablement  
+Workforce development and certification  
+Public-sector programs  
+
+SECTION 9: STATUS
+Title:
+Currently in private development.
+
+Body:
+We’re working with a small group of design partners.
+We’re intentionally quiet. We’re getting the core right.
+
+SECTION 10: CONTACT + FOOTER
+Title:
+Get in touch
+
+Email:
+hello@vericora.ai
+
+Optional microline:
+We respond selectively.
+
+Footer:
+© Vericora, Inc. · Privacy · Terms
+
+DELIVERABLES
+- A complete responsive single-page website
+- Clear typographic scale emphasizing large headlines and whitespace
+- Thin line-based structural system throughout
+- Polished scroll reveal effects
+- Clean component structure for easy iteration
+- White/off-white theme, calm, investor-grade, stealth-appropriate
