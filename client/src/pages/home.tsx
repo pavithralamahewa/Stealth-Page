@@ -3,7 +3,7 @@ import { motion, useInView } from "framer-motion";
 import { ArrowRight, Layers, Target, Compass, Route } from "lucide-react";
 import Lenis from "lenis";
 import vericoraLogo from "../assets/vericora-logo.png";
-import heroVisual from "../assets/hero-visual.png";
+import heroStack from "../assets/hero-stack.png";
 
 const SECTIONS = [
   { id: "hero", numeral: "I", label: "VERICORA" },
@@ -150,17 +150,36 @@ export default function Home() {
           maskImage: 'linear-gradient(to bottom, black 0%, black 60%, transparent 100%)',
           WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black 60%, transparent 100%)'
         }} />
+
+        {/* Left vertical line with Roman numerals */}
+        <div className="absolute left-6 lg:left-10 top-32 bottom-20 hidden lg:flex flex-col items-center z-20">
+          <div className="relative h-full flex flex-col justify-between py-8">
+            {['I', 'II', 'III', 'IV'].map((numeral, i) => (
+              <div key={numeral} className="flex items-center gap-3">
+                <span className="text-[11px] font-serif italic text-black/30">{numeral}</span>
+                {i === 0 && (
+                  <div className="w-1.5 h-1.5 rounded-full bg-accent" />
+                )}
+              </div>
+            ))}
+          </div>
+          <div className="absolute left-3 top-0 bottom-0 w-[1px] bg-black/10" />
+        </div>
         
         <div className="container-grid relative z-10 w-full">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
             {/* Left: Text Content */}
-            <div>
+            <div className="lg:pl-12">
               <motion.div 
                 initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.9, ease: [0.25, 0.1, 0.25, 1] }}
               >
-                <span className="text-[10px] font-mono text-muted-foreground tracking-[0.25em] mb-8 block">I — VERICORA</span>
+                <div className="flex items-center gap-3 mb-8">
+                  <div className="w-1.5 h-1.5 rounded-full bg-accent" />
+                  <div className="w-8 h-[1px] bg-black/15" />
+                  <span className="text-[10px] font-mono text-muted-foreground tracking-[0.25em]">I — VERICORA</span>
+                </div>
                 <h1 className="text-[clamp(2.8rem,6vw,5.5rem)] leading-[0.95] font-serif mb-10 tracking-[-0.02em]">
                   The operating layer<br/>
                   for <em className="italic font-light">agentic learning.</em>
@@ -192,7 +211,7 @@ export default function Home() {
               </motion.div>
             </div>
 
-            {/* Right: Hero Visual */}
+            {/* Right: Hero Stack Visual */}
             <motion.div 
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -200,9 +219,9 @@ export default function Home() {
               className="hidden lg:flex justify-center items-center"
             >
               <img 
-                src={heroVisual} 
+                src={heroStack} 
                 alt="Platform visualization" 
-                className="w-full max-w-md object-contain"
+                className="w-full max-w-lg object-contain"
               />
             </motion.div>
           </div>
