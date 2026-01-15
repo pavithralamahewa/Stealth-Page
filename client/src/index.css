@@ -56,6 +56,22 @@
     background: hsl(192 15% 42% / 0.15);
     color: hsl(192 15% 30%);
   }
+
+  /* Smooth scrolling for the page */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Better focus states */
+  :focus-visible {
+    outline: 2px solid hsl(210 100% 48%);
+    outline-offset: 2px;
+  }
+
+  /* Premium link underline animation */
+  a {
+    text-decoration-skip-ink: auto;
+  }
 }
 
 /* Matte paper texture - subtle noise overlay */

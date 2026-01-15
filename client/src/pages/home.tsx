@@ -286,20 +286,26 @@ const HorizontalScrollAgents = () => {
             {agents.map((agent, i) => (
               <motion.div
                 key={i}
-                className="flex-shrink-0 w-[55vw] bg-[#f5f3ef] rounded-[3px] overflow-hidden flex flex-col"
+                className="flex-shrink-0 w-[55vw] bg-[#f5f3ef] rounded-[3px] overflow-hidden flex flex-col group cursor-pointer"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
+                whileHover={{ y: -4, transition: { duration: 0.3 } }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.06, duration: 0.5 }}
               >
                 <div className="p-8 lg:p-10">
                   <div className="flex items-center gap-3 mb-4 text-[#28281F]">
-                    <AgentIcon type={agent.type} />
-                    <h3 className="text-xl lg:text-2xl font-serif">{agent.title}</h3>
+                    <motion.div
+                      className="transition-colors duration-300"
+                      whileHover={{ scale: 1.1 }}
+                    >
+                      <AgentIcon type={agent.type} />
+                    </motion.div>
+                    <h3 className="text-xl lg:text-2xl font-serif group-hover:text-accent transition-colors duration-300">{agent.title}</h3>
                   </div>
                   <p className="text-[#28281F]/60 leading-relaxed text-[15px] max-w-lg">{agent.desc}</p>
                 </div>
-                <div className="flex-1 bg-[#eae8e4] flex items-center justify-center text-[#28281F]/40 p-6 lg:p-10 min-h-[280px]">
+                <div className="flex-1 bg-[#eae8e4] flex items-center justify-center text-[#28281F]/40 p-6 lg:p-10 min-h-[280px] group-hover:bg-[#e5e3df] transition-colors duration-300">
                   <AgentWireframe type={agent.type} />
                 </div>
               </motion.div>
@@ -465,11 +471,11 @@ export default function Home() {
                 </p>
                 
                 <div className="flex items-center gap-4">
-                  <button className="group bg-accent text-white px-7 py-3.5 text-sm font-medium rounded-[4px] hover:bg-accent/90 transition-all flex items-center gap-2 cursor-pointer">
+                  <button className="group bg-accent text-white px-7 py-3.5 text-sm font-medium rounded-[4px] hover:bg-accent/90 hover:shadow-[0_4px_20px_rgba(0,106,255,0.25)] transition-all duration-300 flex items-center gap-2 cursor-pointer">
                     Request access
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" strokeWidth={1.5} />
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" strokeWidth={1.5} />
                   </button>
-                  <button className="px-6 py-3.5 text-sm font-medium border border-black/15 rounded-[4px] hover:border-black/30 hover:bg-black/[0.02] transition-all cursor-pointer">
+                  <button className="px-6 py-3.5 text-sm font-medium border border-black/15 rounded-[4px] hover:border-black/30 hover:bg-black/[0.02] transition-all duration-300 cursor-pointer">
                     Contact
                   </button>
                 </div>
