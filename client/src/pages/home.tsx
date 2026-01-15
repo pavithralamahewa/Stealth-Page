@@ -80,6 +80,111 @@ const StaggerItem = ({ children, className = "" }: { children: React.ReactNode; 
   </motion.div>
 );
 
+const IsometricStack = () => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-10% 0px" });
+  
+  const layers = [
+    { label: "DESIGN", delay: 0.3, yOffset: 0, color: "rgba(94, 134, 134, 0.85)" },
+    { label: "GOVERN", delay: 0.5, yOffset: 70, color: "rgba(94, 134, 134, 0.65)" },
+    { label: "EXECUTE", delay: 0.7, yOffset: 140, color: "rgba(94, 134, 134, 0.45)" },
+  ];
+
+  return (
+    <div ref={ref} className="relative w-full h-[400px] md:h-[500px] flex items-center justify-center">
+      <div 
+        className="relative"
+        style={{ 
+          transform: "rotateX(55deg) rotateZ(-45deg)",
+          transformStyle: "preserve-3d",
+          perspective: "1000px"
+        }}
+      >
+        {layers.map((layer, i) => (
+          <motion.div
+            key={layer.label}
+            initial={{ opacity: 0, y: -50, z: -100 }}
+            animate={isInView ? { 
+              opacity: 1, 
+              y: layer.yOffset,
+              z: 0
+            } : {}}
+            transition={{ 
+              duration: 0.8, 
+              delay: layer.delay, 
+              ease: [0.25, 0.1, 0.25, 1] 
+            }}
+            className="absolute"
+            style={{
+              width: "280px",
+              height: "200px",
+              transformStyle: "preserve-3d",
+            }}
+          >
+            {/* Glass panel */}
+            <motion.div
+              animate={{ 
+                y: [0, -4, 0],
+              }}
+              transition={{
+                duration: 4 + i * 0.5,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: i * 0.3
+              }}
+              className="relative w-full h-full rounded-sm overflow-hidden"
+              style={{
+                background: `linear-gradient(135deg, ${layer.color}, rgba(94, 134, 134, 0.2))`,
+                backdropFilter: "blur(8px)",
+                border: "1px solid rgba(255, 255, 255, 0.3)",
+                boxShadow: `
+                  0 25px 50px -12px rgba(0, 0, 0, 0.15),
+                  inset 0 1px 0 rgba(255, 255, 255, 0.4),
+                  inset 0 -1px 0 rgba(0, 0, 0, 0.1)
+                `,
+              }}
+            >
+              {/* Glass highlight */}
+              <div 
+                className="absolute inset-0 opacity-30"
+                style={{
+                  background: "linear-gradient(135deg, rgba(255,255,255,0.5) 0%, transparent 50%)"
+                }}
+              />
+              
+              {/* Label */}
+              <div className="absolute bottom-4 right-5 flex items-center gap-2">
+                <span 
+                  className="text-[11px] tracking-[0.2em] font-medium"
+                  style={{ color: "rgba(255,255,255,0.9)" }}
+                >
+                  {layer.label}
+                </span>
+              </div>
+
+              {/* Edge highlight */}
+              <div 
+                className="absolute top-0 left-0 right-0 h-[1px]"
+                style={{ background: "rgba(255, 255, 255, 0.5)" }}
+              />
+            </motion.div>
+            
+            {/* Shadow layer */}
+            <div 
+              className="absolute -bottom-2 left-2 right-2 h-4 rounded-sm"
+              style={{
+                background: "rgba(0, 0, 0, 0.08)",
+                filter: "blur(8px)",
+                transform: "translateZ(-20px)"
+              }}
+            />
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 const OperatingLayerSpine = ({ 
   activeSection, 
   sectionOffsets,
@@ -281,59 +386,63 @@ export default function Home() {
       </nav>
 
       {/* HERO with micro-grid */}
-      <section id="hero" className="relative min-h-screen flex flex-col justify-center pt-24 pb-40 overflow-hidden">
+      <section id="hero" className="relative min-h-screen flex items-center pt-20 pb-20 overflow-hidden">
         {/* Micro-grid background that fades */}
         <div className="absolute inset-0 micro-grid opacity-100" style={{ 
           maskImage: 'linear-gradient(to bottom, black 0%, black 60%, transparent 100%)',
           WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black 60%, transparent 100%)'
         }} />
         
-        <div className="container-grid content-offset relative z-10">
-          <motion.div 
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, ease: [0.25, 0.1, 0.25, 1] }}
-            className="max-w-5xl"
-          >
-            <h1 className="text-[clamp(3.5rem,9vw,8.5rem)] leading-[0.9] font-serif mb-20 tracking-[-0.025em]">
-              The operating layer<br/>
-              for <em className="italic font-light">agentic learning.</em>
-            </h1>
-          </motion.div>
+        <div className="container-grid relative z-10 w-full">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+            {/* Left: Text Content */}
+            <div className="content-offset">
+              <motion.div 
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.9, ease: [0.25, 0.1, 0.25, 1] }}
+              >
+                <h1 className="text-[clamp(2.8rem,6vw,5.5rem)] leading-[0.95] font-serif mb-10 tracking-[-0.02em]">
+                  The operating layer<br/>
+                  for <em className="italic font-light">agentic learning.</em>
+                </h1>
+              </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.35, duration: 0.7 }}
-            className="grid md:grid-cols-12 gap-12"
-          >
-            <div className="md:col-span-5">
-              <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-lg">
-                Vericora is building an integrity-first platform to design, govern, and run learning agents across real environments, with human oversight built in.
-              </p>
-            </div>
-            
-            <div className="md:col-span-7 flex flex-col md:flex-row md:items-start md:justify-end gap-8">
-              <div className="flex items-center gap-5">
-                <button className="group bg-primary text-primary-foreground px-8 py-4 text-sm font-medium rounded-[4px] hover:bg-primary/90 transition-all flex items-center gap-2.5 cursor-pointer">
-                  Request access
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" strokeWidth={1.5} />
-                </button>
-                <a href="mailto:hello@vericora.ai" className="text-sm text-muted-foreground hover:text-foreground transition-colors underline underline-offset-4 decoration-border/50 hover:decoration-foreground/50">
-                  Contact
-                </a>
-              </div>
-            </div>
-          </motion.div>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.3, duration: 0.7 }}
+              >
+                <p className="text-lg text-muted-foreground leading-relaxed max-w-lg mb-10">
+                  Vericora is building an integrity-first platform to design, govern, and run learning agents across real environments, with human oversight built in.
+                </p>
+                
+                <div className="flex items-center gap-4 mb-12">
+                  <button className="group bg-accent text-white px-7 py-3.5 text-sm font-medium rounded-[4px] hover:bg-accent/90 transition-all flex items-center gap-2 cursor-pointer">
+                    Request access
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" strokeWidth={1.5} />
+                  </button>
+                  <button className="px-6 py-3.5 text-sm font-medium border border-black/15 rounded-[4px] hover:border-black/30 hover:bg-black/[0.02] transition-all cursor-pointer">
+                    Contact
+                  </button>
+                </div>
 
-          <motion.p 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6, duration: 0.7 }}
-            className="text-xs text-muted-foreground mt-20 max-w-sm"
-          >
-            Built by a team with a decade of experience deploying learning systems in institutions and complex organizations.
-          </motion.p>
+                <p className="text-xs text-muted-foreground max-w-sm">
+                  Built by a team with a decade of experience deploying learning systems in institutions and complex organizations.
+                </p>
+              </motion.div>
+            </div>
+
+            {/* Right: Isometric Stack */}
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.2, duration: 0.8 }}
+              className="hidden lg:flex justify-center items-center"
+            >
+              <IsometricStack />
+            </motion.div>
+          </div>
         </div>
       </section>
 
