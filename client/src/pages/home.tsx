@@ -1,7 +1,9 @@
-import React, { useRef, useEffect, useState, useMemo } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { ArrowRight, Layers, Target, Compass, Route } from "lucide-react";
 import Lenis from "lenis";
+import vericoraLogo from "../assets/vericora-logo.png";
+import heroVisual from "../assets/hero-visual.png";
 
 const SECTIONS = [
   { id: "hero", numeral: "I", label: "VERICORA" },
@@ -79,150 +81,6 @@ const StaggerItem = ({ children, className = "" }: { children: React.ReactNode; 
     {children}
   </motion.div>
 );
-
-const IsometricStack = () => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-10% 0px" });
-  
-  const layers = [
-    { 
-      label: "DESIGN", 
-      delay: 0.2, 
-      zIndex: 3, 
-      topColor: "rgba(95, 145, 140, 0.75)",
-      topColorLight: "rgba(120, 170, 165, 0.4)",
-      sideColor: "rgba(75, 125, 120, 0.85)"
-    },
-    { 
-      label: "GOVERN", 
-      delay: 0.4, 
-      zIndex: 2, 
-      topColor: "rgba(105, 150, 145, 0.6)",
-      topColorLight: "rgba(130, 175, 170, 0.3)",
-      sideColor: "rgba(85, 130, 125, 0.7)"
-    },
-    { 
-      label: "EXECUTE", 
-      delay: 0.6, 
-      zIndex: 1, 
-      topColor: "rgba(115, 155, 150, 0.45)",
-      topColorLight: "rgba(140, 180, 175, 0.2)",
-      sideColor: "rgba(95, 135, 130, 0.55)"
-    },
-  ];
-
-  const panelWidth = 260;
-  const panelHeight = 180;
-  const panelDepth = 14;
-  const stackGap = 65;
-
-  return (
-    <div ref={ref} className="relative w-full h-[480px] flex items-center justify-center" style={{ perspective: "1000px" }}>
-      <div 
-        className="relative"
-        style={{ 
-          transform: "rotateX(55deg) rotateZ(-45deg)",
-          transformStyle: "preserve-3d",
-          width: panelWidth,
-          height: panelHeight,
-        }}
-      >
-        {layers.map((layer, i) => (
-          <motion.div
-            key={layer.label}
-            initial={{ opacity: 0, y: -100 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: layer.delay, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute"
-            style={{
-              width: panelWidth,
-              height: panelHeight,
-              transformStyle: "preserve-3d",
-              transform: `translateY(${i * stackGap}px) translateZ(${(2 - i) * panelDepth}px)`,
-              zIndex: layer.zIndex,
-            }}
-          >
-            <motion.div
-              animate={{ y: [0, -4, 0] }}
-              transition={{ duration: 6 + i, repeat: Infinity, ease: "easeInOut", delay: i * 0.6 }}
-              style={{ transformStyle: "preserve-3d" }}
-            >
-              {/* Top face - main panel */}
-              <div 
-                className="absolute rounded-[4px]"
-                style={{
-                  width: panelWidth,
-                  height: panelHeight,
-                  background: `linear-gradient(145deg, ${layer.topColor} 0%, ${layer.topColorLight} 100%)`,
-                  border: "1px solid rgba(255,255,255,0.4)",
-                  boxShadow: `
-                    inset 0 2px 0 rgba(255,255,255,0.35),
-                    inset 0 -1px 0 rgba(0,0,0,0.05),
-                    0 20px 60px rgba(0,0,0,0.1)
-                  `,
-                  transform: `translateZ(${panelDepth}px)`,
-                }}
-              >
-                {/* Glass shine gradient */}
-                <div className="absolute inset-0 rounded-[4px]" style={{
-                  background: "linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.1) 30%, transparent 60%)"
-                }} />
-                {/* Subtle horizontal lines */}
-                <div className="absolute inset-x-5 top-[30%] h-[1px]" style={{ background: "rgba(255,255,255,0.25)" }} />
-                <div className="absolute inset-x-5 top-[55%] h-[1px]" style={{ background: "rgba(255,255,255,0.2)" }} />
-                <div className="absolute inset-x-5 top-[80%] h-[1px]" style={{ background: "rgba(255,255,255,0.15)" }} />
-                
-                {/* Label on the panel */}
-                <div className="absolute bottom-5 right-6">
-                  <span className="text-[12px] tracking-[0.2em] font-medium" style={{ color: "rgba(255,255,255,0.85)" }}>
-                    {layer.label}
-                  </span>
-                </div>
-              </div>
-
-              {/* Front face (bottom edge) */}
-              <div 
-                className="absolute origin-top"
-                style={{
-                  width: panelWidth,
-                  height: panelDepth,
-                  background: `linear-gradient(90deg, ${layer.sideColor}, rgba(60, 100, 95, 0.7))`,
-                  borderTop: "1px solid rgba(255,255,255,0.2)",
-                  transform: `translateY(${panelHeight}px) rotateX(-90deg)`,
-                }}
-              />
-
-              {/* Right face (side edge) */}
-              <div 
-                className="absolute origin-left"
-                style={{
-                  width: panelDepth,
-                  height: panelHeight,
-                  background: `linear-gradient(180deg, ${layer.sideColor}, rgba(55, 95, 90, 0.6))`,
-                  borderLeft: "1px solid rgba(255,255,255,0.15)",
-                  transform: `translateX(${panelWidth}px) rotateY(90deg)`,
-                }}
-              />
-            </motion.div>
-          </motion.div>
-        ))}
-
-        {/* Ground shadow */}
-        <div 
-          className="absolute"
-          style={{
-            width: panelWidth * 1.3,
-            height: panelHeight * 0.7,
-            borderRadius: "50%",
-            background: "radial-gradient(ellipse, rgba(0,0,0,0.12) 0%, transparent 65%)",
-            transform: `translateY(${stackGap * 2 + 100}px) translateX(-${panelWidth * 0.15}px) translateZ(-30px)`,
-            filter: "blur(16px)",
-          }}
-        />
-      </div>
-    </div>
-  );
-};
 
 const OperatingLayerSpine = ({ 
   activeSection, 
@@ -335,7 +193,9 @@ export default function Home() {
       {/* NAV */}
       <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-sm bg-background/80">
         <div className="container-grid flex justify-between items-center py-5">
-          <div className="text-sm tracking-[0.2em] font-medium lg:pl-[calc(var(--spine-offset)+48px)]">VERICORA</div>
+          <div className="lg:pl-[calc(var(--spine-offset)+48px)]">
+            <img src={vericoraLogo} alt="VERICORA" className="h-5 w-auto" />
+          </div>
           <div className="hidden md:flex gap-10 text-[13px] text-muted-foreground">
             <a href="#problem" className="hover:text-foreground transition-colors">Problem</a>
             <a href="#platform" className="hover:text-foreground transition-colors">Platform</a>
@@ -399,14 +259,18 @@ export default function Home() {
               </motion.div>
             </div>
 
-            {/* Right: Isometric Stack */}
+            {/* Right: Hero Visual */}
             <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.2, duration: 0.8 }}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.2, duration: 1, ease: [0.25, 0.1, 0.25, 1] }}
               className="hidden lg:flex justify-center items-center"
             >
-              <IsometricStack />
+              <img 
+                src={heroVisual} 
+                alt="Platform visualization" 
+                className="w-full max-w-md object-contain"
+              />
             </motion.div>
           </div>
         </div>
