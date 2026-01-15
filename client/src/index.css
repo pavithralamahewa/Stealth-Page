@@ -31,6 +31,7 @@
 
   --max-width: 1280px;
   --gutter: 24px;
+  --spine-offset: 48px;
 }
 
 @layer base {
@@ -73,6 +74,23 @@
   @media (min-width: 1024px) {
     .container-grid {
       --gutter: 64px;
+      --spine-offset: 56px;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .container-grid {
+      --spine-offset: 64px;
+    }
+  }
+
+  .content-offset {
+    padding-left: calc(var(--spine-offset) + 48px);
+  }
+
+  @media (max-width: 1023px) {
+    .content-offset {
+      padding-left: 0;
     }
   }
 
@@ -86,20 +104,14 @@
     background: hsl(0 0% 0% / 0.08);
   }
 
-  .spine-line {
-    position: fixed;
-    left: 48px;
-    top: 0;
-    bottom: 0;
-    width: 1px;
-    background: hsl(0 0% 0% / 0.06);
-    z-index: 40;
+  .hairline-white {
+    height: 1px;
+    background: hsl(0 0% 100% / 0.12);
   }
 
-  @media (max-width: 1023px) {
-    .spine-line {
-      display: none;
-    }
+  .hairline-v-white {
+    width: 1px;
+    background: hsl(0 0% 100% / 0.12);
   }
 
   .grid-pattern {
@@ -109,13 +121,40 @@
       linear-gradient(to bottom, rgba(0, 0, 0, 0.025) 1px, transparent 1px);
   }
 
-  .paper-texture {
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-    opacity: 0.02;
+  .micro-grid {
+    background-size: 24px 24px;
+    background-image:
+      linear-gradient(to right, rgba(0, 0, 0, 0.02) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
   }
 
-  .framed-section {
-    border-top: 1px solid hsl(0 0% 0% / 0.08);
-    border-bottom: 1px solid hsl(0 0% 0% / 0.08);
+  .framed-module {
+    border-top: 1px solid hsl(0 0% 0% / 0.1);
+    border-bottom: 1px solid hsl(0 0% 0% / 0.1);
+  }
+
+  .framed-module-dark {
+    border-top: 1px solid hsl(0 0% 100% / 0.1);
+    border-bottom: 1px solid hsl(0 0% 100% / 0.1);
+  }
+
+  .branch-line {
+    position: relative;
+  }
+
+  .branch-line::before {
+    content: '';
+    position: absolute;
+    left: calc(-1 * var(--spine-offset) - 24px);
+    top: 50%;
+    width: calc(var(--spine-offset) + 24px);
+    height: 1px;
+    background: hsl(0 0% 0% / 0.08);
+  }
+
+  @media (max-width: 1023px) {
+    .branch-line::before {
+      display: none;
+    }
   }
 }

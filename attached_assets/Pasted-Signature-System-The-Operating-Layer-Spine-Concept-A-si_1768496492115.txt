@@ -1,0 +1,312 @@
+Signature System: The Operating Layer Spine
+Concept
+
+A single vertical spine sits on the left side of the page. It acts like the site’s “operating layer”:
+
+It anchors typography and modules.
+
+It tracks progress through chapters.
+
+It activates the current section via subtle highlights.
+
+It occasionally “branches” into thin rules framing key modules.
+
+Think “research paper margin + product OS scaffolding.”
+
+Anatomy
+1) The Spine Rail
+
+A thin vertical line (hairline rule).
+
+Starts near the top of the hero and runs down through most of the page.
+
+Fixed position, so it stays stable as the page scrolls (premium feel).
+
+Placement
+
+Desktop: ~48–64px from the left edge of the content container
+
+Mobile: collapses to a top progress bar (details below)
+
+Style
+
+1px line, low contrast (like 12–18% opacity black)
+
+On tinted sections (like the dark “non-negotiables”), invert to low opacity white.
+
+2) Chapter Nodes
+
+At each major section, the spine gets a node:
+
+Small circle or square (choose one and commit)
+
+Label next to it (Roman numeral + section name)
+
+Active state highlights the current node
+
+Node shape
+
+Circle: feels calmer / more human
+
+Square: feels more “infra” / systems
+Pick circle if you want slightly warmer.
+
+Node size
+
+6px (inactive)
+
+8px (active)
+
+Label format
+
+I — HERO
+
+II — PROBLEM
+
+III — INSIGHT
+… etc.
+
+Labels should be small uppercase or smallcaps, letterspaced.
+
+3) Active Indicator (the “operating layer” moment)
+
+A subtle highlighted segment of the spine shows “where you are.”
+
+The spine rail remains constant.
+
+A slightly darker segment (or colored accent) grows/shifts to match the active section’s range.
+
+This is the premium detail that makes it feel “designed.”
+
+Active segment style
+
+Same 1px thickness but higher opacity
+
+Or use your single accent color at very low saturation (tasteful, not neon)
+
+4) Branch Rules (frames for key modules)
+
+In 2–3 sections only, the spine “branches”:
+
+a horizontal rule extends from the spine to the content block
+
+it frames the content with top/bottom rules or vertical dividers
+
+Use branches to make key ideas feel “architectural”:
+
+Design/Govern/Execute module (must)
+
+Agents grid (optional)
+
+No-code builder (optional)
+
+This is the part that will make it stop looking bland.
+
+How It Applies to Your Page (section by section)
+HERO
+
+What happens
+
+Spine starts here.
+
+Node label: I — VERICORA
+
+Headline aligns to a column that visually references the spine.
+
+Add one hero-only move
+
+A faint micro-grid behind the hero content (very subtle) that fades out by section 2.
+
+NOT across the whole page.
+
+Why
+This creates an “opening page” feeling: editorial, calm, intentional.
+
+PROBLEM
+
+What happens
+
+Node label: II — PROBLEM
+
+Spine branches with a thin horizontal rule into the left column title.
+
+Two-column layout stays, but the left column is visually tethered to the spine.
+
+Effect
+The problem section becomes a “chapter,” not just text.
+
+INSIGHT
+
+What happens
+
+Node label: III — INSIGHT
+
+No branching. This is a “pause” section.
+
+Active indicator moves and the page breathes.
+
+Effect
+This becomes your “moment.”
+
+PLATFORM: Design / Govern / Execute
+
+This is where the system must shine.
+
+What happens
+
+Node label: IV — PLATFORM
+
+Spine branches into a framed module:
+
+Top rule across module
+
+Vertical dividers between the 3 columns
+
+Bottom rule across module
+
+Column labels include 01 / 02 / 03 above Design/Govern/Execute
+
+Motion
+
+As user scrolls into view:
+
+frame lines fade in
+
+then columns appear sequentially (left → right)
+
+Effect
+This becomes iconic. Investors remember this.
+
+AGENTS (cards)
+
+What happens
+
+Node label: V — AGENTS
+
+Optional branch: a thin rule from spine to the agent card grid.
+
+Cards appear in staggered sequence on scroll.
+
+Card styling tied to the system
+
+Light borders
+
+Corner radius
+
+A tiny glyph on each card that matches the spine node shape (circle or square)
+
+Effect
+Cohesion. Not “random cards.”
+
+NO-CODE BUILDER
+
+What happens
+
+Node label: VI — BUILDER
+
+Branch rule frames the builder schematic area
+
+The schematic itself uses the same line language as the spine
+
+Schematic style
+
+Monochrome, blueprint-like
+
+Boxes and connectors, no screenshots
+
+Looks like a system diagram
+
+PRINCIPLES (“Non-negotiables”)
+
+What happens
+
+Node label: VII — PRINCIPLES
+
+Spine inverts (white hairline on dark background)
+
+Active segment becomes slightly brighter
+
+Layout
+
+Align the big headline to the spine line (important)
+
+Use vertical dividers inside the dark band
+
+Effect
+The dark section feels intentional, not random.
+
+WHO IT’S FOR
+
+What happens
+
+Node label: VIII — CONTEXTS
+
+Light branch into the grid of domains (Education / Enterprise / Workforce / Public)
+
+Important
+Make those domain boxes feel like “chapters,” not buttons.
+
+STATUS + CONTACT
+
+What happens
+
+Node label: IX — STATUS
+
+Spine fades out gradually and ends before the footer
+
+Endcap
+
+A tiny terminal mark where the spine ends (small dot)
+
+Feels deliberate.
+
+Mobile Behavior (must not look broken)
+
+On mobile, a left fixed spine is annoying. So:
+
+Collapse the spine into a top progress bar (thin line across top)
+
+Active segment shows scroll progress
+
+Chapter label updates in the nav area (small)
+
+Cards and modules remain, but with fewer dividers.
+
+Exact Style Guidelines (so it stays premium)
+Lines
+
+Only 1px lines.
+
+Only 2 opacities:
+
+passive: very light
+
+active: slightly darker
+
+No thick borders anywhere.
+
+Spacing
+
+Section padding must be huge:
+
+Desktop: 96–140px vertical rhythm per chapter
+
+Give the Insight section extra breathing room.
+
+Type
+
+Hero headline massive (bigger than now).
+
+Body text narrower measure.
+
+Use italics sparingly but consistently (only for “agentic learning” or “operating layer” style emphasis).
+
+Motion
+
+Fade + slight translate only.
+
+Stagger card reveals.
+
+No bouncing.
+
+No weird scroll-jacking.

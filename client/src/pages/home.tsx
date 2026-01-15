@@ -1,18 +1,18 @@
-import React, { useRef, useEffect, useState } from "react";
-import { motion, useInView, useScroll, useTransform } from "framer-motion";
-import { ArrowRight, Circle, Layers, Target, Compass, Route } from "lucide-react";
+import React, { useRef, useEffect, useState, useMemo } from "react";
+import { motion, useInView } from "framer-motion";
+import { ArrowRight, Layers, Target, Compass, Route } from "lucide-react";
 import Lenis from "lenis";
 
 const SECTIONS = [
-  { id: "hero", numeral: "I", label: "Intro" },
-  { id: "problem", numeral: "II", label: "Problem" },
-  { id: "insight", numeral: "III", label: "Insight" },
-  { id: "platform", numeral: "IV", label: "Platform" },
-  { id: "agents", numeral: "V", label: "Agents" },
-  { id: "builder", numeral: "VI", label: "Builder" },
-  { id: "principles", numeral: "VII", label: "Principles" },
-  { id: "audience", numeral: "VIII", label: "Audience" },
-  { id: "status", numeral: "IX", label: "Status" },
+  { id: "hero", numeral: "I", label: "VERICORA" },
+  { id: "problem", numeral: "II", label: "PROBLEM" },
+  { id: "insight", numeral: "III", label: "INSIGHT" },
+  { id: "platform", numeral: "IV", label: "PLATFORM" },
+  { id: "agents", numeral: "V", label: "AGENTS" },
+  { id: "builder", numeral: "VI", label: "BUILDER" },
+  { id: "principles", numeral: "VII", label: "PRINCIPLES" },
+  { id: "audience", numeral: "VIII", label: "CONTEXTS" },
+  { id: "status", numeral: "IX", label: "STATUS" },
 ];
 
 const ScrollReveal = ({
@@ -25,18 +25,14 @@ const ScrollReveal = ({
   delay?: number;
 }) => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-12% 0px" });
+  const isInView = useInView(ref, { once: true, margin: "-8% 0px" });
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 24 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
-      transition={{ 
-        duration: 0.7, 
-        delay,
-        ease: [0.25, 0.1, 0.25, 1] 
-      }}
+      initial={{ opacity: 0, y: 20 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+      transition={{ duration: 0.6, delay, ease: [0.25, 0.1, 0.25, 1] }}
       className={className}
     >
       {children}
@@ -54,7 +50,7 @@ const StaggerContainer = ({
   staggerDelay?: number;
 }) => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-10% 0px" });
+  const isInView = useInView(ref, { once: true, margin: "-8% 0px" });
 
   return (
     <motion.div
@@ -63,10 +59,7 @@ const StaggerContainer = ({
       animate={isInView ? "show" : "hidden"}
       variants={{
         hidden: { opacity: 0 },
-        show: {
-          opacity: 1,
-          transition: { staggerChildren: staggerDelay }
-        }
+        show: { opacity: 1, transition: { staggerChildren: staggerDelay } }
       }}
       className={className}
     >
@@ -78,12 +71,8 @@ const StaggerContainer = ({
 const StaggerItem = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => (
   <motion.div
     variants={{
-      hidden: { opacity: 0, y: 20 },
-      show: { 
-        opacity: 1, 
-        y: 0,
-        transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }
-      }
+      hidden: { opacity: 0, y: 16 },
+      show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1] } }
     }}
     className={className}
   >
@@ -91,43 +80,127 @@ const StaggerItem = ({ children, className = "" }: { children: React.ReactNode; 
   </motion.div>
 );
 
-const ProgressIndicator = ({ activeSection }: { activeSection: string }) => {
+const OperatingLayerSpine = ({ 
+  activeSection, 
+  sectionOffsets,
+  isDarkSection,
+  scrollProgress 
+}: { 
+  activeSection: string;
+  sectionOffsets: { [key: string]: { top: number; height: number } };
+  isDarkSection: boolean;
+  scrollProgress: number;
+}) => {
+  const activeIndex = SECTIONS.findIndex(s => s.id === activeSection);
+  const totalSections = SECTIONS.length;
+  
+  const indicatorTop = useMemo(() => {
+    const spineTop = 96;
+    const spineHeight = typeof window !== 'undefined' ? window.innerHeight - 96 - 128 : 600;
+    const sectionHeight = spineHeight / totalSections;
+    return spineTop + (activeIndex * sectionHeight);
+  }, [activeIndex, totalSections]);
+
+  const indicatorHeight = useMemo(() => {
+    const spineHeight = typeof window !== 'undefined' ? window.innerHeight - 96 - 128 : 600;
+    return spineHeight / totalSections;
+  }, [totalSections]);
+  
   return (
-    <div className="fixed left-6 lg:left-12 top-1/2 -translate-y-1/2 z-50 hidden lg:flex flex-col gap-6">
-      {SECTIONS.map((section) => (
-        <a
-          key={section.id}
-          href={`#${section.id}`}
-          className={`group flex items-center gap-3 transition-all duration-300 ${
-            activeSection === section.id 
-              ? "opacity-100" 
-              : "opacity-30 hover:opacity-60"
-          }`}
-        >
-          <span className={`font-mono text-[10px] tracking-wider transition-colors ${
-            activeSection === section.id ? "text-accent" : "text-muted-foreground"
-          }`}>
-            {section.numeral}
-          </span>
-          <span className={`text-[10px] uppercase tracking-widest overflow-hidden transition-all duration-300 ${
-            activeSection === section.id 
-              ? "w-16 opacity-100" 
-              : "w-0 opacity-0 group-hover:w-16 group-hover:opacity-100"
-          }`}>
-            {section.label}
-          </span>
-        </a>
-      ))}
+    <div className="fixed left-0 top-0 bottom-0 z-40 hidden lg:block" style={{ width: 'calc(var(--gutter) + var(--spine-offset))' }}>
+      {/* The Spine Rail */}
+      <div 
+        className="absolute top-24 bottom-32 w-[1px] transition-colors duration-500"
+        style={{ 
+          left: 'calc(var(--gutter) + var(--spine-offset))',
+          background: isDarkSection ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.08)'
+        }}
+      />
+      
+      {/* Active Indicator Segment */}
+      <motion.div 
+        className="absolute w-[1px] transition-colors duration-500"
+        style={{ 
+          left: 'calc(var(--gutter) + var(--spine-offset))',
+          background: isDarkSection ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.25)'
+        }}
+        animate={{ 
+          top: indicatorTop,
+          height: indicatorHeight
+        }}
+        transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
+      />
+
+      {/* Chapter Nodes */}
+      <div className="absolute top-28 bottom-40 flex flex-col justify-between" style={{ left: 'calc(var(--gutter) + 12px)' }}>
+        {SECTIONS.map((section, i) => {
+          const isActive = activeSection === section.id;
+          const isPrinciplesDark = section.id === 'principles' && isDarkSection;
+          
+          return (
+            <a
+              key={section.id}
+              href={`#${section.id}`}
+              className="group flex items-center gap-3 transition-all duration-300"
+            >
+              {/* Node Circle */}
+              <motion.div 
+                className="rounded-full border transition-all duration-300"
+                style={{
+                  width: isActive ? 8 : 6,
+                  height: isActive ? 8 : 6,
+                  borderColor: isActive 
+                    ? (isDarkSection ? 'rgba(255,255,255,0.6)' : 'hsl(192 15% 42%)') 
+                    : (isDarkSection ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.15)'),
+                  background: isActive 
+                    ? (isDarkSection ? 'rgba(255,255,255,0.6)' : 'hsl(192 15% 42%)') 
+                    : 'transparent'
+                }}
+              />
+              
+              {/* Label */}
+              <span 
+                className={`text-[9px] tracking-[0.2em] uppercase transition-all duration-300 whitespace-nowrap ${
+                  isActive 
+                    ? (isDarkSection ? 'text-white/80' : 'text-accent') 
+                    : (isDarkSection ? 'text-white/20' : 'text-black/25')
+                } group-hover:${isDarkSection ? 'text-white/50' : 'text-black/50'}`}
+              >
+                {section.numeral} — {section.label}
+              </span>
+            </a>
+          );
+        })}
+      </div>
+      
+      {/* Terminal Dot */}
+      <div 
+        className="absolute w-1 h-1 rounded-full transition-colors duration-500"
+        style={{ 
+          left: 'calc(var(--gutter) + var(--spine-offset) - 1.5px)',
+          bottom: '28px',
+          background: isDarkSection ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.2)'
+        }}
+      />
     </div>
   );
 };
 
-const SpineLine = () => (
-  <div className="spine-line" />
+const MobileProgressBar = ({ scrollProgress }: { scrollProgress: number }) => (
+  <div className="fixed top-0 left-0 right-0 h-[2px] z-50 lg:hidden bg-black/5">
+    <motion.div 
+      className="h-full bg-accent"
+      style={{ width: `${scrollProgress * 100}%` }}
+    />
+  </div>
 );
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState("hero");
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [sectionOffsets, setSectionOffsets] = useState<{ [key: string]: { top: number; height: number } }>({});
+  
+  const isDarkSection = activeSection === 'principles';
 
   useEffect(() => {
     const lenis = new Lenis({
@@ -142,8 +215,21 @@ export default function Home() {
     }
     requestAnimationFrame(raf);
 
+    const updateSectionOffsets = () => {
+      const offsets: { [key: string]: { top: number; height: number } } = {};
+      SECTIONS.forEach(section => {
+        const el = document.getElementById(section.id);
+        if (el) {
+          offsets[section.id] = { top: el.offsetTop, height: el.offsetHeight };
+        }
+      });
+      setSectionOffsets(offsets);
+    };
+
     const handleScroll = () => {
       const scrollPosition = window.scrollY + window.innerHeight / 3;
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      setScrollProgress(Math.min(1, window.scrollY / totalHeight));
       
       for (let i = SECTIONS.length - 1; i >= 0; i--) {
         const section = document.getElementById(SECTIONS[i].id);
@@ -154,22 +240,31 @@ export default function Home() {
       }
     };
 
+    updateSectionOffsets();
     window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", updateSectionOffsets);
+    
     return () => {
       lenis.destroy();
       window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", updateSectionOffsets);
     };
   }, []);
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden relative">
-      <SpineLine />
-      <ProgressIndicator activeSection={activeSection} />
+      <OperatingLayerSpine 
+        activeSection={activeSection} 
+        sectionOffsets={sectionOffsets}
+        isDarkSection={isDarkSection}
+        scrollProgress={scrollProgress}
+      />
+      <MobileProgressBar scrollProgress={scrollProgress} />
       
       {/* NAV */}
       <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-sm bg-background/80">
         <div className="container-grid flex justify-between items-center py-5">
-          <div className="text-sm tracking-[0.2em] font-medium pl-8 lg:pl-16">VERICORA</div>
+          <div className="text-sm tracking-[0.2em] font-medium lg:pl-[calc(var(--spine-offset)+48px)]">VERICORA</div>
           <div className="hidden md:flex gap-10 text-[13px] text-muted-foreground">
             <a href="#problem" className="hover:text-foreground transition-colors">Problem</a>
             <a href="#platform" className="hover:text-foreground transition-colors">Platform</a>
@@ -185,26 +280,32 @@ export default function Home() {
         <div className="hairline" />
       </nav>
 
-      {/* HERO */}
-      <section id="hero" className="min-h-screen flex flex-col justify-center pt-24 pb-32">
-        <div className="container-grid pl-8 lg:pl-24">
+      {/* HERO with micro-grid */}
+      <section id="hero" className="relative min-h-screen flex flex-col justify-center pt-24 pb-40 overflow-hidden">
+        {/* Micro-grid background that fades */}
+        <div className="absolute inset-0 micro-grid opacity-100" style={{ 
+          maskImage: 'linear-gradient(to bottom, black 0%, black 60%, transparent 100%)',
+          WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black 60%, transparent 100%)'
+        }} />
+        
+        <div className="container-grid content-offset relative z-10">
           <motion.div 
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] }}
+            transition={{ duration: 0.9, ease: [0.25, 0.1, 0.25, 1] }}
             className="max-w-5xl"
           >
-            <h1 className="text-[clamp(3rem,8vw,7.5rem)] leading-[0.92] font-serif mb-16 tracking-[-0.02em]">
+            <h1 className="text-[clamp(3.5rem,9vw,8.5rem)] leading-[0.9] font-serif mb-20 tracking-[-0.025em]">
               The operating layer<br/>
-              for <em className="font-light not-italic" style={{ fontStyle: 'italic' }}>agentic learning.</em>
+              for <em className="italic font-light">agentic learning.</em>
             </h1>
           </motion.div>
 
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.4, duration: 0.8 }}
-            className="grid md:grid-cols-12 gap-12 mt-8"
+            transition={{ delay: 0.35, duration: 0.7 }}
+            className="grid md:grid-cols-12 gap-12"
           >
             <div className="md:col-span-5">
               <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-lg">
@@ -213,12 +314,12 @@ export default function Home() {
             </div>
             
             <div className="md:col-span-7 flex flex-col md:flex-row md:items-start md:justify-end gap-8">
-              <div className="flex items-center gap-4">
-                <button className="group bg-primary text-primary-foreground px-7 py-3.5 text-sm font-medium rounded-sm hover:bg-primary/90 transition-all flex items-center gap-2 cursor-pointer">
+              <div className="flex items-center gap-5">
+                <button className="group bg-primary text-primary-foreground px-8 py-4 text-sm font-medium rounded-[4px] hover:bg-primary/90 transition-all flex items-center gap-2.5 cursor-pointer">
                   Request access
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" strokeWidth={1.5} />
                 </button>
-                <a href="mailto:hello@vericora.ai" className="text-sm text-muted-foreground hover:text-foreground transition-colors underline underline-offset-4 decoration-border hover:decoration-foreground">
+                <a href="mailto:hello@vericora.ai" className="text-sm text-muted-foreground hover:text-foreground transition-colors underline underline-offset-4 decoration-border/50 hover:decoration-foreground/50">
                   Contact
                 </a>
               </div>
@@ -228,23 +329,21 @@ export default function Home() {
           <motion.p 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.7, duration: 0.8 }}
-            className="text-xs text-muted-foreground mt-16 max-w-sm"
+            transition={{ delay: 0.6, duration: 0.7 }}
+            className="text-xs text-muted-foreground mt-20 max-w-sm"
           >
             Built by a team with a decade of experience deploying learning systems in institutions and complex organizations.
           </motion.p>
         </div>
       </section>
 
-      <div className="container-grid"><div className="hairline" /></div>
-
-      {/* PROBLEM */}
-      <section id="problem" className="py-32 lg:py-40">
-        <div className="container-grid pl-8 lg:pl-24">
-          <div className="grid lg:grid-cols-12 gap-12 lg:gap-16">
-            <ScrollReveal className="lg:col-span-5">
-              <span className="text-xs font-mono text-muted-foreground tracking-widest mb-6 block">02 — PROBLEM</span>
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif leading-[1.1]">
+      {/* PROBLEM - with branch line */}
+      <section id="problem" className="py-36 lg:py-44">
+        <div className="container-grid content-offset">
+          <div className="grid lg:grid-cols-12 gap-12 lg:gap-20">
+            <ScrollReveal className="lg:col-span-5 branch-line">
+              <span className="text-[10px] font-mono text-muted-foreground tracking-[0.25em] mb-8 block">II — PROBLEM</span>
+              <h2 className="text-4xl md:text-5xl lg:text-[3.5rem] font-serif leading-[1.05]">
                 AI can generate content.<br/>
                 <span className="text-muted-foreground">Learning requires execution.</span>
               </h2>
@@ -254,67 +353,67 @@ export default function Home() {
               <div className="hairline-v h-full" />
             </div>
 
-            <ScrollReveal className="lg:col-span-6 flex flex-col justify-end" delay={0.15}>
-              <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed mb-8">
+            <ScrollReveal className="lg:col-span-6 flex flex-col justify-end" delay={0.12}>
+              <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed mb-10">
                 Learning systems fail when the hard parts are treated as an afterthought: context, policy, progress, accountability, and human judgment.
               </p>
               <p className="text-lg text-foreground leading-relaxed">
                 Most AI experiences are impressive in a demo and fragile in deployment.
-                <br/><em className="text-accent">Vericora exists to make learning agents operational.</em>
+                <br/><em className="text-accent italic">Vericora exists to make learning agents operational.</em>
               </p>
             </ScrollReveal>
           </div>
         </div>
       </section>
 
-      {/* INSIGHT */}
-      <section id="insight" className="py-32 lg:py-40 framed-section bg-secondary/30">
+      {/* INSIGHT - breathing room, centered */}
+      <section id="insight" className="py-44 lg:py-56 framed-module bg-secondary/20">
         <div className="container-grid">
           <ScrollReveal className="max-w-4xl mx-auto text-center">
-            <span className="text-xs font-mono text-muted-foreground tracking-widest mb-8 block">03 — INSIGHT</span>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-10 leading-[1.1]">
+            <span className="text-[10px] font-mono text-muted-foreground tracking-[0.25em] mb-10 block">III — INSIGHT</span>
+            <h2 className="text-4xl md:text-5xl lg:text-[3.5rem] font-serif mb-12 leading-[1.05]">
               What's missing is not intelligence.<br/>
-              It's an <em className="text-accent">operating layer.</em>
+              It's an <em className="text-accent italic">operating layer.</em>
             </h2>
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
               To scale responsibly, learning agents need a layer that separates what should happen (design), what's allowed (governance), and what actually happens (execution).
             </p>
-            <p className="text-lg text-foreground mt-8">
+            <p className="text-lg text-foreground mt-10">
               That's the layer Vericora is building.
             </p>
           </ScrollReveal>
         </div>
       </section>
 
-      {/* PLATFORM - Design/Govern/Execute */}
-      <section id="platform" className="py-32 lg:py-40">
-        <div className="container-grid pl-8 lg:pl-24">
-          <ScrollReveal className="mb-20">
-            <span className="text-xs font-mono text-muted-foreground tracking-widest mb-6 block">04 — PLATFORM</span>
+      {/* PLATFORM - Iconic framed module */}
+      <section id="platform" className="py-36 lg:py-44">
+        <div className="container-grid content-offset">
+          <ScrollReveal className="mb-20 branch-line">
+            <span className="text-[10px] font-mono text-muted-foreground tracking-[0.25em] mb-8 block">IV — PLATFORM</span>
             <h2 className="text-5xl md:text-6xl lg:text-7xl font-serif">Vericora</h2>
-            <p className="text-xl text-muted-foreground mt-4 max-w-2xl">
+            <p className="text-xl text-muted-foreground mt-6 max-w-2xl">
               An integrity-first execution core for agentic learning systems.
             </p>
           </ScrollReveal>
 
-          <StaggerContainer className="framed-section">
+          <StaggerContainer className="framed-module" staggerDelay={0.15}>
             <div className="grid md:grid-cols-3">
               {[
                 { num: "01", title: "Design", desc: "Define lessons, journeys, outcomes, and progression." },
                 { num: "02", title: "Govern", desc: "Set policies, constraints, oversight, and auditability." },
                 { num: "03", title: "Execute", desc: "Run agent behavior reliably across learners, cohorts, teams, and programs." }
               ].map((item, i) => (
-                <StaggerItem key={i} className={`py-12 px-8 ${i !== 2 ? "md:border-r border-border/50" : ""}`}>
-                  <span className="text-xs font-mono text-accent tracking-widest mb-4 block">{item.num}</span>
-                  <h3 className="text-2xl md:text-3xl font-serif mb-4">{item.title}</h3>
+                <StaggerItem key={i} className={`py-14 px-10 ${i !== 2 ? "md:border-r border-black/8" : ""}`}>
+                  <span className="text-[10px] font-mono text-accent tracking-[0.2em] mb-5 block">{item.num}</span>
+                  <h3 className="text-2xl md:text-3xl font-serif mb-5">{item.title}</h3>
                   <p className="text-muted-foreground leading-relaxed">{item.desc}</p>
                 </StaggerItem>
               ))}
             </div>
           </StaggerContainer>
           
-          <ScrollReveal delay={0.3}>
-            <p className="mt-10 text-sm font-mono text-muted-foreground tracking-wide">
+          <ScrollReveal delay={0.4}>
+            <p className="mt-12 text-[11px] font-mono text-muted-foreground tracking-[0.15em]">
               Model-agnostic · Delivery-agnostic · Built for institutional deployment
             </p>
           </ScrollReveal>
@@ -322,16 +421,16 @@ export default function Home() {
       </section>
 
       {/* AGENTS */}
-      <section id="agents" className="py-32 lg:py-40 bg-secondary/20">
-        <div className="container-grid pl-8 lg:pl-24">
-          <div className="grid lg:grid-cols-12 gap-16">
-            <ScrollReveal className="lg:col-span-4">
-              <span className="text-xs font-mono text-muted-foreground tracking-widest mb-6 block">05 — AGENTS</span>
-              <h2 className="text-4xl md:text-5xl font-serif leading-[1.1] lg:sticky lg:top-32">
+      <section id="agents" className="py-36 lg:py-44 bg-secondary/15">
+        <div className="container-grid content-offset">
+          <div className="grid lg:grid-cols-12 gap-20">
+            <ScrollReveal className="lg:col-span-4 branch-line">
+              <span className="text-[10px] font-mono text-muted-foreground tracking-[0.25em] mb-8 block">V — AGENTS</span>
+              <h2 className="text-4xl md:text-5xl font-serif leading-[1.05] lg:sticky lg:top-36">
                 Learning agents that operate across domains.
               </h2>
-              <p className="mt-8 text-lg text-muted-foreground lg:sticky lg:top-64">
-                Vericora powers structured agent roles that show up wherever learning happens: education, workforce enablement, certification, and public programs.
+              <p className="mt-10 text-lg text-muted-foreground lg:sticky lg:top-72">
+                Vericora powers structured agent roles that show up wherever learning happens.
               </p>
             </ScrollReveal>
             
@@ -344,19 +443,17 @@ export default function Home() {
                   { icon: Route, title: "Pathway Agents", desc: "Assemble learning journeys and progression logic for roles and outcomes." },
                 ].map((card, i) => (
                   <StaggerItem key={i}>
-                    <div className="group bg-background p-8 border border-border/60 rounded-md hover:border-border hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-                      <div className="w-8 h-8 rounded-full border border-border/60 flex items-center justify-center mb-6 group-hover:border-accent/40 transition-colors">
-                        <card.icon className="w-4 h-4 text-muted-foreground group-hover:text-accent transition-colors" />
-                      </div>
-                      <h3 className="text-lg font-medium mb-3">{card.title}</h3>
+                    <div className="group bg-background p-10 border border-black/6 rounded-md hover:border-black/12 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                      <div className="w-2 h-2 rounded-full border border-black/15 mb-8 group-hover:border-accent group-hover:bg-accent transition-colors" />
+                      <h3 className="text-lg font-medium mb-4">{card.title}</h3>
                       <p className="text-muted-foreground text-sm leading-relaxed">{card.desc}</p>
                     </div>
                   </StaggerItem>
                 ))}
               </StaggerContainer>
 
-              <ScrollReveal delay={0.4} className="mt-8 text-center">
-                <span className="inline-block px-5 py-2.5 bg-background border border-border/60 rounded-full text-xs font-medium text-muted-foreground">
+              <ScrollReveal delay={0.4} className="mt-10 text-center">
+                <span className="inline-block px-5 py-2.5 bg-background border border-black/6 rounded-full text-[11px] font-medium text-muted-foreground tracking-wide">
                   Not isolated chatbots. Orchestrated systems.
                 </span>
               </ScrollReveal>
@@ -366,12 +463,12 @@ export default function Home() {
       </section>
 
       {/* NO-CODE BUILDER */}
-      <section id="builder" className="py-32 lg:py-40">
-        <div className="container-grid pl-8 lg:pl-24">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+      <section id="builder" className="py-36 lg:py-44">
+        <div className="container-grid content-offset">
+          <div className="grid lg:grid-cols-2 gap-20 items-center">
             <div className="order-2 lg:order-1">
               <ScrollReveal>
-                <div className="relative aspect-[4/3] bg-secondary/40 border border-border/60 rounded-md overflow-hidden">
+                <div className="relative aspect-[4/3] bg-secondary/30 border border-black/6 rounded-md overflow-hidden">
                   <video 
                     autoPlay 
                     loop 
@@ -386,15 +483,15 @@ export default function Home() {
             </div>
             
             <div className="order-1 lg:order-2">
-              <ScrollReveal>
-                <span className="text-xs font-mono text-muted-foreground tracking-widest mb-6 block">06 — BUILDER</span>
-                <h2 className="text-4xl md:text-5xl font-serif mb-6 leading-[1.1]">Build and deploy without code.</h2>
-                <p className="text-lg text-muted-foreground mb-10 leading-relaxed">
+              <ScrollReveal className="branch-line">
+                <span className="text-[10px] font-mono text-muted-foreground tracking-[0.25em] mb-8 block">VI — BUILDER</span>
+                <h2 className="text-4xl md:text-5xl font-serif mb-8 leading-[1.05]">Build and deploy without code.</h2>
+                <p className="text-lg text-muted-foreground mb-12 leading-relaxed">
                   Vericora includes a no-code builder to define agent behavior, lesson structure, evaluation logic, and guardrails. Teams can author learning flows once and deploy them consistently at scale.
                 </p>
               </ScrollReveal>
               
-              <StaggerContainer className="space-y-4" staggerDelay={0.06}>
+              <StaggerContainer className="space-y-5" staggerDelay={0.06}>
                 {[
                   "Outcomes & mastery criteria",
                   "Lesson structure & progression",
@@ -413,19 +510,19 @@ export default function Home() {
         </div>
       </section>
 
-      {/* PRINCIPLES */}
-      <section id="principles" className="py-32 lg:py-40 bg-primary text-primary-foreground">
-        <div className="container-grid pl-8 lg:pl-24">
-          <div className="grid lg:grid-cols-12 gap-12 lg:gap-16">
+      {/* PRINCIPLES - Dark section with inverted spine */}
+      <section id="principles" className="py-36 lg:py-44 bg-primary text-primary-foreground">
+        <div className="container-grid content-offset">
+          <div className="grid lg:grid-cols-12 gap-12 lg:gap-20">
             <ScrollReveal className="lg:col-span-4">
-              <span className="text-xs font-mono text-white/40 tracking-widest mb-6 block">07 — PRINCIPLES</span>
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-white/90 leading-[1.1]">
+              <span className="text-[10px] font-mono text-white/30 tracking-[0.25em] mb-8 block">VII — PRINCIPLES</span>
+              <h2 className="text-4xl md:text-5xl lg:text-[3.5rem] font-serif text-white/90 leading-[1.05]">
                 Built on a few non-negotiables.
               </h2>
             </ScrollReveal>
 
             <div className="lg:col-span-8">
-              <StaggerContainer className="grid sm:grid-cols-2 gap-x-12 gap-y-10" staggerDelay={0.08}>
+              <StaggerContainer className="grid sm:grid-cols-2 gap-x-14 gap-y-12" staggerDelay={0.08}>
                 {[
                   "Integrity by design, not patchwork controls",
                   "Human governance first, not autonomous guesswork",
@@ -434,10 +531,10 @@ export default function Home() {
                   "Outcomes over output: mastery, not chatter",
                   "Scale without compromise: trust and velocity together"
                 ].map((item, i) => (
-                  <StaggerItem key={i} className="border-t border-white/15 pt-6">
-                    <div className="flex gap-4 items-start">
-                      <span className="text-xs text-white/30 font-mono mt-1">0{i + 1}</span>
-                      <p className="text-lg text-white/75 leading-relaxed">{item}</p>
+                  <StaggerItem key={i} className="border-t border-white/12 pt-6">
+                    <div className="flex gap-5 items-start">
+                      <span className="text-[10px] text-white/25 font-mono mt-1.5">0{i + 1}</span>
+                      <p className="text-lg text-white/70 leading-relaxed">{item}</p>
                     </div>
                   </StaggerItem>
                 ))}
@@ -448,17 +545,17 @@ export default function Home() {
       </section>
 
       {/* AUDIENCE */}
-      <section id="audience" className="py-32 lg:py-40">
+      <section id="audience" className="py-36 lg:py-44">
         <div className="container-grid">
-          <ScrollReveal className="max-w-3xl mx-auto text-center mb-16">
-            <span className="text-xs font-mono text-muted-foreground tracking-widest mb-6 block">08 — AUDIENCE</span>
-            <h2 className="text-4xl md:text-5xl font-serif mb-6 leading-[1.1]">Designed for environments where outcomes matter.</h2>
+          <ScrollReveal className="max-w-3xl mx-auto text-center mb-20">
+            <span className="text-[10px] font-mono text-muted-foreground tracking-[0.25em] mb-8 block">VIII — CONTEXTS</span>
+            <h2 className="text-4xl md:text-5xl font-serif mb-8 leading-[1.05]">Designed for environments where outcomes matter.</h2>
             <p className="text-lg text-muted-foreground">
               Vericora is built for organizations deploying AI for learning and capability development in high-accountability contexts, including:
             </p>
           </ScrollReveal>
           
-          <StaggerContainer className="grid grid-cols-2 lg:grid-cols-4 gap-4" staggerDelay={0.08}>
+          <StaggerContainer className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5" staggerDelay={0.08}>
             {[
               "Education systems and institutions",
               "Enterprise training and enablement",
@@ -466,7 +563,7 @@ export default function Home() {
               "Public-sector programs"
             ].map((item, i) => (
               <StaggerItem key={i}>
-                <div className="p-8 bg-secondary/50 border border-border/50 text-center min-h-[180px] flex items-center justify-center rounded-md hover:bg-secondary/80 transition-colors">
+                <div className="p-10 bg-secondary/40 border border-black/5 text-center min-h-[200px] flex items-center justify-center rounded-md hover:bg-secondary/60 transition-colors">
                   <span className="font-medium text-sm leading-relaxed">{item}</span>
                 </div>
               </StaggerItem>
@@ -476,22 +573,22 @@ export default function Home() {
       </section>
 
       {/* STATUS + FOOTER */}
-      <section id="status" className="pt-32 lg:pt-40 pb-12">
-        <div className="container-grid pl-8 lg:pl-24">
-          <div className="framed-section py-20">
-            <div className="grid lg:grid-cols-2 gap-16">
+      <section id="status" className="pt-36 lg:pt-44 pb-16">
+        <div className="container-grid content-offset">
+          <div className="framed-module py-24">
+            <div className="grid lg:grid-cols-2 gap-20">
               <ScrollReveal>
-                <span className="text-xs font-mono text-accent tracking-widest mb-6 block">09 — STATUS</span>
-                <h2 className="text-3xl md:text-4xl font-serif mb-6">Currently in private development.</h2>
+                <span className="text-[10px] font-mono text-accent tracking-[0.25em] mb-8 block">IX — STATUS</span>
+                <h2 className="text-3xl md:text-4xl font-serif mb-8">Currently in private development.</h2>
                 <p className="text-muted-foreground max-w-md leading-relaxed">
                   We're working with a small group of design partners.<br/>
                   We're intentionally quiet. We're getting the core right.
                 </p>
               </ScrollReveal>
               
-              <ScrollReveal delay={0.15} className="lg:text-right flex flex-col justify-end">
-                <span className="text-xs font-mono text-muted-foreground tracking-widest mb-6 block">GET IN TOUCH</span>
-                <a href="mailto:hello@vericora.ai" className="text-3xl md:text-4xl font-serif hover:text-accent transition-colors mb-3">
+              <ScrollReveal delay={0.12} className="lg:text-right flex flex-col justify-end">
+                <span className="text-[10px] font-mono text-muted-foreground tracking-[0.25em] mb-8 block">GET IN TOUCH</span>
+                <a href="mailto:hello@vericora.ai" className="text-3xl md:text-4xl font-serif hover:text-accent transition-colors mb-4">
                   hello@vericora.ai
                 </a>
                 <p className="text-sm text-muted-foreground">We respond selectively.</p>
@@ -499,9 +596,9 @@ export default function Home() {
             </div>
           </div>
           
-          <div className="mt-20 flex flex-col md:flex-row justify-between items-center text-xs text-muted-foreground border-t border-border/50 pt-8">
+          <div className="mt-24 flex flex-col md:flex-row justify-between items-center text-xs text-muted-foreground border-t border-black/6 pt-10">
             <p>© Vericora, Inc.</p>
-            <div className="flex gap-8 mt-4 md:mt-0">
+            <div className="flex gap-10 mt-4 md:mt-0">
               <span className="hover:text-foreground transition-colors cursor-pointer">Privacy</span>
               <span className="hover:text-foreground transition-colors cursor-pointer">Terms</span>
             </div>
