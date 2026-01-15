@@ -268,31 +268,139 @@ export default function Home() {
         </div>
       </section>
 
-      {/* PROBLEM - with branch line */}
-      <section id="problem" className="py-36 lg:py-44">
-        <div className="container-grid">
+      {/* PROBLEM - Award-winning dramatic section */}
+      <section id="problem" className="py-44 lg:py-56 overflow-hidden relative">
+        {/* Subtle gradient orb as visual anchor */}
+        <motion.div 
+          className="absolute top-1/2 right-0 w-[600px] h-[600px] -translate-y-1/2 translate-x-1/2 pointer-events-none"
+          initial={{ opacity: 0, scale: 0.8 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1.5, ease: "easeOut" }}
+        >
+          <div className="w-full h-full rounded-full bg-gradient-to-br from-accent/[0.03] via-transparent to-transparent blur-3xl" />
+        </motion.div>
+
+        <div className="container-grid relative z-10">
+          {/* Section label with animated line */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, margin: "-10%" }}
+            transition={{ duration: 0.6 }}
+            className="mb-16 lg:mb-24 flex items-center gap-4"
+          >
+            <motion.div 
+              className="h-[1px] bg-accent/40"
+              initial={{ width: 0 }}
+              whileInView={{ width: 40 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+            />
+            <span className="text-[10px] font-mono text-muted-foreground tracking-[0.25em]">II — PROBLEM</span>
+          </motion.div>
+
+          {/* Dramatic headline with word-by-word animation */}
+          <div className="mb-20 lg:mb-32">
+            <h2 className="text-5xl md:text-6xl lg:text-[5.5rem] xl:text-[6.5rem] font-serif leading-[0.95] tracking-[-0.02em]">
+              <span className="block overflow-hidden">
+                {["AI", "can", "generate", "content."].map((word, i) => (
+                  <motion.span
+                    key={i}
+                    className="inline-block mr-[0.25em]"
+                    initial={{ y: "100%", opacity: 0 }}
+                    whileInView={{ y: 0, opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ 
+                      duration: 0.6, 
+                      delay: i * 0.08,
+                      ease: [0.25, 0.1, 0.25, 1] 
+                    }}
+                  >
+                    {word}
+                  </motion.span>
+                ))}
+              </span>
+              <span className="block overflow-hidden mt-2">
+                {["Learning", "requires"].map((word, i) => (
+                  <motion.span
+                    key={i}
+                    className="inline-block mr-[0.25em] text-muted-foreground/50"
+                    initial={{ y: "100%", opacity: 0 }}
+                    whileInView={{ y: 0, opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ 
+                      duration: 0.6, 
+                      delay: 0.4 + i * 0.08,
+                      ease: [0.25, 0.1, 0.25, 1] 
+                    }}
+                  >
+                    {word}
+                  </motion.span>
+                ))}
+                <motion.em
+                  className="inline-block italic text-foreground"
+                  initial={{ y: "100%", opacity: 0 }}
+                  whileInView={{ y: 0, opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ 
+                    duration: 0.7, 
+                    delay: 0.6,
+                    ease: [0.25, 0.1, 0.25, 1] 
+                  }}
+                >
+                  execution.
+                </motion.em>
+              </span>
+            </h2>
+          </div>
+
+          {/* Supporting content with staggered reveals */}
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-20">
-            <ScrollReveal className="lg:col-span-5">
-              <span className="text-[10px] font-mono text-muted-foreground tracking-[0.25em] mb-8 block">II — PROBLEM</span>
-              <h2 className="text-4xl md:text-5xl lg:text-[3.5rem] font-serif leading-[1.05]">
-                AI can generate content.<br/>
-                <span className="text-muted-foreground">Learning requires execution.</span>
-              </h2>
-            </ScrollReveal>
-
-            <div className="lg:col-span-1 hidden lg:flex justify-center">
-              <div className="hairline-v h-full" />
-            </div>
-
-            <ScrollReveal className="lg:col-span-6 flex flex-col justify-end" delay={0.12}>
-              <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed mb-10">
-                Learning systems fail when the hard parts are treated as an afterthought: context, policy, progress, accountability, and human judgment.
+            <motion.div 
+              className="lg:col-span-7"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-10%" }}
+              transition={{ duration: 0.7, delay: 0.5 }}
+            >
+              <p className="text-xl md:text-2xl lg:text-[1.75rem] text-muted-foreground leading-[1.5] max-w-2xl">
+                Learning systems fail when the hard parts are treated as an afterthought: 
+                <span className="text-foreground font-medium"> context, policy, progress, accountability,</span> and 
+                <span className="text-foreground font-medium"> human judgment.</span>
               </p>
-              <p className="text-lg text-foreground leading-relaxed">
-                Most AI experiences are impressive in a demo and fragile in deployment.
-                <br/><em className="text-accent italic">Vericora exists to make learning agents operational.</em>
-              </p>
-            </ScrollReveal>
+            </motion.div>
+
+            <motion.div 
+              className="lg:col-span-5 flex flex-col justify-end"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-10%" }}
+              transition={{ duration: 0.7, delay: 0.65 }}
+            >
+              <div className="relative lg:pl-10">
+                {/* Animated border */}
+                <motion.div 
+                  className="absolute left-0 top-0 w-[1px] bg-gradient-to-b from-accent/40 to-transparent hidden lg:block"
+                  initial={{ height: 0 }}
+                  whileInView={{ height: "100%" }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8, delay: 0.7 }}
+                />
+                <p className="text-lg text-muted-foreground leading-relaxed mb-6">
+                  Most AI experiences are impressive in a demo and fragile in deployment.
+                </p>
+                <motion.p 
+                  className="text-xl md:text-2xl font-serif italic text-accent relative"
+                  initial={{ opacity: 0, x: -10 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.85 }}
+                >
+                  Vericora exists to make learning agents operational.
+                </motion.p>
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
