@@ -217,10 +217,12 @@ const HorizontalScrollAgents = () => {
   });
   
   const numCards = 4;
-  const cardWidthVw = 42;
-  const gapVw = 2;
-  const totalWidth = (numCards * cardWidthVw) + ((numCards - 1) * gapVw);
-  const translateEnd = -(totalWidth - 90);
+  const cardWidthVw = 55;
+  const gapVw = 3;
+  const paddingVw = 4;
+  const totalScrollWidth = (numCards * cardWidthVw) + ((numCards - 1) * gapVw) + paddingVw;
+  const viewportWidth = 100;
+  const translateEnd = -(totalScrollWidth - viewportWidth + paddingVw);
   
   const x = useTransform(scrollYProgress, [0, 1], ["0vw", `${translateEnd}vw`]);
   
@@ -248,14 +250,14 @@ const HorizontalScrollAgents = () => {
   ];
 
   return (
-    <section id="agents" ref={containerRef} className="relative h-[500vh]">
-      <div className="sticky top-0 h-screen overflow-hidden flex flex-col" style={{ backgroundColor: 'var(--color-dark-section, #28281F)' }}>
-        <div className="container-grid pt-28 pb-16">
+    <section id="agents" ref={containerRef} className="relative h-[600vh]">
+      <div className="sticky top-0 h-screen overflow-hidden flex flex-col" style={{ backgroundColor: '#28281F' }}>
+        <div className="container-grid pt-24 lg:pt-28 pb-10 lg:pb-14">
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="flex items-center gap-3 mb-8"
+            className="flex items-center gap-3 mb-6"
           >
             <div className="w-1.5 h-1.5 rounded-full bg-white/40" />
             <div className="w-8 h-[1px] bg-white/20" />
@@ -263,7 +265,7 @@ const HorizontalScrollAgents = () => {
           </motion.div>
           
           <motion.h2 
-            className="text-[clamp(2rem,4.5vw,4rem)] font-serif text-white/90 leading-[1.05] max-w-3xl mb-6"
+            className="text-[clamp(2rem,4.5vw,4rem)] font-serif text-white/90 leading-[1.05] max-w-3xl mb-4"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -275,28 +277,28 @@ const HorizontalScrollAgents = () => {
           </p>
         </div>
         
-        <div className="flex-1 flex items-center overflow-hidden">
+        <div className="flex-1 flex items-center overflow-hidden py-4">
           <motion.div 
-            className="flex gap-[2vw] pl-8 lg:pl-16"
+            className="flex gap-[3vw] pl-[4vw]"
             style={{ x }}
           >
             {agents.map((agent, i) => (
               <motion.div
                 key={i}
-                className="flex-shrink-0 w-[42vw] bg-background rounded-sm overflow-hidden flex flex-col"
-                initial={{ opacity: 0, y: 40 }}
+                className="flex-shrink-0 w-[55vw] bg-[#f5f3ef] rounded-[3px] overflow-hidden flex flex-col"
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.08 }}
+                transition={{ delay: i * 0.06, duration: 0.5 }}
               >
-                <div className="p-8 lg:p-10 pb-6">
-                  <div className="flex items-center gap-3 mb-5 text-foreground">
+                <div className="p-8 lg:p-10">
+                  <div className="flex items-center gap-3 mb-4 text-[#28281F]">
                     <AgentIcon type={agent.type} />
-                    <h3 className="text-2xl font-serif">{agent.title}</h3>
+                    <h3 className="text-xl lg:text-2xl font-serif">{agent.title}</h3>
                   </div>
-                  <p className="text-muted-foreground leading-relaxed text-[15px]">{agent.desc}</p>
+                  <p className="text-[#28281F]/60 leading-relaxed text-[15px] max-w-lg">{agent.desc}</p>
                 </div>
-                <div className="flex-1 bg-muted flex items-center justify-center text-foreground/40 p-8 min-h-[220px]">
+                <div className="flex-1 bg-[#eae8e4] flex items-center justify-center text-[#28281F]/40 p-6 lg:p-10 min-h-[280px]">
                   <AgentWireframe type={agent.type} />
                 </div>
               </motion.div>
@@ -304,7 +306,7 @@ const HorizontalScrollAgents = () => {
           </motion.div>
         </div>
         
-        <div className="container-grid py-10">
+        <div className="container-grid py-8">
           <span className="inline-block px-5 py-2.5 border border-white/10 rounded-full text-[11px] font-medium text-white/40 tracking-wide">
             Not isolated chatbots. Orchestrated systems.
           </span>
