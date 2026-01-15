@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, Layers, Target, Compass, Route } from "lucide-react";
 import Lenis from "lenis";
 import vericoraLogo from "../assets/vericora-logo.png";
@@ -91,6 +91,159 @@ const MobileProgressBar = ({ scrollProgress }: { scrollProgress: number }) => (
   </div>
 );
 
+const AgentWireframe = ({ type }: { type: string }) => {
+  const wireframes: Record<string, React.ReactNode> = {
+    instruction: (
+      <svg viewBox="0 0 280 180" className="w-full h-full" fill="none">
+        <rect x="20" y="20" width="240" height="140" rx="4" stroke="currentColor" strokeWidth="1" opacity="0.3" />
+        <rect x="30" y="35" width="100" height="8" rx="2" fill="currentColor" opacity="0.4" />
+        <rect x="30" y="55" width="180" height="4" rx="1" fill="currentColor" opacity="0.2" />
+        <rect x="30" y="65" width="160" height="4" rx="1" fill="currentColor" opacity="0.2" />
+        <rect x="30" y="75" width="140" height="4" rx="1" fill="currentColor" opacity="0.2" />
+        <rect x="30" y="100" width="80" height="30" rx="4" stroke="currentColor" strokeWidth="1" opacity="0.3" />
+        <rect x="120" y="100" width="80" height="30" rx="4" stroke="currentColor" strokeWidth="1" opacity="0.3" />
+        <circle cx="50" cy="115" r="6" stroke="currentColor" strokeWidth="1" opacity="0.4" />
+        <circle cx="140" cy="115" r="6" fill="currentColor" opacity="0.4" />
+      </svg>
+    ),
+    evaluation: (
+      <svg viewBox="0 0 280 180" className="w-full h-full" fill="none">
+        <rect x="20" y="20" width="240" height="140" rx="4" stroke="currentColor" strokeWidth="1" opacity="0.3" />
+        <circle cx="140" cy="80" r="35" stroke="currentColor" strokeWidth="2" opacity="0.4" />
+        <path d="M120 80 L135 95 L165 65" stroke="currentColor" strokeWidth="2" opacity="0.6" />
+        <rect x="40" y="130" width="40" height="20" rx="2" fill="currentColor" opacity="0.2" />
+        <rect x="90" y="130" width="40" height="20" rx="2" fill="currentColor" opacity="0.3" />
+        <rect x="140" y="130" width="40" height="20" rx="2" fill="currentColor" opacity="0.2" />
+        <rect x="190" y="130" width="40" height="20" rx="2" fill="currentColor" opacity="0.2" />
+      </svg>
+    ),
+    guidance: (
+      <svg viewBox="0 0 280 180" className="w-full h-full" fill="none">
+        <rect x="20" y="20" width="240" height="140" rx="4" stroke="currentColor" strokeWidth="1" opacity="0.3" />
+        <circle cx="60" cy="60" r="20" stroke="currentColor" strokeWidth="1" opacity="0.4" />
+        <rect x="90" y="45" width="120" height="6" rx="2" fill="currentColor" opacity="0.3" />
+        <rect x="90" y="60" width="80" height="4" rx="1" fill="currentColor" opacity="0.2" />
+        <rect x="30" y="100" width="200" height="40" rx="4" stroke="currentColor" strokeWidth="1" opacity="0.3" />
+        <rect x="40" y="110" width="140" height="4" rx="1" fill="currentColor" opacity="0.2" />
+        <rect x="40" y="120" width="100" height="4" rx="1" fill="currentColor" opacity="0.2" />
+      </svg>
+    ),
+    pathway: (
+      <svg viewBox="0 0 280 180" className="w-full h-full" fill="none">
+        <rect x="20" y="20" width="240" height="140" rx="4" stroke="currentColor" strokeWidth="1" opacity="0.3" />
+        <circle cx="60" cy="90" r="15" stroke="currentColor" strokeWidth="1.5" opacity="0.5" />
+        <circle cx="140" cy="60" r="15" stroke="currentColor" strokeWidth="1.5" opacity="0.5" />
+        <circle cx="140" cy="120" r="15" stroke="currentColor" strokeWidth="1.5" opacity="0.5" />
+        <circle cx="220" cy="90" r="15" fill="currentColor" opacity="0.3" />
+        <line x1="75" y1="85" x2="125" y2="65" stroke="currentColor" strokeWidth="1" opacity="0.4" />
+        <line x1="75" y1="95" x2="125" y2="115" stroke="currentColor" strokeWidth="1" opacity="0.4" />
+        <line x1="155" y1="65" x2="205" y2="85" stroke="currentColor" strokeWidth="1" opacity="0.4" />
+        <line x1="155" y1="115" x2="205" y2="95" stroke="currentColor" strokeWidth="1" opacity="0.4" />
+      </svg>
+    ),
+  };
+  return wireframes[type] || null;
+};
+
+const HorizontalScrollAgents = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"]
+  });
+  
+  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-75%"]);
+  
+  const agents = [
+    { 
+      type: "instruction",
+      title: "Instruction", 
+      desc: "Deliver structured learning and guidance with pacing and context. These agents present content, respond to questions, and adapt delivery based on learner progress.",
+    },
+    { 
+      type: "evaluation",
+      title: "Evaluation", 
+      desc: "Measure readiness, mastery, and progress with consistent criteria. Agents assess understanding through varied formats while maintaining evaluation integrity.",
+    },
+    { 
+      type: "guidance",
+      title: "Guidance", 
+      desc: "Support coaching, onboarding, and decision support within guardrails. These agents provide contextual help and navigate learners through complex processes.",
+    },
+    { 
+      type: "pathway",
+      title: "Pathway", 
+      desc: "Assemble learning journeys and progression logic for roles and outcomes. Agents orchestrate sequences and adapt paths based on demonstrated competency.",
+    },
+  ];
+
+  return (
+    <section id="agents" ref={containerRef} className="relative h-[300vh]">
+      <div className="sticky top-0 h-screen bg-[#2a2520] text-white overflow-hidden flex flex-col justify-center">
+        <div className="container-grid py-16">
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="flex items-center gap-3 mb-6"
+          >
+            <div className="w-1.5 h-1.5 rounded-full bg-white/40" />
+            <div className="w-8 h-[1px] bg-white/20" />
+            <span className="text-[10px] font-mono text-white/50 tracking-[0.25em]">V — AGENTS</span>
+          </motion.div>
+          
+          <motion.h2 
+            className="text-[clamp(2rem,4vw,3.5rem)] font-serif text-white/90 leading-[1.05] max-w-2xl mb-4"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            Learning agents that operate across domains.
+          </motion.h2>
+          <p className="text-white/50 text-lg max-w-xl">
+            Vericora powers structured agent roles that show up wherever learning happens.
+          </p>
+        </div>
+        
+        <div className="overflow-hidden">
+          <motion.div 
+            className="flex gap-6 px-8 lg:px-16"
+            style={{ x }}
+          >
+            {agents.map((agent, i) => (
+              <motion.div
+                key={i}
+                className="flex-shrink-0 w-[85vw] md:w-[60vw] lg:w-[45vw] bg-[#f5f3f0] rounded-lg overflow-hidden"
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+              >
+                <div className="aspect-[16/10] bg-[#eae7e3] flex items-center justify-center text-[#2a2520]/60 p-8">
+                  <AgentWireframe type={agent.type} />
+                </div>
+                <div className="p-8 lg:p-10">
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="text-[10px] font-mono text-[#2a2520]/40 tracking-[0.2em]">0{i + 1}</span>
+                    <h3 className="text-2xl font-serif text-[#2a2520]">{agent.title}</h3>
+                  </div>
+                  <p className="text-[#2a2520]/70 leading-relaxed">{agent.desc}</p>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+        
+        <div className="container-grid mt-8">
+          <span className="inline-block px-5 py-2.5 border border-white/10 rounded-full text-[11px] font-medium text-white/40 tracking-wide">
+            Not isolated chatbots. Orchestrated systems.
+          </span>
+        </div>
+      </div>
+    </section>
+  );
+};
+
 const SiteSpine = ({ activeSection, isDarkSection }: { activeSection: string; isDarkSection: boolean }) => {
   const activeIndex = SECTIONS.findIndex(s => s.id === activeSection);
   
@@ -139,7 +292,7 @@ export default function Home() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [activeSection, setActiveSection] = useState("hero");
   
-  const isDarkSection = activeSection === 'principles';
+  const isDarkSection = activeSection === 'principles' || activeSection === 'agents';
 
   useEffect(() => {
     const lenis = new Lenis({
@@ -390,51 +543,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* AGENTS */}
-      <section id="agents" className="py-36 lg:py-44 bg-secondary/15">
-        <div className="container-grid">
-          <div className="grid lg:grid-cols-12 gap-20">
-            <ScrollReveal className="lg:col-span-4">
-              <div className="flex items-center gap-3 mb-8">
-                <div className="w-1.5 h-1.5 rounded-full bg-accent" />
-                <div className="w-8 h-[1px] bg-black/15" />
-                <span className="text-[10px] font-mono text-muted-foreground tracking-[0.25em]">V — AGENTS</span>
-              </div>
-              <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-serif leading-[1.05] lg:sticky lg:top-36">
-                Learning agents that operate across domains.
-              </h2>
-              <p className="mt-10 text-lg text-muted-foreground lg:sticky lg:top-72">
-                Vericora powers structured agent roles that show up wherever learning happens.
-              </p>
-            </ScrollReveal>
-            
-            <div className="lg:col-span-8">
-              <StaggerContainer className="grid sm:grid-cols-2 gap-5" staggerDelay={0.1}>
-                {[
-                  { icon: Layers, title: "Instruction Agents", desc: "Deliver structured learning and guidance with pacing and context." },
-                  { icon: Target, title: "Evaluation Agents", desc: "Measure readiness, mastery, and progress with consistent criteria." },
-                  { icon: Compass, title: "Guidance Agents", desc: "Support coaching, onboarding, and decision support within guardrails." },
-                  { icon: Route, title: "Pathway Agents", desc: "Assemble learning journeys and progression logic for roles and outcomes." },
-                ].map((card, i) => (
-                  <StaggerItem key={i}>
-                    <div className="group bg-background p-10 border border-black/6 rounded-md hover:border-black/12 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-                      <div className="w-2 h-2 rounded-full border border-black/15 mb-8 group-hover:border-accent group-hover:bg-accent transition-colors" />
-                      <h3 className="text-lg font-medium mb-4">{card.title}</h3>
-                      <p className="text-muted-foreground text-sm leading-relaxed">{card.desc}</p>
-                    </div>
-                  </StaggerItem>
-                ))}
-              </StaggerContainer>
-
-              <ScrollReveal delay={0.4} className="mt-10 text-center">
-                <span className="inline-block px-5 py-2.5 bg-background border border-black/6 rounded-full text-[11px] font-medium text-muted-foreground tracking-wide">
-                  Not isolated chatbots. Orchestrated systems.
-                </span>
-              </ScrollReveal>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* AGENTS - Dark horizontal scroll section */}
+      <HorizontalScrollAgents />
 
       {/* NO-CODE BUILDER */}
       <section id="builder" className="py-36 lg:py-44">

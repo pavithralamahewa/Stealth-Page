@@ -1,0 +1,51 @@
+We need to upgrade the current Vericora page from bland to produced quickly. Do NOT change copy or section order. Only change visual hierarchy, rhythm, and signature styling.
+
+Implement these exact high-impact changes:
+
+1) OPERATING LAYER SPINE (SIGNATURE SYSTEM)
+- Create a fixed/sticky left spine that remains visible through the page.
+- Add chapter nodes and labels for each major section:
+  I — VERICORA
+  II — PROBLEM
+  III — INSIGHT
+  IV — PLATFORM
+  V — AGENTS
+  VI — BUILDER
+  VII — PRINCIPLES
+  VIII — CONTEXTS
+  IX — STATUS
+- Add an “active segment” on the spine that highlights the current section in the accent color.
+- Inactive spine is hairline low-contrast; active spine segment is clearer and in accent.
+- Make the spine feel structural, not decorative.
+
+2) HERO: MAKE IT A MOMENT
+- Keep headline, but increase hierarchy:
+  - Slightly increase headline size and tighten measure (max width).
+  - Apply accent color to the italic phrase “agentic learning” at high legibility.
+- Place the layer-stack illustration inside a hero-only framed grid field:
+  - very subtle dotted/grid texture ONLY in hero
+  - a faint shadow plane aligned to grid beneath the stack
+  - add small label near illustration: “SYSTEM MODEL” in tiny caps
+- Align the hero layout to the spine with clear left margin logic.
+
+3) PLATFORM SECTION (Design/Govern/Execute) MUST FEEL ICONIC
+- Add a subtle tinted panel background ONLY for this section (2–4% contrast from page background).
+- Turn the 3 columns into a framed module:
+  - top rule, bottom rule, vertical dividers
+  - add 01/02/03 labels above each column
+- Add sequential scroll reveal of the three columns.
+
+4) CARD POLISH (AGENTS + CONTEXT BOXES)
+- Upgrade cards to feel premium:
+  - more padding
+  - lighter border
+  - slightly larger radius
+  - hover: slight lift + border darkens
+  - add tiny glyph per agent card (simple dot/line icon) consistent with the spine node shape
+
+5) TYPO + SPACING RHYTHM
+- Increase vertical spacing between major sections to create narrative beats.
+- Reduce body text line length for readability.
+- Ensure headings clearly stand apart from body.
+
+Deliverable: same content, but with visible contrast, stronger structure, and a memorable signature spine system.
