@@ -219,12 +219,11 @@ const HorizontalScrollAgents = () => {
   const numCards = 4;
   const cardWidthVw = 55;
   const gapVw = 3;
-  const paddingVw = 4;
-  const totalScrollWidth = (numCards * cardWidthVw) + ((numCards - 1) * gapVw) + paddingVw;
-  const viewportWidth = 100;
-  const translateEnd = -(totalScrollWidth - viewportWidth + paddingVw);
+  const startPaddingVw = 4;
+  const totalContentWidth = startPaddingVw + (numCards * cardWidthVw) + ((numCards - 1) * gapVw);
+  const translateEnd = -(totalContentWidth - 100);
   
-  const x = useTransform(scrollYProgress, [0, 1], ["0vw", `${translateEnd}vw`]);
+  const x = useTransform(scrollYProgress, [0, 1], [`${startPaddingVw}vw`, `${translateEnd}vw`]);
   
   const agents = [
     { 
@@ -249,8 +248,10 @@ const HorizontalScrollAgents = () => {
     },
   ];
 
+  const sectionHeight = `${100 + (numCards * 80)}vh`;
+
   return (
-    <section id="agents" ref={containerRef} className="relative h-[600vh]">
+    <section id="agents" ref={containerRef} className="relative" style={{ height: sectionHeight }}>
       <div className="sticky top-0 h-screen overflow-hidden flex flex-col" style={{ backgroundColor: '#28281F' }}>
         <div className="container-grid pt-24 lg:pt-28 pb-10 lg:pb-14">
           <motion.div
@@ -279,7 +280,7 @@ const HorizontalScrollAgents = () => {
         
         <div className="flex-1 flex items-center overflow-hidden py-4">
           <motion.div 
-            className="flex gap-[3vw] pl-[4vw]"
+            className="flex gap-[3vw]"
             style={{ x }}
           >
             {agents.map((agent, i) => (
@@ -562,7 +563,7 @@ export default function Home() {
       <SectionDivider numeral="III" />
 
       {/* INSIGHT - breathing room, centered */}
-      <section id="insight" className="py-32 lg:py-40 framed-module bg-secondary/20">
+      <section id="insight" className="py-32 lg:py-40 bg-secondary/20">
         <div className="container-grid">
           <ScrollReveal className="max-w-4xl mx-auto text-center">
             <div className="flex items-center justify-center gap-3 mb-10">
