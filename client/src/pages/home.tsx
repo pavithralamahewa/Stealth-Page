@@ -82,56 +82,6 @@ const StaggerItem = ({ children, className = "" }: { children: React.ReactNode; 
   </motion.div>
 );
 
-const OperatingLayerSpine = ({ 
-  activeSection, 
-  isDarkSection,
-}: { 
-  activeSection: string;
-  isDarkSection: boolean;
-}) => {
-  const activeData = SECTIONS.find(s => s.id === activeSection) || SECTIONS[0];
-  
-  return (
-    <div className="fixed left-0 top-0 z-40 hidden lg:flex items-start" style={{ paddingTop: '180px', paddingLeft: 'var(--gutter)' }}>
-      {/* Minimal Section Indicator */}
-      <div className="flex items-center gap-3 transition-all duration-500">
-        {/* Roman numeral */}
-        <span 
-          className="text-[11px] font-serif italic transition-colors duration-500"
-          style={{ color: isDarkSection ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.35)' }}
-        >
-          {activeData.numeral}
-        </span>
-        
-        {/* Small dot */}
-        <div 
-          className="w-1.5 h-1.5 rounded-full transition-colors duration-500"
-          style={{ background: isDarkSection ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.25)' }}
-        />
-        
-        {/* Horizontal line */}
-        <div 
-          className="w-8 h-[1px] transition-colors duration-500"
-          style={{ background: isDarkSection ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.12)' }}
-        />
-        
-        {/* Current section label */}
-        <motion.span 
-          key={activeSection}
-          initial={{ opacity: 0, x: -8 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
-          className="text-[10px] tracking-[0.2em] uppercase transition-colors duration-500"
-          style={{ color: isDarkSection ? 'rgba(255,255,255,0.6)' : 'rgba(0,0,0,0.45)' }}
-        >
-          {activeData.label}
-        </motion.span>
-      </div>
-    </div>
-  );
-};
-
-
 const MobileProgressBar = ({ scrollProgress }: { scrollProgress: number }) => (
   <div className="fixed top-0 left-0 right-0 h-[2px] z-50 lg:hidden bg-black/5">
     <motion.div 
@@ -142,10 +92,7 @@ const MobileProgressBar = ({ scrollProgress }: { scrollProgress: number }) => (
 );
 
 export default function Home() {
-  const [activeSection, setActiveSection] = useState("hero");
   const [scrollProgress, setScrollProgress] = useState(0);
-  
-  const isDarkSection = activeSection === 'principles';
 
   useEffect(() => {
     const lenis = new Lenis({
@@ -161,17 +108,8 @@ export default function Home() {
     requestAnimationFrame(raf);
 
     const handleScroll = () => {
-      const scrollPosition = window.scrollY + window.innerHeight / 3;
       const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
       setScrollProgress(Math.min(1, window.scrollY / totalHeight));
-      
-      for (let i = SECTIONS.length - 1; i >= 0; i--) {
-        const section = document.getElementById(SECTIONS[i].id);
-        if (section && section.offsetTop <= scrollPosition) {
-          setActiveSection(SECTIONS[i].id);
-          break;
-        }
-      }
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -184,18 +122,12 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden relative">
-      <OperatingLayerSpine 
-        activeSection={activeSection} 
-        isDarkSection={isDarkSection}
-      />
       <MobileProgressBar scrollProgress={scrollProgress} />
       
       {/* NAV */}
       <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-sm bg-background/80">
         <div className="container-grid flex justify-between items-center py-5">
-          <div className="lg:pl-[calc(var(--spine-offset)+48px)]">
-            <img src={vericoraLogo} alt="VERICORA" className="h-5 w-auto" />
-          </div>
+          <img src={vericoraLogo} alt="VERICORA" className="h-5 w-auto" />
           <div className="hidden md:flex gap-10 text-[13px] text-muted-foreground">
             <a href="#problem" className="hover:text-foreground transition-colors">Problem</a>
             <a href="#platform" className="hover:text-foreground transition-colors">Platform</a>
@@ -222,12 +154,13 @@ export default function Home() {
         <div className="container-grid relative z-10 w-full">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
             {/* Left: Text Content */}
-            <div className="content-offset">
+            <div>
               <motion.div 
                 initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.9, ease: [0.25, 0.1, 0.25, 1] }}
               >
+                <span className="text-[10px] font-mono text-muted-foreground tracking-[0.25em] mb-8 block">I — VERICORA</span>
                 <h1 className="text-[clamp(2.8rem,6vw,5.5rem)] leading-[0.95] font-serif mb-10 tracking-[-0.02em]">
                   The operating layer<br/>
                   for <em className="italic font-light">agentic learning.</em>
@@ -278,9 +211,9 @@ export default function Home() {
 
       {/* PROBLEM - with branch line */}
       <section id="problem" className="py-36 lg:py-44">
-        <div className="container-grid content-offset">
+        <div className="container-grid">
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-20">
-            <ScrollReveal className="lg:col-span-5 branch-line">
+            <ScrollReveal className="lg:col-span-5">
               <span className="text-[10px] font-mono text-muted-foreground tracking-[0.25em] mb-8 block">II — PROBLEM</span>
               <h2 className="text-4xl md:text-5xl lg:text-[3.5rem] font-serif leading-[1.05]">
                 AI can generate content.<br/>
@@ -326,8 +259,8 @@ export default function Home() {
 
       {/* PLATFORM - Iconic framed module */}
       <section id="platform" className="py-36 lg:py-44">
-        <div className="container-grid content-offset">
-          <ScrollReveal className="mb-20 branch-line">
+        <div className="container-grid">
+          <ScrollReveal className="mb-20">
             <span className="text-[10px] font-mono text-muted-foreground tracking-[0.25em] mb-8 block">IV — PLATFORM</span>
             <h2 className="text-5xl md:text-6xl lg:text-7xl font-serif">Vericora</h2>
             <p className="text-xl text-muted-foreground mt-6 max-w-2xl">
@@ -361,9 +294,9 @@ export default function Home() {
 
       {/* AGENTS */}
       <section id="agents" className="py-36 lg:py-44 bg-secondary/15">
-        <div className="container-grid content-offset">
+        <div className="container-grid">
           <div className="grid lg:grid-cols-12 gap-20">
-            <ScrollReveal className="lg:col-span-4 branch-line">
+            <ScrollReveal className="lg:col-span-4">
               <span className="text-[10px] font-mono text-muted-foreground tracking-[0.25em] mb-8 block">V — AGENTS</span>
               <h2 className="text-4xl md:text-5xl font-serif leading-[1.05] lg:sticky lg:top-36">
                 Learning agents that operate across domains.
@@ -403,7 +336,7 @@ export default function Home() {
 
       {/* NO-CODE BUILDER */}
       <section id="builder" className="py-36 lg:py-44">
-        <div className="container-grid content-offset">
+        <div className="container-grid">
           <div className="grid lg:grid-cols-2 gap-20 items-center">
             <div className="order-2 lg:order-1">
               <ScrollReveal>
@@ -422,7 +355,7 @@ export default function Home() {
             </div>
             
             <div className="order-1 lg:order-2">
-              <ScrollReveal className="branch-line">
+              <ScrollReveal>
                 <span className="text-[10px] font-mono text-muted-foreground tracking-[0.25em] mb-8 block">VI — BUILDER</span>
                 <h2 className="text-4xl md:text-5xl font-serif mb-8 leading-[1.05]">Build and deploy without code.</h2>
                 <p className="text-lg text-muted-foreground mb-12 leading-relaxed">
@@ -451,7 +384,7 @@ export default function Home() {
 
       {/* PRINCIPLES - Dark section with inverted spine */}
       <section id="principles" className="py-36 lg:py-44 bg-primary text-primary-foreground">
-        <div className="container-grid content-offset">
+        <div className="container-grid">
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-20">
             <ScrollReveal className="lg:col-span-4">
               <span className="text-[10px] font-mono text-white/30 tracking-[0.25em] mb-8 block">VII — PRINCIPLES</span>
@@ -513,7 +446,7 @@ export default function Home() {
 
       {/* STATUS + FOOTER */}
       <section id="status" className="pt-36 lg:pt-44 pb-16">
-        <div className="container-grid content-offset">
+        <div className="container-grid">
           <div className="framed-module py-24">
             <div className="grid lg:grid-cols-2 gap-20">
               <ScrollReveal>
