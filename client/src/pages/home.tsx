@@ -220,10 +220,10 @@ const HorizontalScrollAgents = () => {
   const cardWidthVw = 55;
   const gapVw = 3;
   const startPaddingVw = 4;
-  const totalContentWidth = startPaddingVw + (numCards * cardWidthVw) + ((numCards - 1) * gapVw);
-  const translateEnd = -(totalContentWidth - 100);
+  const totalContentWidth = (numCards * cardWidthVw) + ((numCards - 1) * gapVw);
+  const translateEnd = -(totalContentWidth - 100 + startPaddingVw);
   
-  const x = useTransform(scrollYProgress, [0, 1], [`${startPaddingVw}vw`, `${translateEnd}vw`]);
+  const x = useTransform(scrollYProgress, [0, 1], ["0%", `${translateEnd}vw`]);
   
   const agents = [
     { 
@@ -280,7 +280,7 @@ const HorizontalScrollAgents = () => {
         
         <div className="flex-1 flex items-center overflow-hidden py-4">
           <motion.div 
-            className="flex gap-[3vw]"
+            className="flex gap-[3vw] pl-[4vw]"
             style={{ x }}
           >
             {agents.map((agent, i) => (
