@@ -223,8 +223,9 @@ export default function Home() {
                   <span className="text-[10px] font-mono text-muted-foreground tracking-[0.25em]">I — VERICORA</span>
                 </div>
                 <h1 className="text-[clamp(2.8rem,6vw,5.5rem)] leading-[0.95] font-serif mb-10 tracking-[-0.02em]">
-                  The operating layer<br/>
-                  for <em className="italic font-light">agentic learning.</em>
+                  The operating<br/>
+                  layer for<br/>
+                  <em className="italic font-light">agentic learning.</em>
                 </h1>
               </motion.div>
 
