@@ -85,101 +85,140 @@ const IsometricStack = () => {
   const isInView = useInView(ref, { once: true, margin: "-10% 0px" });
   
   const layers = [
-    { label: "DESIGN", delay: 0.3, yOffset: 0, color: "rgba(94, 134, 134, 0.85)" },
-    { label: "GOVERN", delay: 0.5, yOffset: 70, color: "rgba(94, 134, 134, 0.65)" },
-    { label: "EXECUTE", delay: 0.7, yOffset: 140, color: "rgba(94, 134, 134, 0.45)" },
+    { 
+      label: "DESIGN", 
+      delay: 0.2, 
+      zIndex: 3, 
+      topColor: "rgba(95, 145, 140, 0.75)",
+      topColorLight: "rgba(120, 170, 165, 0.4)",
+      sideColor: "rgba(75, 125, 120, 0.85)"
+    },
+    { 
+      label: "GOVERN", 
+      delay: 0.4, 
+      zIndex: 2, 
+      topColor: "rgba(105, 150, 145, 0.6)",
+      topColorLight: "rgba(130, 175, 170, 0.3)",
+      sideColor: "rgba(85, 130, 125, 0.7)"
+    },
+    { 
+      label: "EXECUTE", 
+      delay: 0.6, 
+      zIndex: 1, 
+      topColor: "rgba(115, 155, 150, 0.45)",
+      topColorLight: "rgba(140, 180, 175, 0.2)",
+      sideColor: "rgba(95, 135, 130, 0.55)"
+    },
   ];
 
+  const panelWidth = 260;
+  const panelHeight = 180;
+  const panelDepth = 14;
+  const stackGap = 65;
+
   return (
-    <div ref={ref} className="relative w-full h-[400px] md:h-[500px] flex items-center justify-center">
+    <div ref={ref} className="relative w-full h-[480px] flex items-center justify-center" style={{ perspective: "1000px" }}>
       <div 
         className="relative"
         style={{ 
           transform: "rotateX(55deg) rotateZ(-45deg)",
           transformStyle: "preserve-3d",
-          perspective: "1000px"
+          width: panelWidth,
+          height: panelHeight,
         }}
       >
         {layers.map((layer, i) => (
           <motion.div
             key={layer.label}
-            initial={{ opacity: 0, y: -50, z: -100 }}
-            animate={isInView ? { 
-              opacity: 1, 
-              y: layer.yOffset,
-              z: 0
-            } : {}}
-            transition={{ 
-              duration: 0.8, 
-              delay: layer.delay, 
-              ease: [0.25, 0.1, 0.25, 1] 
-            }}
+            initial={{ opacity: 0, y: -100 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: layer.delay, ease: [0.16, 1, 0.3, 1] }}
             className="absolute"
             style={{
-              width: "280px",
-              height: "200px",
+              width: panelWidth,
+              height: panelHeight,
               transformStyle: "preserve-3d",
+              transform: `translateY(${i * stackGap}px) translateZ(${(2 - i) * panelDepth}px)`,
+              zIndex: layer.zIndex,
             }}
           >
-            {/* Glass panel */}
             <motion.div
-              animate={{ 
-                y: [0, -4, 0],
-              }}
-              transition={{
-                duration: 4 + i * 0.5,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: i * 0.3
-              }}
-              className="relative w-full h-full rounded-sm overflow-hidden"
-              style={{
-                background: `linear-gradient(135deg, ${layer.color}, rgba(94, 134, 134, 0.2))`,
-                backdropFilter: "blur(8px)",
-                border: "1px solid rgba(255, 255, 255, 0.3)",
-                boxShadow: `
-                  0 25px 50px -12px rgba(0, 0, 0, 0.15),
-                  inset 0 1px 0 rgba(255, 255, 255, 0.4),
-                  inset 0 -1px 0 rgba(0, 0, 0, 0.1)
-                `,
-              }}
+              animate={{ y: [0, -4, 0] }}
+              transition={{ duration: 6 + i, repeat: Infinity, ease: "easeInOut", delay: i * 0.6 }}
+              style={{ transformStyle: "preserve-3d" }}
             >
-              {/* Glass highlight */}
+              {/* Top face - main panel */}
               <div 
-                className="absolute inset-0 opacity-30"
+                className="absolute rounded-[4px]"
                 style={{
-                  background: "linear-gradient(135deg, rgba(255,255,255,0.5) 0%, transparent 50%)"
+                  width: panelWidth,
+                  height: panelHeight,
+                  background: `linear-gradient(145deg, ${layer.topColor} 0%, ${layer.topColorLight} 100%)`,
+                  border: "1px solid rgba(255,255,255,0.4)",
+                  boxShadow: `
+                    inset 0 2px 0 rgba(255,255,255,0.35),
+                    inset 0 -1px 0 rgba(0,0,0,0.05),
+                    0 20px 60px rgba(0,0,0,0.1)
+                  `,
+                  transform: `translateZ(${panelDepth}px)`,
                 }}
-              />
-              
-              {/* Label */}
-              <div className="absolute bottom-4 right-5 flex items-center gap-2">
-                <span 
-                  className="text-[11px] tracking-[0.2em] font-medium"
-                  style={{ color: "rgba(255,255,255,0.9)" }}
-                >
-                  {layer.label}
-                </span>
+              >
+                {/* Glass shine gradient */}
+                <div className="absolute inset-0 rounded-[4px]" style={{
+                  background: "linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.1) 30%, transparent 60%)"
+                }} />
+                {/* Subtle horizontal lines */}
+                <div className="absolute inset-x-5 top-[30%] h-[1px]" style={{ background: "rgba(255,255,255,0.25)" }} />
+                <div className="absolute inset-x-5 top-[55%] h-[1px]" style={{ background: "rgba(255,255,255,0.2)" }} />
+                <div className="absolute inset-x-5 top-[80%] h-[1px]" style={{ background: "rgba(255,255,255,0.15)" }} />
+                
+                {/* Label on the panel */}
+                <div className="absolute bottom-5 right-6">
+                  <span className="text-[12px] tracking-[0.2em] font-medium" style={{ color: "rgba(255,255,255,0.85)" }}>
+                    {layer.label}
+                  </span>
+                </div>
               </div>
 
-              {/* Edge highlight */}
+              {/* Front face (bottom edge) */}
               <div 
-                className="absolute top-0 left-0 right-0 h-[1px]"
-                style={{ background: "rgba(255, 255, 255, 0.5)" }}
+                className="absolute origin-top"
+                style={{
+                  width: panelWidth,
+                  height: panelDepth,
+                  background: `linear-gradient(90deg, ${layer.sideColor}, rgba(60, 100, 95, 0.7))`,
+                  borderTop: "1px solid rgba(255,255,255,0.2)",
+                  transform: `translateY(${panelHeight}px) rotateX(-90deg)`,
+                }}
+              />
+
+              {/* Right face (side edge) */}
+              <div 
+                className="absolute origin-left"
+                style={{
+                  width: panelDepth,
+                  height: panelHeight,
+                  background: `linear-gradient(180deg, ${layer.sideColor}, rgba(55, 95, 90, 0.6))`,
+                  borderLeft: "1px solid rgba(255,255,255,0.15)",
+                  transform: `translateX(${panelWidth}px) rotateY(90deg)`,
+                }}
               />
             </motion.div>
-            
-            {/* Shadow layer */}
-            <div 
-              className="absolute -bottom-2 left-2 right-2 h-4 rounded-sm"
-              style={{
-                background: "rgba(0, 0, 0, 0.08)",
-                filter: "blur(8px)",
-                transform: "translateZ(-20px)"
-              }}
-            />
           </motion.div>
         ))}
+
+        {/* Ground shadow */}
+        <div 
+          className="absolute"
+          style={{
+            width: panelWidth * 1.3,
+            height: panelHeight * 0.7,
+            borderRadius: "50%",
+            background: "radial-gradient(ellipse, rgba(0,0,0,0.12) 0%, transparent 65%)",
+            transform: `translateY(${stackGap * 2 + 100}px) translateX(-${panelWidth * 0.15}px) translateZ(-30px)`,
+            filter: "blur(16px)",
+          }}
+        />
       </div>
     </div>
   );
