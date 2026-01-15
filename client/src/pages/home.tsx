@@ -185,7 +185,7 @@ export default function Home() {
       {/* NAV */}
       <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-sm bg-background/80">
         <div className="container-grid flex justify-between items-center py-5">
-          <img src={vericoraLogo} alt="VERICORA" className="h-5 w-auto" />
+          <img src={vericoraLogo} alt="VERICORA" className="h-7 w-auto" />
           <div className="hidden md:flex gap-10 text-[13px] text-muted-foreground">
             <a href="#problem" className="hover:text-foreground transition-colors">Problem</a>
             <a href="#platform" className="hover:text-foreground transition-colors">Platform</a>
@@ -219,8 +219,7 @@ export default function Home() {
                 transition={{ duration: 0.9, ease: [0.25, 0.1, 0.25, 1] }}
               >
                 <div className="flex items-center gap-3 mb-8">
-                  <div className="w-1.5 h-1.5 rounded-full bg-accent" />
-                  <div className="w-8 h-[1px] bg-black/15" />
+                  <div className="w-10 h-[1px] bg-black/15" />
                   <span className="text-[10px] font-mono text-muted-foreground tracking-[0.25em]">I — VERICORA</span>
                 </div>
                 <h1 className="text-[clamp(2.8rem,6vw,5.5rem)] leading-[0.95] font-serif mb-10 tracking-[-0.02em]">
@@ -238,7 +237,7 @@ export default function Home() {
                   Vericora is building an integrity-first platform to design, govern, and run learning agents across real environments, with human oversight built in.
                 </p>
                 
-                <div className="flex items-center gap-4 mb-12">
+                <div className="flex items-center gap-4">
                   <button className="group bg-accent text-white px-7 py-3.5 text-sm font-medium rounded-[4px] hover:bg-accent/90 transition-all flex items-center gap-2 cursor-pointer">
                     Request access
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" strokeWidth={1.5} />
@@ -247,10 +246,6 @@ export default function Home() {
                     Contact
                   </button>
                 </div>
-
-                <p className="text-xs text-muted-foreground max-w-sm">
-                  Built by a team with a decade of experience deploying learning systems in institutions and complex organizations.
-                </p>
               </motion.div>
             </div>
 
@@ -259,8 +254,8 @@ export default function Home() {
               initial={{ opacity: 0, x: 40 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2, duration: 1, ease: [0.25, 0.1, 0.25, 1] }}
-              className="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 w-[55%] pointer-events-none"
-              style={{ right: '-5%' }}
+              className="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 w-[65%] pointer-events-none"
+              style={{ right: '-12%' }}
             >
               <img 
                 src={heroStack} 
