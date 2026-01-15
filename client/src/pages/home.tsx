@@ -371,46 +371,16 @@ export default function Home() {
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="order-2 lg:order-1">
               <ScrollReveal>
-                <div className="relative aspect-[4/3] bg-secondary/40 border border-border/60 rounded-md p-8 overflow-hidden">
-                  <div className="absolute inset-0 grid-pattern opacity-60" />
-                  
-                  <div className="relative z-10 h-full flex flex-col">
-                    <div className="flex items-center gap-3 mb-8">
-                      <div className="w-3 h-3 rounded-full bg-border" />
-                      <div className="w-3 h-3 rounded-full bg-border" />
-                      <div className="w-3 h-3 rounded-full bg-border" />
-                    </div>
-
-                    <div className="flex-1 grid grid-cols-3 gap-4">
-                      <div className="col-span-1 space-y-3">
-                        <div className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest mb-4">Components</div>
-                        {["Outcomes", "Lessons", "Policies", "Evaluation", "Delivery"].map((item, i) => (
-                          <div key={i} className="bg-background/60 border border-border/40 rounded px-3 py-2 text-xs text-muted-foreground">
-                            {item}
-                          </div>
-                        ))}
-                      </div>
-
-                      <div className="col-span-2 bg-background/40 border border-border/40 rounded-md p-4">
-                        <div className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest mb-4">Canvas</div>
-                        <div className="space-y-3">
-                          <div className="flex items-center gap-3">
-                            <div className="w-24 h-10 bg-accent/10 border border-accent/20 rounded flex items-center justify-center text-[10px] text-accent">Outcome</div>
-                            <div className="w-8 h-[1px] bg-border" />
-                            <div className="w-20 h-10 bg-secondary border border-border/40 rounded flex items-center justify-center text-[10px] text-muted-foreground">Lesson 1</div>
-                          </div>
-                          <div className="flex items-center gap-3 ml-8">
-                            <div className="w-4 h-[1px] bg-border rotate-90 origin-left" />
-                          </div>
-                          <div className="flex items-center gap-3 ml-16">
-                            <div className="w-20 h-10 bg-secondary border border-border/40 rounded flex items-center justify-center text-[10px] text-muted-foreground">Lesson 2</div>
-                            <div className="w-8 h-[1px] bg-border" />
-                            <div className="w-16 h-10 bg-secondary border border-border/40 rounded flex items-center justify-center text-[10px] text-muted-foreground">Eval</div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                <div className="relative aspect-[4/3] bg-secondary/40 border border-border/60 rounded-md overflow-hidden">
+                  <video 
+                    autoPlay 
+                    loop 
+                    muted 
+                    playsInline
+                    className="w-full h-full object-cover"
+                  >
+                    <source src="/assets/studio_1_(2)_1768496011624.mp4" type="video/mp4" />
+                  </video>
                 </div>
               </ScrollReveal>
             </div>
