@@ -91,8 +91,55 @@ const MobileProgressBar = ({ scrollProgress }: { scrollProgress: number }) => (
   </div>
 );
 
+const SiteSpine = ({ activeSection, isDarkSection }: { activeSection: string; isDarkSection: boolean }) => {
+  const activeIndex = SECTIONS.findIndex(s => s.id === activeSection);
+  
+  return (
+    <div className="fixed left-6 lg:left-10 top-0 bottom-0 z-40 hidden lg:flex flex-col items-start pointer-events-none">
+      <div 
+        className="absolute left-[6px] top-20 bottom-20 w-[1px] transition-colors duration-500"
+        style={{ background: isDarkSection ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.06)' }}
+      />
+      
+      <div className="relative h-full flex flex-col justify-between py-28">
+        {SECTIONS.map((section, i) => (
+          <div key={section.id} className="flex items-center gap-2">
+            <span 
+              className="text-[10px] font-serif italic transition-colors duration-500 w-5 text-right"
+              style={{ 
+                color: activeIndex === i 
+                  ? (isDarkSection ? 'rgba(255,255,255,0.8)' : 'rgba(0,0,0,0.6)') 
+                  : (isDarkSection ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.15)')
+              }}
+            >
+              {section.numeral}
+            </span>
+            <motion.div 
+              className="rounded-full transition-colors duration-300"
+              initial={false}
+              animate={{ 
+                scale: activeIndex === i ? 1 : 0.6,
+                width: activeIndex === i ? 6 : 4,
+                height: activeIndex === i ? 6 : 4,
+              }}
+              style={{ 
+                background: activeIndex === i 
+                  ? 'hsl(192 15% 42%)' 
+                  : (isDarkSection ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.1)')
+              }}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 export default function Home() {
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [activeSection, setActiveSection] = useState("hero");
+  
+  const isDarkSection = activeSection === 'principles';
 
   useEffect(() => {
     const lenis = new Lenis({
@@ -108,11 +155,21 @@ export default function Home() {
     requestAnimationFrame(raf);
 
     const handleScroll = () => {
+      const scrollPosition = window.scrollY + window.innerHeight / 3;
       const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
       setScrollProgress(Math.min(1, window.scrollY / totalHeight));
+      
+      for (let i = SECTIONS.length - 1; i >= 0; i--) {
+        const section = document.getElementById(SECTIONS[i].id);
+        if (section && section.offsetTop <= scrollPosition) {
+          setActiveSection(SECTIONS[i].id);
+          break;
+        }
+      }
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
     
     return () => {
       lenis.destroy();
@@ -122,6 +179,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden relative">
+      <SiteSpine activeSection={activeSection} isDarkSection={isDarkSection} />
       <MobileProgressBar scrollProgress={scrollProgress} />
       
       {/* NAV */}
@@ -151,25 +209,10 @@ export default function Home() {
           WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black 60%, transparent 100%)'
         }} />
 
-        {/* Left vertical line with Roman numerals */}
-        <div className="absolute left-6 lg:left-10 top-32 bottom-20 hidden lg:flex flex-col items-center z-20">
-          <div className="relative h-full flex flex-col justify-between py-8">
-            {['I', 'II', 'III', 'IV'].map((numeral, i) => (
-              <div key={numeral} className="flex items-center gap-3">
-                <span className="text-[11px] font-serif italic text-black/30">{numeral}</span>
-                {i === 0 && (
-                  <div className="w-1.5 h-1.5 rounded-full bg-accent" />
-                )}
-              </div>
-            ))}
-          </div>
-          <div className="absolute left-3 top-0 bottom-0 w-[1px] bg-black/10" />
-        </div>
-        
         <div className="container-grid relative z-10 w-full">
           <div className="relative">
             {/* Left: Text Content */}
-            <div className="lg:pl-12 lg:max-w-[50%]">
+            <div className="lg:max-w-[50%]">
               <motion.div 
                 initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
