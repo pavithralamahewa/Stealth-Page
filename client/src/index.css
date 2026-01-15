@@ -3,27 +3,29 @@
 
 @theme inline {
   --font-sans: "Inter", sans-serif;
-  --font-serif: "Source Serif 4", serif;
+  --font-serif: "Besley", "Source Serif 4", serif;
   --font-mono: "JetBrains Mono", monospace;
 
-  --color-background: hsl(50 12% 95%);
-  --color-foreground: hsl(0 0% 10%);
+  --color-background: hsl(50 10% 93%);
+  --color-foreground: hsl(60 3% 10%);
   
-  --color-muted: hsl(40 8% 92%);
-  --color-muted-foreground: hsl(0 0% 45%);
+  --color-muted: hsl(50 8% 90%);
+  --color-muted-foreground: hsl(60 2% 40%);
 
-  --color-primary: hsl(0 0% 8%);
-  --color-primary-foreground: hsl(45 15% 97%);
+  --color-primary: hsl(60 3% 10%);
+  --color-primary-foreground: hsl(50 10% 93%);
 
-  --color-secondary: hsl(42 10% 94%);
-  --color-secondary-foreground: hsl(0 0% 10%);
+  --color-secondary: hsl(50 8% 90%);
+  --color-secondary-foreground: hsl(60 3% 10%);
 
-  --color-accent: hsl(192 15% 42%);
+  --color-accent: hsl(210 100% 48%);
   --color-accent-foreground: hsl(0 0% 100%);
 
-  --color-border: hsl(0 0% 85%);
-  --color-border-light: hsl(0 0% 90%);
-  --color-input: hsl(0 0% 88%);
+  --color-border: hsl(60 3% 80%);
+  --color-border-light: hsl(60 3% 88%);
+  --color-input: hsl(60 3% 85%);
+  
+  --color-dark-section: hsl(50 12% 14%);
   
   --radius-sm: 3px;
   --radius-md: 6px;

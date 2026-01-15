@@ -145,6 +145,37 @@ const AgentWireframe = ({ type }: { type: string }) => {
   return wireframes[type] || null;
 };
 
+const AgentIcon = ({ type }: { type: string }) => {
+  const icons: Record<string, React.ReactNode> = {
+    instruction: (
+      <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <path d="M4 6h16M4 12h16M4 18h10" />
+      </svg>
+    ),
+    evaluation: (
+      <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <circle cx="12" cy="12" r="9" />
+        <path d="M9 12l2 2 4-4" />
+      </svg>
+    ),
+    guidance: (
+      <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <circle cx="12" cy="8" r="4" />
+        <path d="M4 20c0-4 4-6 8-6s8 2 8 6" />
+      </svg>
+    ),
+    pathway: (
+      <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <circle cx="6" cy="12" r="3" />
+        <circle cx="18" cy="6" r="3" />
+        <circle cx="18" cy="18" r="3" />
+        <path d="M9 11l6-4M9 13l6 4" />
+      </svg>
+    ),
+  };
+  return icons[type] || null;
+};
+
 const HorizontalScrollAgents = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -152,7 +183,13 @@ const HorizontalScrollAgents = () => {
     offset: ["start start", "end end"]
   });
   
-  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-75%"]);
+  const numCards = 4;
+  const cardWidthVw = 42;
+  const gapVw = 2;
+  const totalWidth = (numCards * cardWidthVw) + ((numCards - 1) * gapVw);
+  const translateEnd = -(totalWidth - 90);
+  
+  const x = useTransform(scrollYProgress, [0, 1], ["0vw", `${translateEnd}vw`]);
   
   const agents = [
     { 
@@ -178,14 +215,14 @@ const HorizontalScrollAgents = () => {
   ];
 
   return (
-    <section id="agents" ref={containerRef} className="relative h-[300vh]">
-      <div className="sticky top-0 h-screen bg-[#2a2520] text-white overflow-hidden flex flex-col justify-center">
-        <div className="container-grid py-16">
+    <section id="agents" ref={containerRef} className="relative h-[500vh]">
+      <div className="sticky top-0 h-screen overflow-hidden flex flex-col" style={{ backgroundColor: 'var(--color-dark-section, #28281F)' }}>
+        <div className="container-grid pt-28 pb-16">
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="flex items-center gap-3 mb-6"
+            className="flex items-center gap-3 mb-8"
           >
             <div className="w-1.5 h-1.5 rounded-full bg-white/40" />
             <div className="w-8 h-[1px] bg-white/20" />
@@ -193,7 +230,7 @@ const HorizontalScrollAgents = () => {
           </motion.div>
           
           <motion.h2 
-            className="text-[clamp(2rem,4vw,3.5rem)] font-serif text-white/90 leading-[1.05] max-w-2xl mb-4"
+            className="text-[clamp(2rem,4.5vw,4rem)] font-serif text-white/90 leading-[1.05] max-w-3xl mb-6"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -205,36 +242,36 @@ const HorizontalScrollAgents = () => {
           </p>
         </div>
         
-        <div className="overflow-hidden">
+        <div className="flex-1 flex items-center overflow-hidden">
           <motion.div 
-            className="flex gap-6 px-8 lg:px-16"
+            className="flex gap-[2vw] pl-8 lg:pl-16"
             style={{ x }}
           >
             {agents.map((agent, i) => (
               <motion.div
                 key={i}
-                className="flex-shrink-0 w-[85vw] md:w-[60vw] lg:w-[45vw] bg-[#f5f3f0] rounded-lg overflow-hidden"
+                className="flex-shrink-0 w-[42vw] bg-background rounded-sm overflow-hidden flex flex-col"
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
+                transition={{ delay: i * 0.08 }}
               >
-                <div className="aspect-[16/10] bg-[#eae7e3] flex items-center justify-center text-[#2a2520]/60 p-8">
-                  <AgentWireframe type={agent.type} />
-                </div>
-                <div className="p-8 lg:p-10">
-                  <div className="flex items-center gap-3 mb-4">
-                    <span className="text-[10px] font-mono text-[#2a2520]/40 tracking-[0.2em]">0{i + 1}</span>
-                    <h3 className="text-2xl font-serif text-[#2a2520]">{agent.title}</h3>
+                <div className="p-8 lg:p-10 pb-6">
+                  <div className="flex items-center gap-3 mb-5 text-foreground">
+                    <AgentIcon type={agent.type} />
+                    <h3 className="text-2xl font-serif">{agent.title}</h3>
                   </div>
-                  <p className="text-[#2a2520]/70 leading-relaxed">{agent.desc}</p>
+                  <p className="text-muted-foreground leading-relaxed text-[15px]">{agent.desc}</p>
+                </div>
+                <div className="flex-1 bg-muted flex items-center justify-center text-foreground/40 p-8 min-h-[220px]">
+                  <AgentWireframe type={agent.type} />
                 </div>
               </motion.div>
             ))}
           </motion.div>
         </div>
         
-        <div className="container-grid mt-8">
+        <div className="container-grid py-10">
           <span className="inline-block px-5 py-2.5 border border-white/10 rounded-full text-[11px] font-medium text-white/40 tracking-wide">
             Not isolated chatbots. Orchestrated systems.
           </span>
