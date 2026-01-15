@@ -91,6 +91,39 @@ const MobileProgressBar = ({ scrollProgress }: { scrollProgress: number }) => (
   </div>
 );
 
+const SectionDivider = ({ numeral, dark = false }: { numeral?: string; dark?: boolean }) => (
+  <div className={`relative py-16 lg:py-24 ${dark ? 'bg-[#28281F]' : ''}`}>
+    <div className="container-grid">
+      <div className="flex items-center gap-6">
+        <div className={`flex-1 h-[1px] ${dark ? 'bg-white/10' : 'bg-black/8'}`} />
+        {numeral && (
+          <span className={`text-[10px] font-serif italic ${dark ? 'text-white/30' : 'text-black/20'}`}>
+            {numeral}
+          </span>
+        )}
+        <div className={`w-1.5 h-1.5 rounded-full ${dark ? 'bg-white/20' : 'bg-black/10'}`} />
+        <div className={`flex-1 h-[1px] ${dark ? 'bg-white/10' : 'bg-black/8'}`} />
+      </div>
+    </div>
+  </div>
+);
+
+const ScrollIndicator = () => (
+  <motion.div 
+    className="absolute bottom-8 lg:bottom-12 left-1/2 -translate-x-1/2 flex-col items-center gap-2 hidden md:flex"
+    initial={{ opacity: 0, y: -10 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ delay: 1.2, duration: 0.6 }}
+  >
+    <span className="text-[9px] font-mono text-muted-foreground/40 tracking-widest">SCROLL</span>
+    <motion.div 
+      className="w-[1px] h-6 bg-black/10"
+      animate={{ scaleY: [1, 0.5, 1] }}
+      transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+    />
+  </motion.div>
+);
+
 const AgentWireframe = ({ type }: { type: string }) => {
   const wireframes: Record<string, React.ReactNode> = {
     instruction: (
@@ -456,10 +489,15 @@ export default function Home() {
             </motion.div>
           </div>
         </div>
+        
+        <ScrollIndicator />
       </section>
+      
+      {/* Section Divider: Hero → Problem */}
+      <SectionDivider numeral="II" />
 
       {/* PROBLEM - Balanced editorial section */}
-      <section id="problem" className="py-36 lg:py-44 overflow-hidden">
+      <section id="problem" className="py-24 lg:py-32 overflow-hidden">
         <div className="container-grid">
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-16">
             {/* Left: Headline */}
@@ -518,8 +556,11 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Section Divider: Problem → Insight */}
+      <SectionDivider numeral="III" />
+
       {/* INSIGHT - breathing room, centered */}
-      <section id="insight" className="py-44 lg:py-56 framed-module bg-secondary/20">
+      <section id="insight" className="py-32 lg:py-40 framed-module bg-secondary/20">
         <div className="container-grid">
           <ScrollReveal className="max-w-4xl mx-auto text-center">
             <div className="flex items-center justify-center gap-3 mb-10">
@@ -541,8 +582,11 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Section Divider: Insight → Platform */}
+      <SectionDivider numeral="IV" />
+
       {/* PLATFORM - Iconic framed module */}
-      <section id="platform" className="py-36 lg:py-44">
+      <section id="platform" className="py-28 lg:py-36">
         <div className="container-grid">
           <ScrollReveal className="mb-20">
             <div className="flex items-center gap-3 mb-8">
@@ -580,11 +624,14 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Section Divider: Platform → Agents (dark) */}
+      <SectionDivider numeral="V" dark />
+
       {/* AGENTS - Dark horizontal scroll section */}
       <HorizontalScrollAgents />
 
       {/* NO-CODE BUILDER */}
-      <section id="builder" className="py-36 lg:py-44">
+      <section id="builder" className="py-28 lg:py-36">
         <div className="container-grid">
           <div className="grid lg:grid-cols-2 gap-20 items-center">
             <div className="order-2 lg:order-1">
@@ -635,8 +682,11 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Section Divider: Builder → Principles (dark) */}
+      <SectionDivider numeral="VII" dark />
+
       {/* PRINCIPLES - Dark section with inverted spine */}
-      <section id="principles" className="py-36 lg:py-44 bg-primary text-primary-foreground">
+      <section id="principles" className="py-28 lg:py-36 bg-primary text-primary-foreground">
         <div className="container-grid">
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-20">
             <ScrollReveal className="lg:col-span-4">
@@ -673,8 +723,11 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Section Divider: Principles → Audience */}
+      <SectionDivider numeral="VIII" />
+
       {/* AUDIENCE */}
-      <section id="audience" className="py-36 lg:py-44">
+      <section id="audience" className="py-28 lg:py-36">
         <div className="container-grid">
           <ScrollReveal className="max-w-3xl mx-auto text-center mb-20">
             <div className="flex items-center justify-center gap-3 mb-8">
@@ -705,8 +758,11 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Section Divider: Audience → Status */}
+      <SectionDivider numeral="IX" />
+
       {/* STATUS + FOOTER */}
-      <section id="status" className="pt-36 lg:pt-44 pb-16">
+      <section id="status" className="pt-28 lg:pt-36 pb-16">
         <div className="container-grid">
           <div className="framed-module py-24">
             <div className="grid lg:grid-cols-2 gap-20">
