@@ -226,109 +226,53 @@ const IsometricStack = () => {
 
 const OperatingLayerSpine = ({ 
   activeSection, 
-  sectionOffsets,
   isDarkSection,
-  scrollProgress 
 }: { 
   activeSection: string;
-  sectionOffsets: { [key: string]: { top: number; height: number } };
   isDarkSection: boolean;
-  scrollProgress: number;
 }) => {
-  const activeIndex = SECTIONS.findIndex(s => s.id === activeSection);
-  const totalSections = SECTIONS.length;
-  
-  const indicatorTop = useMemo(() => {
-    const spineTop = 96;
-    const spineHeight = typeof window !== 'undefined' ? window.innerHeight - 96 - 128 : 600;
-    const sectionHeight = spineHeight / totalSections;
-    return spineTop + (activeIndex * sectionHeight);
-  }, [activeIndex, totalSections]);
-
-  const indicatorHeight = useMemo(() => {
-    const spineHeight = typeof window !== 'undefined' ? window.innerHeight - 96 - 128 : 600;
-    return spineHeight / totalSections;
-  }, [totalSections]);
+  const activeData = SECTIONS.find(s => s.id === activeSection) || SECTIONS[0];
   
   return (
-    <div className="fixed left-0 top-0 bottom-0 z-40 hidden lg:block" style={{ width: 'calc(var(--gutter) + var(--spine-offset))' }}>
-      {/* The Spine Rail */}
-      <div 
-        className="absolute top-24 bottom-32 w-[1px] transition-colors duration-500"
-        style={{ 
-          left: 'calc(var(--gutter) + var(--spine-offset))',
-          background: isDarkSection ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.08)'
-        }}
-      />
-      
-      {/* Active Indicator Segment */}
-      <motion.div 
-        className="absolute w-[1px] transition-colors duration-500"
-        style={{ 
-          left: 'calc(var(--gutter) + var(--spine-offset))',
-          background: isDarkSection ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.25)'
-        }}
-        animate={{ 
-          top: indicatorTop,
-          height: indicatorHeight
-        }}
-        transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
-      />
-
-      {/* Chapter Nodes */}
-      <div className="absolute top-28 bottom-40 flex flex-col justify-between" style={{ left: 'calc(var(--gutter) + 12px)' }}>
-        {SECTIONS.map((section, i) => {
-          const isActive = activeSection === section.id;
-          const isPrinciplesDark = section.id === 'principles' && isDarkSection;
-          
-          return (
-            <a
-              key={section.id}
-              href={`#${section.id}`}
-              className="group flex items-center gap-3 transition-all duration-300"
-            >
-              {/* Node Circle */}
-              <motion.div 
-                className="rounded-full border transition-all duration-300"
-                style={{
-                  width: isActive ? 8 : 6,
-                  height: isActive ? 8 : 6,
-                  borderColor: isActive 
-                    ? (isDarkSection ? 'rgba(255,255,255,0.6)' : 'hsl(192 15% 42%)') 
-                    : (isDarkSection ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.15)'),
-                  background: isActive 
-                    ? (isDarkSection ? 'rgba(255,255,255,0.6)' : 'hsl(192 15% 42%)') 
-                    : 'transparent'
-                }}
-              />
-              
-              {/* Label */}
-              <span 
-                className={`text-[9px] tracking-[0.2em] uppercase transition-all duration-300 whitespace-nowrap ${
-                  isActive 
-                    ? (isDarkSection ? 'text-white/80' : 'text-accent') 
-                    : (isDarkSection ? 'text-white/20' : 'text-black/25')
-                } group-hover:${isDarkSection ? 'text-white/50' : 'text-black/50'}`}
-              >
-                {section.numeral} — {section.label}
-              </span>
-            </a>
-          );
-        })}
+    <div className="fixed left-0 top-0 z-40 hidden lg:flex items-start" style={{ paddingTop: '180px', paddingLeft: 'var(--gutter)' }}>
+      {/* Minimal Section Indicator */}
+      <div className="flex items-center gap-3 transition-all duration-500">
+        {/* Roman numeral */}
+        <span 
+          className="text-[11px] font-serif italic transition-colors duration-500"
+          style={{ color: isDarkSection ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.35)' }}
+        >
+          {activeData.numeral}
+        </span>
+        
+        {/* Small dot */}
+        <div 
+          className="w-1.5 h-1.5 rounded-full transition-colors duration-500"
+          style={{ background: isDarkSection ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.25)' }}
+        />
+        
+        {/* Horizontal line */}
+        <div 
+          className="w-8 h-[1px] transition-colors duration-500"
+          style={{ background: isDarkSection ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.12)' }}
+        />
+        
+        {/* Current section label */}
+        <motion.span 
+          key={activeSection}
+          initial={{ opacity: 0, x: -8 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
+          className="text-[10px] tracking-[0.2em] uppercase transition-colors duration-500"
+          style={{ color: isDarkSection ? 'rgba(255,255,255,0.6)' : 'rgba(0,0,0,0.45)' }}
+        >
+          {activeData.label}
+        </motion.span>
       </div>
-      
-      {/* Terminal Dot */}
-      <div 
-        className="absolute w-1 h-1 rounded-full transition-colors duration-500"
-        style={{ 
-          left: 'calc(var(--gutter) + var(--spine-offset) - 1.5px)',
-          bottom: '28px',
-          background: isDarkSection ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.2)'
-        }}
-      />
     </div>
   );
 };
+
 
 const MobileProgressBar = ({ scrollProgress }: { scrollProgress: number }) => (
   <div className="fixed top-0 left-0 right-0 h-[2px] z-50 lg:hidden bg-black/5">
@@ -342,7 +286,6 @@ const MobileProgressBar = ({ scrollProgress }: { scrollProgress: number }) => (
 export default function Home() {
   const [activeSection, setActiveSection] = useState("hero");
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [sectionOffsets, setSectionOffsets] = useState<{ [key: string]: { top: number; height: number } }>({});
   
   const isDarkSection = activeSection === 'principles';
 
@@ -359,17 +302,6 @@ export default function Home() {
     }
     requestAnimationFrame(raf);
 
-    const updateSectionOffsets = () => {
-      const offsets: { [key: string]: { top: number; height: number } } = {};
-      SECTIONS.forEach(section => {
-        const el = document.getElementById(section.id);
-        if (el) {
-          offsets[section.id] = { top: el.offsetTop, height: el.offsetHeight };
-        }
-      });
-      setSectionOffsets(offsets);
-    };
-
     const handleScroll = () => {
       const scrollPosition = window.scrollY + window.innerHeight / 3;
       const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
@@ -384,14 +316,11 @@ export default function Home() {
       }
     };
 
-    updateSectionOffsets();
     window.addEventListener("scroll", handleScroll, { passive: true });
-    window.addEventListener("resize", updateSectionOffsets);
     
     return () => {
       lenis.destroy();
       window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", updateSectionOffsets);
     };
   }, []);
 
@@ -399,9 +328,7 @@ export default function Home() {
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden relative">
       <OperatingLayerSpine 
         activeSection={activeSection} 
-        sectionOffsets={sectionOffsets}
         isDarkSection={isDarkSection}
-        scrollProgress={scrollProgress}
       />
       <MobileProgressBar scrollProgress={scrollProgress} />
       
