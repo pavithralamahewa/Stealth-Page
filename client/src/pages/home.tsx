@@ -248,7 +248,7 @@ const HorizontalScrollAgents = () => {
     },
   ];
 
-  const sectionHeight = `${100 + (numCards * 25)}vh`;
+  const sectionHeight = `${100 + (numCards * 12)}vh`;
 
   return (
     <section id="agents" ref={containerRef} className="relative" style={{ height: sectionHeight }}>
