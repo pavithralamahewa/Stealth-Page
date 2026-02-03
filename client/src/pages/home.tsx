@@ -474,8 +474,10 @@ export default function Home() {
               style={{ 
                 right: '-12%', 
                 mixBlendMode: 'multiply',
-                maskImage: 'linear-gradient(to right, transparent 0%, black 25%)',
-                WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 25%)'
+                maskImage: 'linear-gradient(to right, transparent 0%, black 20%, black 80%, transparent 100%), linear-gradient(to bottom, black 0%, black 75%, transparent 100%)',
+                WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 20%, black 80%, transparent 100%), linear-gradient(to bottom, black 0%, black 75%, transparent 100%)',
+                maskComposite: 'intersect',
+                WebkitMaskComposite: 'source-in'
               }}
             >
               <video 
