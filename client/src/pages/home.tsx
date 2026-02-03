@@ -760,16 +760,50 @@ export default function Home() {
             </p>
           </ScrollReveal>
           
-          <StaggerContainer className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5" staggerDelay={0.08}>
+          <StaggerContainer className="grid grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6" staggerDelay={0.08}>
             {[
-              "Education systems and institutions",
-              "Enterprise training and enablement",
-              "Workforce development and certification",
-              "Public-sector programs"
+              { num: "01", title: "Education", subtitle: "Systems & institutions", icon: (
+                <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <path d="M12 3L2 9l10 6 10-6-10-6zM2 17l10 6 10-6M2 13l10 6 10-6" />
+                </svg>
+              )},
+              { num: "02", title: "Enterprise", subtitle: "Training & enablement", icon: (
+                <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <rect x="3" y="3" width="18" height="18" rx="2" />
+                  <path d="M9 3v18M3 9h18" />
+                </svg>
+              )},
+              { num: "03", title: "Workforce", subtitle: "Development & certification", icon: (
+                <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <path d="M12 15l-3 3 1.5 1.5L12 18l1.5 1.5L15 18l-3-3z" />
+                  <circle cx="12" cy="8" r="5" />
+                </svg>
+              )},
+              { num: "04", title: "Public Sector", subtitle: "Government programs", icon: (
+                <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6" />
+                </svg>
+              )}
             ].map((item, i) => (
-              <StaggerItem key={i}>
-                <div className="p-10 bg-white/60 backdrop-blur-sm border border-white/80 shadow-[0_4px_30px_rgba(0,0,0,0.03)] text-center min-h-[200px] flex items-center justify-center rounded-lg hover:bg-white/80 hover:border-accent/20 hover:shadow-[0_8px_40px_rgba(0,106,255,0.08)] transition-all duration-300">
-                  <span className="font-medium text-sm leading-relaxed">{item}</span>
+              <StaggerItem key={i} className="relative">
+                {/* Extending hairline above */}
+                <div className="absolute -top-4 left-1/2 w-[1px] h-8 bg-gradient-to-t from-black/10 to-transparent" />
+                
+                <div className="group p-8 lg:p-10 bg-white/50 backdrop-blur-sm border border-white/70 shadow-[0_4px_30px_rgba(0,0,0,0.04)] min-h-[220px] flex flex-col rounded-lg hover:bg-white/70 hover:border-accent/20 hover:shadow-[0_12px_48px_rgba(0,106,255,0.1)] transition-all duration-300 cursor-pointer">
+                  {/* Corner accent */}
+                  <div className="absolute top-3 right-3 w-2 h-2 border-t border-r border-black/10 group-hover:border-accent/30 transition-colors duration-300" />
+                  
+                  {/* Number label */}
+                  <span className="text-[10px] font-mono text-accent/70 tracking-[0.2em] mb-auto">{item.num}</span>
+                  
+                  {/* Icon + Title */}
+                  <div className="mt-auto">
+                    <div className="text-muted-foreground/50 mb-3 group-hover:text-accent/70 group-hover:scale-110 transition-all duration-300 origin-left">
+                      {item.icon}
+                    </div>
+                    <h4 className="text-lg font-serif mb-1 group-hover:text-accent transition-colors duration-300">{item.title}</h4>
+                    <p className="text-[13px] text-muted-foreground leading-relaxed">{item.subtitle}</p>
+                  </div>
                 </div>
               </StaggerItem>
             ))}
