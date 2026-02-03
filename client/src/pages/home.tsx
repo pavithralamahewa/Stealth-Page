@@ -557,8 +557,18 @@ export default function Home() {
       </section>
 
       {/* INSIGHT - breathing room, centered */}
-      <section id="insight" className="py-32 lg:py-40 bg-secondary/20">
-        <div className="container-grid">
+      <section id="insight" className="py-32 lg:py-40 bg-secondary/20 relative overflow-hidden">
+        {/* Glow backgrounds */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-accent/8 rounded-full blur-[120px]" />
+          <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-blue-400/6 rounded-full blur-[100px]" />
+        </div>
+        {/* Fine mesh overlay */}
+        <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{
+          backgroundImage: 'linear-gradient(rgba(0,0,0,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.1) 1px, transparent 1px)',
+          backgroundSize: '40px 40px'
+        }} />
+        <div className="container-grid relative z-10">
           <ScrollReveal className="max-w-4xl mx-auto text-center">
             <div className="flex items-center justify-center gap-3 mb-10">
               <div className="w-1.5 h-1.5 rounded-full bg-accent" />
@@ -580,8 +590,12 @@ export default function Home() {
       </section>
 
       {/* PLATFORM - Iconic framed module */}
-      <section id="platform" className="py-28 lg:py-36">
-        <div className="container-grid">
+      <section id="platform" className="py-28 lg:py-36 relative overflow-hidden">
+        {/* Subtle glow accent */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-0 right-1/4 w-[600px] h-[300px] bg-accent/5 rounded-full blur-[100px]" />
+        </div>
+        <div className="container-grid relative z-10">
           <ScrollReveal className="mb-20">
             <div className="flex items-center gap-3 mb-8">
               <div className="w-1.5 h-1.5 rounded-full bg-accent" />
@@ -712,8 +726,18 @@ export default function Home() {
       </section>
 
       {/* AUDIENCE */}
-      <section id="audience" className="py-28 lg:py-36">
-        <div className="container-grid">
+      <section id="audience" className="py-28 lg:py-36 relative overflow-hidden">
+        {/* Glow backgrounds */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-1/3 left-1/6 w-[450px] h-[450px] bg-accent/6 rounded-full blur-[120px]" />
+          <div className="absolute bottom-1/4 right-1/6 w-[350px] h-[350px] bg-teal-400/5 rounded-full blur-[100px]" />
+        </div>
+        {/* Fine mesh overlay */}
+        <div className="absolute inset-0 opacity-[0.025] pointer-events-none" style={{
+          backgroundImage: 'linear-gradient(rgba(0,0,0,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.1) 1px, transparent 1px)',
+          backgroundSize: '40px 40px'
+        }} />
+        <div className="container-grid relative z-10">
           <ScrollReveal className="max-w-3xl mx-auto text-center mb-20">
             <div className="flex items-center justify-center gap-3 mb-8">
               <div className="w-1.5 h-1.5 rounded-full bg-accent" />
@@ -734,7 +758,7 @@ export default function Home() {
               "Public-sector programs"
             ].map((item, i) => (
               <StaggerItem key={i}>
-                <div className="p-10 bg-secondary/40 border border-black/5 text-center min-h-[200px] flex items-center justify-center rounded-md hover:bg-secondary/60 transition-colors">
+                <div className="p-10 bg-white/60 backdrop-blur-sm border border-white/80 shadow-[0_4px_30px_rgba(0,0,0,0.03)] text-center min-h-[200px] flex items-center justify-center rounded-lg hover:bg-white/80 hover:border-accent/20 hover:shadow-[0_8px_40px_rgba(0,106,255,0.08)] transition-all duration-300">
                   <span className="font-medium text-sm leading-relaxed">{item}</span>
                 </div>
               </StaggerItem>
