@@ -3,7 +3,6 @@ import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, Layers, Target, Compass, Route } from "lucide-react";
 import Lenis from "lenis";
 import vericoraLogo from "../assets/vericora-logo.png";
-import heroStack from "../assets/hero-stack.png";
 
 const SECTIONS = [
   { id: "hero", numeral: "I", label: "VERICORA" },
@@ -466,19 +465,23 @@ export default function Home() {
               </motion.div>
             </div>
 
-            {/* Right: Hero Stack Visual - positioned to extend beyond viewport */}
+            {/* Right: Hero Video - positioned to extend beyond viewport */}
             <motion.div 
               initial={{ opacity: 0, x: 40 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2, duration: 1, ease: [0.25, 0.1, 0.25, 1] }}
               className="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 w-[65%] pointer-events-none"
-              style={{ right: '-12%' }}
+              style={{ right: '-12%', mixBlendMode: 'multiply' }}
             >
-              <img 
-                src={heroStack} 
-                alt="Platform visualization" 
+              <video 
+                autoPlay 
+                loop 
+                muted 
+                playsInline
                 className="w-full object-contain"
-              />
+              >
+                <source src="/assets/hero-video.mp4" type="video/mp4" />
+              </video>
             </motion.div>
           </div>
         </div>
