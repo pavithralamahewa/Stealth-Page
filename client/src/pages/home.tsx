@@ -248,7 +248,7 @@ const HorizontalScrollAgents = () => {
     },
   ];
 
-  const sectionHeight = `${100 + (numCards * 12)}vh`;
+  const sectionHeight = "120vh";
 
   return (
     <section id="agents" ref={containerRef} className="relative" style={{ height: sectionHeight }}>
@@ -640,7 +640,7 @@ export default function Home() {
       <HorizontalScrollAgents />
 
       {/* NO-CODE BUILDER */}
-      <section id="builder" className="py-28 lg:py-36">
+      <section id="builder" className="py-24 lg:py-32">
         <div className="container-grid">
           <div className="grid lg:grid-cols-2 gap-20 items-center">
             <div className="order-2 lg:order-1">
