@@ -455,7 +455,7 @@ export default function Home() {
                   <span className="text-[10px] font-mono text-muted-foreground tracking-[0.25em]">I — VERICORA</span>
                 </div>
                 <h1 className="text-[clamp(2.8rem,6vw,5.5rem)] leading-[0.95] font-serif mb-10 tracking-[-0.02em]">
-                  The operating<br/>
+                  The execution<br/>
                   layer for<br/>
                   <em className="italic font-light">agentic learning.</em>
                 </h1>
@@ -467,7 +467,7 @@ export default function Home() {
                 transition={{ delay: 0.3, duration: 0.7 }}
               >
                 <p className="text-lg text-muted-foreground leading-relaxed max-w-lg mb-10">
-                  Vericora is building an integrity-first platform to design, govern, and run learning agents across real environments, with human oversight built in.
+                  Vericora is building an integrity-first platform to design, govern, and execute learning agents across real learning environments, with human oversight built in.
                 </p>
                 
                 <div className="flex items-center gap-4">
@@ -547,16 +547,16 @@ export default function Home() {
               >
                 <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-8">
                   Learning systems fail when the hard parts are treated as an afterthought: 
-                  <span className="text-foreground"> context, policy, progress, accountability,</span> and 
+                  <span className="text-foreground"> context, policy, progress, accountability, adaptation,</span> and 
                   <span className="text-foreground"> human judgment.</span>
                 </p>
                 
                 <div className="border-l border-black/10 pl-6">
                   <p className="text-muted-foreground leading-relaxed mb-4">
-                    Most AI experiences are impressive in a demo and fragile in deployment.
+                    Most AI experiences are impressive in a demo and fragile in real-world deployment.
                   </p>
                   <p className="text-lg font-serif italic text-accent">
-                    Vericora exists to make learning agents operational.
+                    Vericora exists to make learning agents operational at scale.
                   </p>
                 </div>
               </motion.div>
@@ -579,10 +579,10 @@ export default function Home() {
             </div>
             <h2 className="text-[clamp(2.2rem,4.5vw,4rem)] font-serif mb-12 leading-[1.05]">
               What's missing is not intelligence.<br/>
-              It's an <em className="text-accent italic">operating layer.</em>
+              It's an <em className="text-accent italic">execution layer.</em>
             </h2>
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-              To scale responsibly, learning agents need a layer that separates what should happen (design), what's allowed (governance), and what actually happens (execution).
+              To scale responsibly, learning agents need a layer that separates what should happen (design), what's allowed (governance), and what actually happens in practice (execution).
             </p>
             <p className="text-lg text-foreground mt-10">
               That's the layer Vericora is building.
@@ -614,7 +614,7 @@ export default function Home() {
               {[
                 { num: "01", title: "Design", desc: "Define lessons, journeys, outcomes, and progression." },
                 { num: "02", title: "Govern", desc: "Set policies, constraints, oversight, and auditability." },
-                { num: "03", title: "Execute", desc: "Run agent behavior reliably across learners, cohorts, teams, and programs." }
+                { num: "03", title: "Execute", desc: "Execute agent behavior reliably across learners, cohorts, teams, and programs." }
               ].map((item, i) => (
                 <StaggerItem key={i} className={`py-14 px-10 ${i !== 2 ? "md:border-r border-black/8" : ""}`}>
                   <span className="text-[10px] font-mono text-accent tracking-[0.2em] mb-5 block">{item.num}</span>
