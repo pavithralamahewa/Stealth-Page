@@ -91,22 +91,6 @@ const MobileProgressBar = ({ scrollProgress }: { scrollProgress: number }) => (
   </div>
 );
 
-const SectionDivider = ({ numeral, dark = false }: { numeral?: string; dark?: boolean }) => (
-  <div className={`relative py-16 lg:py-24 ${dark ? 'bg-[#28281F]' : ''}`}>
-    <div className="container-grid">
-      <div className="flex items-center gap-6">
-        <div className={`flex-1 h-[1px] ${dark ? 'bg-white/10' : 'bg-black/8'}`} />
-        {numeral && (
-          <span className={`text-[10px] font-serif italic ${dark ? 'text-white/30' : 'text-black/20'}`}>
-            {numeral}
-          </span>
-        )}
-        <div className={`w-1.5 h-1.5 rounded-full ${dark ? 'bg-white/20' : 'bg-black/10'}`} />
-        <div className={`flex-1 h-[1px] ${dark ? 'bg-white/10' : 'bg-black/8'}`} />
-      </div>
-    </div>
-  </div>
-);
 
 const ScrollIndicator = () => (
   <motion.div 
@@ -502,9 +486,6 @@ export default function Home() {
         <ScrollIndicator />
       </section>
       
-      {/* Section Divider: Hero → Problem */}
-      <SectionDivider numeral="II" />
-
       {/* PROBLEM - Balanced editorial section */}
       <section id="problem" className="py-24 lg:py-32 overflow-hidden">
         <div className="container-grid">
@@ -565,9 +546,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Section Divider: Problem → Insight */}
-      <SectionDivider numeral="III" />
-
       {/* INSIGHT - breathing room, centered */}
       <section id="insight" className="py-32 lg:py-40 bg-secondary/20">
         <div className="container-grid">
@@ -590,9 +568,6 @@ export default function Home() {
           </ScrollReveal>
         </div>
       </section>
-
-      {/* Section Divider: Insight → Platform */}
-      <SectionDivider numeral="IV" />
 
       {/* PLATFORM - Iconic framed module */}
       <section id="platform" className="py-28 lg:py-36">
@@ -633,14 +608,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Section Divider: Platform → Agents (dark) */}
-      <SectionDivider numeral="V" dark />
-
       {/* AGENTS - Dark horizontal scroll section */}
       <HorizontalScrollAgents />
-
-      {/* Section Divider: Agents → Builder */}
-      <SectionDivider numeral="VI" />
 
       {/* NO-CODE BUILDER */}
       <section id="builder" className="py-24 lg:py-32">
@@ -694,9 +663,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Section Divider: Builder → Principles (dark) */}
-      <SectionDivider numeral="VII" dark />
-
       {/* PRINCIPLES - Dark section with inverted spine */}
       <section id="principles" className="py-28 lg:py-36 bg-primary text-primary-foreground">
         <div className="container-grid">
@@ -735,9 +701,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Section Divider: Principles → Audience */}
-      <SectionDivider numeral="VIII" />
-
       {/* AUDIENCE */}
       <section id="audience" className="py-28 lg:py-36">
         <div className="container-grid">
@@ -769,9 +732,6 @@ export default function Home() {
           </StaggerContainer>
         </div>
       </section>
-
-      {/* Section Divider: Audience → Status */}
-      <SectionDivider numeral="IX" />
 
       {/* STATUS + FOOTER */}
       <section id="status" className="pt-28 lg:pt-36 pb-16">
