@@ -542,13 +542,17 @@ export default function Home() {
                   <span className="text-foreground"> human judgment.</span>
                 </p>
                 
-                <div className="border-l border-black/10 pl-6">
-                  <p className="text-muted-foreground leading-relaxed mb-4">
-                    Most AI experiences are impressive in a demo and fragile in real-world deployment.
-                  </p>
-                  <p className="text-lg font-serif italic text-accent">
-                    Vericora exists to make learning agents operational at scale.
-                  </p>
+                <div className="relative">
+                  <div className="bg-white/50 backdrop-blur-sm border border-white/70 shadow-[0_4px_30px_rgba(0,0,0,0.04)] rounded-lg p-6">
+                    <p className="text-muted-foreground leading-relaxed mb-4">
+                      Most AI experiences are impressive in a demo and fragile in real-world deployment.
+                    </p>
+                    <p className="text-lg font-serif italic text-accent">
+                      Vericora exists to make learning agents operational at scale.
+                    </p>
+                  </div>
+                  {/* Extending hairline */}
+                  <div className="absolute -left-4 top-1/2 w-8 h-[1px] bg-gradient-to-r from-transparent via-black/10 to-black/10" />
                 </div>
               </motion.div>
             </div>
@@ -608,20 +612,22 @@ export default function Home() {
             </p>
           </ScrollReveal>
 
-          <StaggerContainer className="framed-module" staggerDelay={0.15}>
-            <div className="grid md:grid-cols-3">
-              {[
-                { num: "01", title: "Design", desc: "Define lessons, journeys, outcomes, and progression." },
-                { num: "02", title: "Govern", desc: "Set policies, constraints, oversight, and auditability." },
-                { num: "03", title: "Execute", desc: "Execute agent behavior reliably across learners, cohorts, teams, and programs." }
-              ].map((item, i) => (
-                <StaggerItem key={i} className={`py-14 px-10 ${i !== 2 ? "md:border-r border-black/8" : ""}`}>
+          <StaggerContainer className="grid md:grid-cols-3 gap-4" staggerDelay={0.15}>
+            {[
+              { num: "01", title: "Design", desc: "Define lessons, journeys, outcomes, and progression." },
+              { num: "02", title: "Govern", desc: "Set policies, constraints, oversight, and auditability." },
+              { num: "03", title: "Execute", desc: "Execute agent behavior reliably across learners, cohorts, teams, and programs." }
+            ].map((item, i) => (
+              <StaggerItem key={i} className="relative">
+                <div className="bg-white/50 backdrop-blur-sm border border-white/70 shadow-[0_4px_30px_rgba(0,0,0,0.04)] rounded-lg p-10 h-full hover:bg-white/70 hover:shadow-[0_8px_40px_rgba(0,106,255,0.06)] transition-all duration-300">
                   <span className="text-[10px] font-mono text-accent tracking-[0.2em] mb-5 block">{item.num}</span>
                   <h3 className="text-2xl md:text-3xl font-serif mb-5">{item.title}</h3>
                   <p className="text-muted-foreground leading-relaxed">{item.desc}</p>
-                </StaggerItem>
-              ))}
-            </div>
+                </div>
+                {/* Extending hairline */}
+                <div className="absolute -bottom-4 left-1/2 w-[1px] h-8 bg-gradient-to-b from-black/10 to-transparent" />
+              </StaggerItem>
+            ))}
           </StaggerContainer>
           
           <ScrollReveal delay={0.4}>
@@ -703,7 +709,7 @@ export default function Home() {
             </ScrollReveal>
 
             <div className="lg:col-span-8">
-              <StaggerContainer className="grid sm:grid-cols-2 gap-x-14 gap-y-12" staggerDelay={0.08}>
+              <StaggerContainer className="grid sm:grid-cols-2 gap-4" staggerDelay={0.08}>
                 {[
                   "Integrity by design, not patchwork controls",
                   "Human governance first, not autonomous guesswork",
@@ -712,11 +718,15 @@ export default function Home() {
                   "Outcomes over output: mastery, not chatter",
                   "Scale without compromise: trust and velocity together"
                 ].map((item, i) => (
-                  <StaggerItem key={i} className="border-t border-white/12 pt-6">
-                    <div className="flex gap-5 items-start">
-                      <span className="text-[10px] text-white/25 font-mono mt-1.5">0{i + 1}</span>
-                      <p className="text-lg text-white/70 leading-relaxed">{item}</p>
+                  <StaggerItem key={i} className="relative">
+                    <div className="bg-white/[0.03] backdrop-blur-sm border border-white/10 rounded-lg p-6 h-full hover:bg-white/[0.06] hover:border-white/15 transition-all duration-300">
+                      <div className="flex gap-5 items-start">
+                        <span className="text-[10px] text-white/30 font-mono mt-1.5">0{i + 1}</span>
+                        <p className="text-[15px] text-white/70 leading-relaxed">{item}</p>
+                      </div>
                     </div>
+                    {/* Extending hairline */}
+                    <div className="absolute -left-2 top-1/2 w-4 h-[1px] bg-gradient-to-r from-transparent to-white/15" />
                   </StaggerItem>
                 ))}
               </StaggerContainer>
