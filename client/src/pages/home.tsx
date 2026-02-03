@@ -639,6 +639,9 @@ export default function Home() {
       {/* AGENTS - Dark horizontal scroll section */}
       <HorizontalScrollAgents />
 
+      {/* Section Divider: Agents → Builder */}
+      <SectionDivider numeral="VI" />
+
       {/* NO-CODE BUILDER */}
       <section id="builder" className="py-24 lg:py-32">
         <div className="container-grid">
