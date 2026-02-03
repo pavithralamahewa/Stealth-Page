@@ -471,7 +471,12 @@ export default function Home() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2, duration: 1, ease: [0.25, 0.1, 0.25, 1] }}
               className="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 w-[65%] pointer-events-none"
-              style={{ right: '-12%', mixBlendMode: 'multiply' }}
+              style={{ 
+                right: '-12%', 
+                mixBlendMode: 'multiply',
+                maskImage: 'linear-gradient(to right, transparent 0%, black 25%)',
+                WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 25%)'
+              }}
             >
               <video 
                 autoPlay 
