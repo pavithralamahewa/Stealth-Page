@@ -222,14 +222,12 @@ const HorizontalScrollAgents = () => {
     },
   ];
 
-  const { ref, inView } = useInView({
-    threshold: 0.1,
-    triggerOnce: false
-  });
+  const agentsRef = useRef(null);
+  const inView = useInView(agentsRef, { margin: "-10% 0px" });
 
   return (
     <section 
-      ref={ref}
+      ref={agentsRef}
       id="agents" 
       className="relative min-h-screen bg-[#28281F]"
     >
