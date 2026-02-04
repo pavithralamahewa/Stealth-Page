@@ -255,9 +255,9 @@ const HorizontalScrollAgents = () => {
 
   return (
     <section id="agents" ref={containerRef} className="relative" style={{ height: sectionHeight }}>
-      <div className="sticky top-0 h-screen overflow-hidden flex flex-col" style={{ backgroundColor: '#28281F' }}>
+      <div className="sticky top-0 min-h-screen overflow-hidden flex flex-col py-16 lg:py-20" style={{ backgroundColor: '#28281F' }}>
         {/* Top header area with title - uses container-grid for consistent margins */}
-        <div className="container-grid pt-16 pb-8">
+        <div className="container-grid pb-12 lg:pb-16">
           {/* Section label */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -311,7 +311,7 @@ const HorizontalScrollAgents = () => {
                   <img 
                     src={agent.image} 
                     alt={`${agent.title} agent interface`}
-                    className="h-[55vh] w-auto rounded-2xl transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+                    className="h-[50vh] w-auto rounded-2xl transition-transform duration-700 ease-out group-hover:scale-[1.02]"
                   />
                 </div>
                 
@@ -328,7 +328,7 @@ const HorizontalScrollAgents = () => {
         </div>
         
         {/* Bottom tagline - uses container-grid for consistent margins */}
-        <div className="container-grid pb-8">
+        <div className="container-grid pt-8">
           <span className="inline-block px-4 py-2 border border-white/10 rounded-full text-[10px] font-medium text-white/35 tracking-wide">
             Not isolated chatbots. Orchestrated systems.
           </span>
