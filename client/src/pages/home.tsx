@@ -254,7 +254,7 @@ const HorizontalScrollAgents = () => {
               ease: "linear",
               repeat: 0
             }}
-            className="flex gap-8 no-scrollbar pb-10"
+            className="flex gap-8 overflow-x-auto no-scrollbar pb-10 cursor-grab active:cursor-grabbing"
           >
             {agents.map((agent, i) => (
               <div
