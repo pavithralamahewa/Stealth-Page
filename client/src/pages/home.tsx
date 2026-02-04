@@ -256,8 +256,8 @@ const HorizontalScrollAgents = () => {
   return (
     <section id="agents" ref={containerRef} className="relative" style={{ height: sectionHeight }}>
       <div className="sticky top-0 h-screen overflow-hidden flex flex-col" style={{ backgroundColor: '#28281F' }}>
-        {/* Top header area with title */}
-        <div className="px-6 lg:px-16 pt-16 pb-8">
+        {/* Top header area with title - uses container-grid for consistent margins */}
+        <div className="container-grid pt-16 pb-8">
           {/* Section label */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -287,31 +287,31 @@ const HorizontalScrollAgents = () => {
           </div>
         </div>
         
-        {/* Cards area - takes remaining height */}
-        <div ref={cardsAreaRef} className="flex-1 flex items-center overflow-hidden pl-6 lg:pl-16">
+        {/* Cards area - uses container-grid left margin, overflow visible for scroll */}
+        <div ref={cardsAreaRef} className="flex-1 flex items-center overflow-hidden container-grid !max-w-none !pr-0">
           <motion.div 
             ref={trackRef}
-            className="flex gap-8 items-center h-[65vh]"
+            className="flex gap-8 items-end"
             style={{ x }}
           >
             {agents.map((agent, i) => (
               <motion.div
                 key={i}
-                className="flex-shrink-0 h-full group cursor-pointer"
+                className="flex-shrink-0 group cursor-pointer"
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1, duration: 0.6 }}
               >
-                {/* Card frame - height fixed, width auto based on image */}
-                <div className="relative h-full rounded-2xl overflow-hidden shadow-[0_8px_40px_rgba(0,0,0,0.2),0_30px_80px_rgba(0,0,0,0.25)] group-hover:shadow-[0_12px_50px_rgba(0,0,0,0.25),0_40px_100px_rgba(0,0,0,0.3)] transition-all duration-700 ease-out">
+                {/* Card frame - sized by image, no overflow clipping */}
+                <div className="relative rounded-2xl shadow-[0_8px_40px_rgba(0,0,0,0.2),0_30px_80px_rgba(0,0,0,0.25)] group-hover:shadow-[0_12px_50px_rgba(0,0,0,0.25),0_40px_100px_rgba(0,0,0,0.3)] transition-all duration-700 ease-out">
                   {/* Subtle border overlay */}
                   <div className="absolute inset-0 rounded-2xl border border-white/15 pointer-events-none z-10" />
-                  {/* Screenshot - full image, no cropping */}
+                  {/* Screenshot - fixed height, auto width, fully visible */}
                   <img 
                     src={agent.image} 
                     alt={`${agent.title} agent interface`}
-                    className="h-full w-auto object-contain transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+                    className="h-[55vh] w-auto rounded-2xl transition-transform duration-700 ease-out group-hover:scale-[1.02]"
                   />
                 </div>
                 
@@ -327,8 +327,8 @@ const HorizontalScrollAgents = () => {
           </motion.div>
         </div>
         
-        {/* Bottom tagline */}
-        <div className="px-6 lg:px-16 pb-8">
+        {/* Bottom tagline - uses container-grid for consistent margins */}
+        <div className="container-grid pb-8">
           <span className="inline-block px-4 py-2 border border-white/10 rounded-full text-[10px] font-medium text-white/35 tracking-wide">
             Not isolated chatbots. Orchestrated systems.
           </span>
