@@ -481,7 +481,7 @@ export default function Home() {
               }}
             >
               <img 
-                src="/assets/hero-visual.png" 
+                src="/assets/hero-stack.png" 
                 alt="Vericora platform visualization"
                 className="w-full object-contain"
               />
