@@ -163,9 +163,11 @@ const AgentWireframe = ({ type }: { type: string }) => {
 
 const AgentIcon = ({ type }: { type: string }) => {
   const icons: Record<string, React.ReactNode> = {
-    instruction: (
+    tutoring: (
       <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="1.5">
-        <path d="M4 6h16M4 12h16M4 18h10" />
+        <path d="M12 14l9-5-9-5-9 5 9 5z" />
+        <path d="M12 14v7" />
+        <path d="M5.5 11.5v5c0 1.5 3 3 6.5 3s6.5-1.5 6.5-3v-5" />
       </svg>
     ),
     evaluation: (
@@ -195,10 +197,10 @@ const AgentIcon = ({ type }: { type: string }) => {
 const HorizontalScrollAgents = () => {
   const agents = [
     { 
-      type: "instruction",
-      title: "Instruction", 
-      desc: "Deliver structured learning and guidance with pacing and context.",
-      image: "/assets/agent-instruction.png",
+      type: "tutoring",
+      title: "Tutoring", 
+      desc: "Live, interactive 1-on-1 instruction with real-time guidance and feedback.",
+      image: "/assets/agent-tutoring.png",
     },
     { 
       type: "evaluation",
