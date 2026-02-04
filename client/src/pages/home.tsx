@@ -273,36 +273,43 @@ const HorizontalScrollAgents = () => {
             {agents.map((agent, i) => (
               <motion.div
                 key={i}
-                className="flex-shrink-0 w-[55vw] bg-[#f5f3ef] rounded-[3px] overflow-hidden flex flex-col group cursor-pointer"
+                className="flex-shrink-0 w-[55vw] flex flex-col group cursor-pointer"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 whileHover={{ y: -4, transition: { duration: 0.3 } }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.06, duration: 0.5 }}
               >
-                <div className="p-8 lg:p-10">
-                  <div className="flex items-center gap-3 mb-4 text-[#28281F]">
-                    <motion.div
-                      className="transition-colors duration-300"
-                      whileHover={{ scale: 1.1 }}
-                    >
-                      <AgentIcon type={agent.type} />
-                    </motion.div>
-                    <h3 className="text-xl lg:text-2xl font-serif group-hover:text-accent transition-colors duration-300">{agent.title}</h3>
+                {/* Browser chrome frame */}
+                <div className="bg-[#f5f3ef] rounded-lg overflow-hidden shadow-[0_8px_40px_rgba(0,0,0,0.15)] group-hover:shadow-[0_16px_60px_rgba(0,0,0,0.2)] transition-shadow duration-500">
+                  {/* Window title bar */}
+                  <div className="flex items-center gap-2 px-4 py-3 bg-[#e8e6e2] border-b border-black/5">
+                    <div className="flex gap-1.5">
+                      <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f57]" />
+                      <div className="w-2.5 h-2.5 rounded-full bg-[#febc2e]" />
+                      <div className="w-2.5 h-2.5 rounded-full bg-[#28c840]" />
+                    </div>
+                    <span className="ml-4 text-[10px] font-mono text-[#28281F]/40 tracking-wider uppercase">{agent.title} Agent</span>
                   </div>
-                  <p className="text-[#28281F]/60 leading-relaxed text-[15px] max-w-lg">{agent.desc}</p>
+                  {/* Screenshot container - fixed height, full width image */}
+                  <div className="relative bg-white">
+                    <img 
+                      src={agent.image} 
+                      alt={`${agent.title} agent interface`}
+                      className="w-auto h-[320px] lg:h-[380px] object-contain object-top transition-transform duration-500 ease-out group-hover:scale-[1.01]"
+                    />
+                  </div>
                 </div>
-                <div className="flex-1 relative overflow-hidden min-h-[280px]">
-                  {/* Gradient fade at top for seamless blend */}
-                  <div className="absolute inset-x-0 top-0 h-8 bg-gradient-to-b from-[#f5f3ef] to-transparent z-10 pointer-events-none" />
-                  {/* Subtle inner shadow for depth */}
-                  <div className="absolute inset-0 shadow-[inset_0_2px_8px_rgba(0,0,0,0.04)] z-10 pointer-events-none rounded-b-[3px]" />
-                  {/* Product screenshot */}
-                  <img 
-                    src={agent.image} 
-                    alt={`${agent.title} agent interface`}
-                    className="w-full h-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.02]"
-                  />
+                
+                {/* Label below card */}
+                <div className="mt-6 flex items-start gap-4">
+                  <div className="text-white/30 mt-0.5">
+                    <AgentIcon type={agent.type} />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-lg font-serif text-white/90 mb-2 group-hover:text-accent transition-colors duration-300">{agent.title}</h3>
+                    <p className="text-white/50 text-sm leading-relaxed max-w-sm">{agent.desc}</p>
+                  </div>
                 </div>
               </motion.div>
             ))}
