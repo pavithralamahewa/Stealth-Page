@@ -170,16 +170,18 @@ const AgentIcon = ({ type }: { type: string }) => {
         <path d="M5.5 11.5v5c0 1.5 3 3 6.5 3s6.5-1.5 6.5-3v-5" />
       </svg>
     ),
-    evaluation: (
+    builder: (
       <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="1.5">
-        <circle cx="12" cy="12" r="9" />
-        <path d="M9 12l2 2 4-4" />
+        <rect x="3" y="3" width="18" height="18" rx="2" />
+        <path d="M9 9h6" />
+        <path d="M9 13h6" />
+        <path d="M9 17h4" />
       </svg>
     ),
-    guidance: (
+    learning: (
       <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="1.5">
-        <circle cx="12" cy="8" r="4" />
-        <path d="M4 20c0-4 4-6 8-6s8 2 8 6" />
+        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
       </svg>
     ),
     pathway: (
@@ -203,22 +205,16 @@ const HorizontalScrollAgents = () => {
       image: "/assets/agent-tutoring.png",
     },
     { 
-      type: "evaluation",
-      title: "Evaluation", 
-      desc: "Measure readiness, mastery, and progress with consistent criteria.",
+      type: "builder",
+      title: "Builder", 
+      desc: "Create learning agents and lessons for educators and parents.",
       image: "/assets/agent-evaluation.png",
     },
     { 
-      type: "guidance",
-      title: "Guidance", 
-      desc: "Support coaching, onboarding, and decision support within guardrails.",
+      type: "learning",
+      title: "Learning", 
+      desc: "Personalized learning experiences designed for students.",
       image: "/assets/agent-guidance.png",
-    },
-    { 
-      type: "pathway",
-      title: "Pathway", 
-      desc: "Assemble learning journeys and progression logic for roles and outcomes.",
-      image: "/assets/agent-pathway.png",
     },
   ];
 
