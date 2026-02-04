@@ -197,6 +197,7 @@ const HorizontalScrollAgents = () => {
   const trackRef = useRef<HTMLDivElement>(null);
   const cardsAreaRef = useRef<HTMLDivElement>(null);
   const [scrollRange, setScrollRange] = useState(0);
+  const [sectionHeight, setSectionHeight] = useState("100vh");
   
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -205,7 +206,7 @@ const HorizontalScrollAgents = () => {
   
   const x = useTransform(scrollYProgress, [0, 1], [0, scrollRange]);
   
-  // Calculate scroll range dynamically based on actual DOM measurements
+  // Calculate scroll range and section height dynamically based on actual DOM measurements
   useEffect(() => {
     const updateScrollRange = () => {
       if (trackRef.current && cardsAreaRef.current) {
@@ -213,6 +214,18 @@ const HorizontalScrollAgents = () => {
         const containerWidth = cardsAreaRef.current.getBoundingClientRect().width;
         const overflow = trackWidth - containerWidth;
         setScrollRange(overflow > 0 ? -overflow : 0);
+        
+        // Calculate section height: 100vh + minimal extra for scroll animation
+        // Clamp the extra height to a reasonable range to avoid excessive empty space
+        const viewportHeight = window.innerHeight;
+        const minExtra = 0;
+        const maxExtra = viewportHeight * 0.3; // Max 30vh extra scroll
+        const scrollSpeed = 0.3; // Gentle scroll (3px vertical = 1px horizontal)
+        const extraScrollNeeded = overflow > 0 
+          ? Math.min(maxExtra, Math.max(minExtra, overflow * scrollSpeed))
+          : 0;
+        const totalHeight = viewportHeight + extraScrollNeeded;
+        setSectionHeight(`${totalHeight}px`);
       }
     };
     
@@ -220,8 +233,12 @@ const HorizontalScrollAgents = () => {
     const resizeObserver = new ResizeObserver(updateScrollRange);
     if (trackRef.current) resizeObserver.observe(trackRef.current);
     if (cardsAreaRef.current) resizeObserver.observe(cardsAreaRef.current);
+    window.addEventListener('resize', updateScrollRange);
     
-    return () => resizeObserver.disconnect();
+    return () => {
+      resizeObserver.disconnect();
+      window.removeEventListener('resize', updateScrollRange);
+    };
   }, []);
   
   const agents = [
@@ -250,8 +267,6 @@ const HorizontalScrollAgents = () => {
       image: "/assets/agent-pathway.png",
     },
   ];
-
-  const sectionHeight = "200vh";
 
   return (
     <section id="agents" ref={containerRef} className="relative" style={{ height: sectionHeight }}>
