@@ -222,8 +222,17 @@ const HorizontalScrollAgents = () => {
     },
   ];
 
+  const { ref, inView } = useInView({
+    threshold: 0.1,
+    triggerOnce: false
+  });
+
   return (
-    <section id="agents" className="relative min-h-screen bg-[#28281F]">
+    <section 
+      ref={ref}
+      id="agents" 
+      className="relative min-h-screen bg-[#28281F]"
+    >
       <div className="flex flex-col min-h-screen">
         {/* Top header area with title - uses container-grid for consistent margins */}
         <div className="container-grid pt-24 lg:pt-32 pb-12 lg:pb-16">
@@ -250,7 +259,7 @@ const HorizontalScrollAgents = () => {
         <div className="w-full flex-1 flex items-center mb-16 overflow-x-auto no-scrollbar">
           <motion.div 
             initial={{ x: 0 }}
-            animate={{ x: "-20%" }}
+            animate={inView ? { x: "-20%" } : { x: 0 }}
             transition={{ 
               duration: 12, 
               ease: "linear",
