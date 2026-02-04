@@ -195,140 +195,176 @@ const AgentIcon = ({ type }: { type: string }) => {
 const HorizontalScrollAgents = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
+  const cardsAreaRef = useRef<HTMLDivElement>(null);
   const [scrollRange, setScrollRange] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(0);
   
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"]
   });
   
+  const x = useTransform(scrollYProgress, [0, 1], [0, scrollRange]);
+  
   // Calculate scroll range dynamically based on actual DOM measurements
   useEffect(() => {
     const updateScrollRange = () => {
-      if (trackRef.current && containerRef.current) {
+      if (trackRef.current && cardsAreaRef.current) {
         const trackWidth = trackRef.current.scrollWidth;
-        const containerWidth = containerRef.current.getBoundingClientRect().width;
+        const containerWidth = cardsAreaRef.current.getBoundingClientRect().width;
         const overflow = trackWidth - containerWidth;
-        // Only scroll if content overflows, clamp to 0 if no overflow
         setScrollRange(overflow > 0 ? -overflow : 0);
       }
     };
     
     updateScrollRange();
-    // Use ResizeObserver for accurate tracking
     const resizeObserver = new ResizeObserver(updateScrollRange);
     if (trackRef.current) resizeObserver.observe(trackRef.current);
-    if (containerRef.current) resizeObserver.observe(containerRef.current);
+    if (cardsAreaRef.current) resizeObserver.observe(cardsAreaRef.current);
     
     return () => resizeObserver.disconnect();
   }, []);
   
-  const x = useTransform(scrollYProgress, [0, 1], [0, scrollRange]);
+  // Track active card based on scroll progress - simple and reliable
+  useEffect(() => {
+    const unsubscribe = scrollYProgress.on("change", (progress) => {
+      // Map 0-1 progress to 0-3 index for 4 cards
+      const index = Math.min(3, Math.floor(progress * 4));
+      setActiveIndex(index);
+    });
+    return unsubscribe;
+  }, [scrollYProgress]);
   
   const agents = [
     { 
       type: "instruction",
       title: "Instruction", 
-      desc: "Deliver structured learning and guidance with pacing and context. These agents present content, respond to questions, and adapt delivery based on learner progress.",
+      desc: "Deliver structured learning and guidance with pacing and context.",
       image: "/assets/agent-instruction.png",
     },
     { 
       type: "evaluation",
       title: "Evaluation", 
-      desc: "Measure readiness, mastery, and progress with consistent criteria. Agents assess understanding through varied formats while maintaining evaluation integrity.",
+      desc: "Measure readiness, mastery, and progress with consistent criteria.",
       image: "/assets/agent-evaluation.png",
     },
     { 
       type: "guidance",
       title: "Guidance", 
-      desc: "Support coaching, onboarding, and decision support within guardrails. These agents provide contextual help and navigate learners through complex processes.",
+      desc: "Support coaching, onboarding, and decision support within guardrails.",
       image: "/assets/agent-guidance.png",
     },
     { 
       type: "pathway",
       title: "Pathway", 
-      desc: "Assemble learning journeys and progression logic for roles and outcomes. Agents orchestrate sequences and adapt paths based on demonstrated competency.",
+      desc: "Assemble learning journeys and progression logic for roles and outcomes.",
       image: "/assets/agent-pathway.png",
     },
   ];
 
-  const sectionHeight = "120vh";
+  const sectionHeight = "200vh";
 
   return (
     <section id="agents" ref={containerRef} className="relative" style={{ height: sectionHeight }}>
-      <div className="sticky top-0 h-screen overflow-hidden flex flex-col" style={{ backgroundColor: '#28281F' }}>
-        <div className="container-grid pt-24 lg:pt-28 pb-10 lg:pb-14">
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="flex items-center gap-3 mb-6"
-          >
-            <div className="w-1.5 h-1.5 rounded-full bg-white/40" />
-            <div className="w-8 h-[1px] bg-white/20" />
-            <span className="text-[10px] font-mono text-white/50 tracking-[0.25em]">V — AGENTS</span>
-          </motion.div>
-          
-          <motion.h2 
-            className="text-[clamp(2rem,4.5vw,4rem)] font-serif text-white/90 leading-[1.05] max-w-3xl mb-4"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            Learning agents that operate across domains.
-          </motion.h2>
-          <p className="text-white/50 text-lg max-w-xl">
-            Vericora powers structured agent roles that show up wherever learning happens.
-          </p>
-        </div>
-        
-        <div className="flex-1 flex items-center overflow-hidden py-4">
-          <motion.div 
-            ref={trackRef}
-            className="flex gap-[4vw] pl-[4vw] pr-8 items-start"
-            style={{ x }}
-          >
-            {agents.map((agent, i) => (
-              <motion.div
-                key={i}
-                className="flex-shrink-0 w-[85vw] md:w-[70vw] lg:w-[55vw] min-w-[320px] flex flex-col group cursor-pointer"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                whileHover={{ y: -6, transition: { duration: 0.4, ease: [0.25, 0.1, 0.25, 1] } }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.08, duration: 0.6 }}
-              >
-                {/* Minimal elegant frame */}
-                <div className="relative rounded-xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.08),0_20px_60px_rgba(0,0,0,0.15),0_40px_80px_rgba(0,0,0,0.1)] group-hover:shadow-[0_8px_30px_rgba(0,0,0,0.12),0_30px_80px_rgba(0,0,0,0.2),0_50px_100px_rgba(0,0,0,0.12)] transition-all duration-700 ease-out">
-                  {/* Subtle border overlay */}
-                  <div className="absolute inset-0 rounded-xl border border-white/20 pointer-events-none z-10" />
-                  {/* Screenshot - full width, natural aspect ratio */}
-                  <img 
-                    src={agent.image} 
-                    alt={`${agent.title} agent interface`}
-                    className="w-full h-auto block transition-transform duration-700 ease-out group-hover:scale-[1.02]"
-                  />
-                </div>
-                
-                {/* Elegant label below */}
-                <div className="mt-8 pl-1">
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="text-accent/70">
-                      <AgentIcon type={agent.type} />
-                    </div>
-                    <h3 className="text-xl font-serif text-white/95 group-hover:text-accent transition-colors duration-500">{agent.title}</h3>
+      <div className="sticky top-0 h-screen overflow-hidden" style={{ backgroundColor: '#28281F' }}>
+        {/* Split layout: Cards left (75%), Sidebar right (25%) */}
+        <div className="h-full flex">
+          {/* Left side - Cards area (takes most of the width) */}
+          <div ref={cardsAreaRef} className="flex-1 h-full flex items-center overflow-hidden pl-6 lg:pl-12">
+            <motion.div 
+              ref={trackRef}
+              className="flex gap-8 items-center h-[75vh]"
+              style={{ x }}
+            >
+              {agents.map((agent, i) => (
+                <motion.div
+                  key={i}
+                  className="flex-shrink-0 h-full aspect-[16/10] min-w-[500px] group cursor-pointer"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1, duration: 0.6 }}
+                >
+                  {/* Large card frame */}
+                  <div className="relative h-full w-full rounded-2xl overflow-hidden shadow-[0_8px_40px_rgba(0,0,0,0.2),0_30px_80px_rgba(0,0,0,0.25)] group-hover:shadow-[0_12px_50px_rgba(0,0,0,0.25),0_40px_100px_rgba(0,0,0,0.3)] transition-all duration-700 ease-out">
+                    {/* Subtle border overlay */}
+                    <div className="absolute inset-0 rounded-2xl border border-white/15 pointer-events-none z-10" />
+                    {/* Screenshot - fills the card */}
+                    <img 
+                      src={agent.image} 
+                      alt={`${agent.title} agent interface`}
+                      className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                    />
                   </div>
-                  <p className="text-white/45 text-[14px] leading-relaxed max-w-md">{agent.desc}</p>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-        
-        <div className="container-grid py-8">
-          <span className="inline-block px-5 py-2.5 border border-white/10 rounded-full text-[11px] font-medium text-white/40 tracking-wide">
-            Not isolated chatbots. Orchestrated systems.
-          </span>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+          
+          {/* Right side - Persistent sidebar with title and active agent info */}
+          <div className="w-[320px] lg:w-[380px] h-full flex flex-col justify-center px-8 lg:px-12 border-l border-white/[0.06]">
+            {/* Section label */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              className="flex items-center gap-3 mb-8"
+            >
+              <div className="w-1.5 h-1.5 rounded-full bg-white/40" />
+              <div className="w-6 h-[1px] bg-white/20" />
+              <span className="text-[10px] font-mono text-white/50 tracking-[0.25em]">V — AGENTS</span>
+            </motion.div>
+            
+            {/* Title */}
+            <motion.h2 
+              className="text-[clamp(1.5rem,2.5vw,2.25rem)] font-serif text-white/90 leading-[1.15] mb-6"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              Learning agents that operate across domains.
+            </motion.h2>
+            
+            <p className="text-white/40 text-sm leading-relaxed mb-12">
+              Vericora powers structured agent roles that show up wherever learning happens.
+            </p>
+            
+            {/* Active agent indicator */}
+            <div className="space-y-4">
+              {agents.map((agent, i) => (
+                <motion.div 
+                  key={i}
+                  className={`flex items-center gap-4 py-3 px-4 rounded-lg transition-all duration-500 ${activeIndex === i ? 'bg-white/[0.06]' : 'opacity-40'}`}
+                  animate={{ opacity: activeIndex === i ? 1 : 0.4 }}
+                >
+                  <div className={`transition-colors duration-500 ${activeIndex === i ? 'text-accent' : 'text-white/30'}`}>
+                    <AgentIcon type={agent.type} />
+                  </div>
+                  <div>
+                    <h3 className={`text-sm font-medium transition-colors duration-500 ${activeIndex === i ? 'text-white/95' : 'text-white/50'}`}>
+                      {agent.title}
+                    </h3>
+                    {activeIndex === i && (
+                      <motion.p 
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        className="text-white/40 text-xs mt-1 leading-relaxed"
+                      >
+                        {agent.desc}
+                      </motion.p>
+                    )}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+            
+            {/* Bottom tagline */}
+            <div className="mt-auto pb-8">
+              <span className="inline-block px-4 py-2 border border-white/10 rounded-full text-[10px] font-medium text-white/35 tracking-wide">
+                Not isolated chatbots. Orchestrated systems.
+              </span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
