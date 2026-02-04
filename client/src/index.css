@@ -88,6 +88,13 @@ body::before {
 }
 
 @layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
   .container-grid {
     width: 100%;
     max-width: var(--max-width);
