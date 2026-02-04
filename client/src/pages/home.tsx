@@ -197,7 +197,6 @@ const HorizontalScrollAgents = () => {
   const trackRef = useRef<HTMLDivElement>(null);
   const cardsAreaRef = useRef<HTMLDivElement>(null);
   const [scrollRange, setScrollRange] = useState(0);
-  const [activeIndex, setActiveIndex] = useState(0);
   
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -224,16 +223,6 @@ const HorizontalScrollAgents = () => {
     
     return () => resizeObserver.disconnect();
   }, []);
-  
-  // Track active card based on scroll progress - simple and reliable
-  useEffect(() => {
-    const unsubscribe = scrollYProgress.on("change", (progress) => {
-      // Map 0-1 progress to 0-3 index for 4 cards
-      const index = Math.min(3, Math.floor(progress * 4));
-      setActiveIndex(index);
-    });
-    return unsubscribe;
-  }, [scrollYProgress]);
   
   const agents = [
     { 
@@ -266,58 +255,25 @@ const HorizontalScrollAgents = () => {
 
   return (
     <section id="agents" ref={containerRef} className="relative" style={{ height: sectionHeight }}>
-      <div className="sticky top-0 h-screen overflow-hidden" style={{ backgroundColor: '#28281F' }}>
-        {/* Split layout: Cards left (75%), Sidebar right (25%) */}
-        <div className="h-full flex">
-          {/* Left side - Cards area (takes most of the width) */}
-          <div ref={cardsAreaRef} className="flex-1 h-full flex items-center overflow-hidden pl-6 lg:pl-12">
-            <motion.div 
-              ref={trackRef}
-              className="flex gap-8 items-center h-[75vh]"
-              style={{ x }}
-            >
-              {agents.map((agent, i) => (
-                <motion.div
-                  key={i}
-                  className="flex-shrink-0 h-full aspect-[16/10] min-w-[500px] group cursor-pointer"
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1, duration: 0.6 }}
-                >
-                  {/* Large card frame */}
-                  <div className="relative h-full w-full rounded-2xl overflow-hidden shadow-[0_8px_40px_rgba(0,0,0,0.2),0_30px_80px_rgba(0,0,0,0.25)] group-hover:shadow-[0_12px_50px_rgba(0,0,0,0.25),0_40px_100px_rgba(0,0,0,0.3)] transition-all duration-700 ease-out">
-                    {/* Subtle border overlay */}
-                    <div className="absolute inset-0 rounded-2xl border border-white/15 pointer-events-none z-10" />
-                    {/* Screenshot - fills the card */}
-                    <img 
-                      src={agent.image} 
-                      alt={`${agent.title} agent interface`}
-                      className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-                    />
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
+      <div className="sticky top-0 h-screen overflow-hidden flex flex-col" style={{ backgroundColor: '#28281F' }}>
+        {/* Top header area with title */}
+        <div className="px-6 lg:px-16 pt-16 pb-8">
+          {/* Section label */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="flex items-center gap-3 mb-6"
+          >
+            <div className="w-1.5 h-1.5 rounded-full bg-white/40" />
+            <div className="w-6 h-[1px] bg-white/20" />
+            <span className="text-[10px] font-mono text-white/50 tracking-[0.25em]">V — AGENTS</span>
+          </motion.div>
           
-          {/* Right side - Persistent sidebar with title and active agent info */}
-          <div className="w-[320px] lg:w-[380px] h-full flex flex-col justify-center px-8 lg:px-12 border-l border-white/[0.06]">
-            {/* Section label */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              className="flex items-center gap-3 mb-8"
-            >
-              <div className="w-1.5 h-1.5 rounded-full bg-white/40" />
-              <div className="w-6 h-[1px] bg-white/20" />
-              <span className="text-[10px] font-mono text-white/50 tracking-[0.25em]">V — AGENTS</span>
-            </motion.div>
-            
-            {/* Title */}
+          {/* Title and subtitle row */}
+          <div className="flex items-end justify-between gap-8">
             <motion.h2 
-              className="text-[clamp(1.5rem,2.5vw,2.25rem)] font-serif text-white/90 leading-[1.15] mb-6"
+              className="text-[clamp(2rem,4vw,3.5rem)] font-serif text-white/90 leading-[1.1] max-w-[600px]"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -325,46 +281,57 @@ const HorizontalScrollAgents = () => {
               Learning agents that operate across domains.
             </motion.h2>
             
-            <p className="text-white/40 text-sm leading-relaxed mb-12">
+            <p className="text-white/40 text-sm leading-relaxed max-w-[320px] hidden lg:block">
               Vericora powers structured agent roles that show up wherever learning happens.
             </p>
-            
-            {/* Active agent indicator */}
-            <div className="space-y-4">
-              {agents.map((agent, i) => (
-                <motion.div 
-                  key={i}
-                  className={`flex items-center gap-4 py-3 px-4 rounded-lg transition-all duration-500 ${activeIndex === i ? 'bg-white/[0.06]' : 'opacity-40'}`}
-                  animate={{ opacity: activeIndex === i ? 1 : 0.4 }}
-                >
-                  <div className={`transition-colors duration-500 ${activeIndex === i ? 'text-accent' : 'text-white/30'}`}>
+          </div>
+        </div>
+        
+        {/* Cards area - takes remaining height */}
+        <div ref={cardsAreaRef} className="flex-1 flex items-center overflow-hidden pl-6 lg:pl-16">
+          <motion.div 
+            ref={trackRef}
+            className="flex gap-8 items-center h-[65vh]"
+            style={{ x }}
+          >
+            {agents.map((agent, i) => (
+              <motion.div
+                key={i}
+                className="flex-shrink-0 h-full group cursor-pointer"
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, duration: 0.6 }}
+              >
+                {/* Card frame - height fixed, width auto based on image */}
+                <div className="relative h-full rounded-2xl overflow-hidden shadow-[0_8px_40px_rgba(0,0,0,0.2),0_30px_80px_rgba(0,0,0,0.25)] group-hover:shadow-[0_12px_50px_rgba(0,0,0,0.25),0_40px_100px_rgba(0,0,0,0.3)] transition-all duration-700 ease-out">
+                  {/* Subtle border overlay */}
+                  <div className="absolute inset-0 rounded-2xl border border-white/15 pointer-events-none z-10" />
+                  {/* Screenshot - full image, no cropping */}
+                  <img 
+                    src={agent.image} 
+                    alt={`${agent.title} agent interface`}
+                    className="h-full w-auto object-contain transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+                  />
+                </div>
+                
+                {/* Card label below */}
+                <div className="mt-4 flex items-center gap-3">
+                  <div className="text-white/40">
                     <AgentIcon type={agent.type} />
                   </div>
-                  <div>
-                    <h3 className={`text-sm font-medium transition-colors duration-500 ${activeIndex === i ? 'text-white/95' : 'text-white/50'}`}>
-                      {agent.title}
-                    </h3>
-                    {activeIndex === i && (
-                      <motion.p 
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
-                        className="text-white/40 text-xs mt-1 leading-relaxed"
-                      >
-                        {agent.desc}
-                      </motion.p>
-                    )}
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-            
-            {/* Bottom tagline */}
-            <div className="mt-auto pb-8">
-              <span className="inline-block px-4 py-2 border border-white/10 rounded-full text-[10px] font-medium text-white/35 tracking-wide">
-                Not isolated chatbots. Orchestrated systems.
-              </span>
-            </div>
-          </div>
+                  <span className="text-white/60 text-sm font-medium">{agent.title}</span>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+        
+        {/* Bottom tagline */}
+        <div className="px-6 lg:px-16 pb-8">
+          <span className="inline-block px-4 py-2 border border-white/10 rounded-full text-[10px] font-medium text-white/35 tracking-wide">
+            Not isolated chatbots. Orchestrated systems.
+          </span>
         </div>
       </div>
     </section>
