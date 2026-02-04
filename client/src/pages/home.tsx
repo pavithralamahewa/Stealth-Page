@@ -193,54 +193,6 @@ const AgentIcon = ({ type }: { type: string }) => {
 };
 
 const HorizontalScrollAgents = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
-  const cardsAreaRef = useRef<HTMLDivElement>(null);
-  const [scrollRange, setScrollRange] = useState(0);
-  const [sectionHeight, setSectionHeight] = useState("100vh");
-  
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"]
-  });
-  
-  const x = useTransform(scrollYProgress, [0, 1], [0, scrollRange]);
-  
-  // Calculate scroll range and section height dynamically based on actual DOM measurements
-  useEffect(() => {
-    const updateScrollRange = () => {
-      if (trackRef.current && cardsAreaRef.current) {
-        const trackWidth = trackRef.current.scrollWidth;
-        const containerWidth = cardsAreaRef.current.getBoundingClientRect().width;
-        const overflow = trackWidth - containerWidth;
-        setScrollRange(overflow > 0 ? -overflow : 0);
-        
-        // Calculate section height: 100vh + minimal extra for scroll animation
-        // Clamp the extra height to a reasonable range to avoid excessive empty space
-        const viewportHeight = window.innerHeight;
-        const minExtra = 0;
-        const maxExtra = viewportHeight * 0.3; // Max 30vh extra scroll
-        const scrollSpeed = 0.3; // Gentle scroll (3px vertical = 1px horizontal)
-        const extraScrollNeeded = overflow > 0 
-          ? Math.min(maxExtra, Math.max(minExtra, overflow * scrollSpeed))
-          : 0;
-        const totalHeight = viewportHeight + extraScrollNeeded;
-        setSectionHeight(`${totalHeight}px`);
-      }
-    };
-    
-    updateScrollRange();
-    const resizeObserver = new ResizeObserver(updateScrollRange);
-    if (trackRef.current) resizeObserver.observe(trackRef.current);
-    if (cardsAreaRef.current) resizeObserver.observe(cardsAreaRef.current);
-    window.addEventListener('resize', updateScrollRange);
-    
-    return () => {
-      resizeObserver.disconnect();
-      window.removeEventListener('resize', updateScrollRange);
-    };
-  }, []);
-  
   const agents = [
     { 
       type: "instruction",
@@ -269,32 +221,22 @@ const HorizontalScrollAgents = () => {
   ];
 
   return (
-    <section id="agents" ref={containerRef} className="relative" style={{ height: sectionHeight }}>
-      <div className="sticky top-0 h-screen overflow-hidden flex flex-col" style={{ backgroundColor: '#28281F' }}>
+    <section id="agents" className="relative min-h-screen bg-[#28281F]">
+      <div className="flex flex-col">
         {/* Top header area with title - uses container-grid for consistent margins */}
-        <div className="container-grid pt-16 lg:pt-20 pb-10 lg:pb-12">
+        <div className="container-grid pt-24 lg:pt-32 pb-12 lg:pb-16">
           {/* Section label */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="flex items-center gap-3 mb-6"
-          >
+          <div className="flex items-center gap-3 mb-8">
             <div className="w-1.5 h-1.5 rounded-full bg-white/40" />
             <div className="w-6 h-[1px] bg-white/20" />
             <span className="text-[10px] font-mono text-white/50 tracking-[0.25em]">V — AGENTS</span>
-          </motion.div>
+          </div>
           
           {/* Title and subtitle row */}
           <div className="flex items-end justify-between gap-8">
-            <motion.h2 
-              className="text-[clamp(2rem,4vw,3.5rem)] font-serif text-white/90 leading-[1.1] max-w-[600px]"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-            >
+            <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-serif text-white/90 leading-[1.1] max-w-[600px]">
               Learning agents that operate across domains.
-            </motion.h2>
+            </h2>
             
             <p className="text-white/40 text-sm leading-relaxed max-w-[320px] hidden lg:block">
               Vericora powers structured agent roles that show up wherever learning happens.
@@ -303,20 +245,12 @@ const HorizontalScrollAgents = () => {
         </div>
         
         {/* Cards area - uses container-grid left margin, overflow visible for scroll */}
-        <div ref={cardsAreaRef} className="flex-1 flex items-center overflow-hidden container-grid !max-w-none !pr-0">
-          <motion.div 
-            ref={trackRef}
-            className="flex gap-8 items-end"
-            style={{ x }}
-          >
+        <div className="container-grid !max-w-none !pr-0 mb-24 lg:mb-32">
+          <div className="flex gap-8 overflow-x-auto no-scrollbar pb-10">
             {agents.map((agent, i) => (
-              <motion.div
+              <div
                 key={i}
-                className="flex-shrink-0 group cursor-pointer"
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.6 }}
+                className="flex-shrink-0 group"
               >
                 {/* Card frame - sized by image, no overflow clipping */}
                 <div className="relative rounded-2xl shadow-[0_8px_40px_rgba(0,0,0,0.2),0_30px_80px_rgba(0,0,0,0.25)] group-hover:shadow-[0_12px_50px_rgba(0,0,0,0.25),0_40px_100px_rgba(0,0,0,0.3)] transition-all duration-700 ease-out">
@@ -337,13 +271,13 @@ const HorizontalScrollAgents = () => {
                   </div>
                   <span className="text-white/60 text-sm font-medium">{agent.title}</span>
                 </div>
-              </motion.div>
+              </div>
             ))}
-          </motion.div>
+          </div>
         </div>
         
         {/* Bottom tagline - uses container-grid for consistent margins */}
-        <div className="container-grid pt-6 pb-8 lg:pb-12">
+        <div className="container-grid pb-24 lg:pb-32">
           <span className="inline-block px-4 py-2 border border-white/10 rounded-full text-[10px] font-medium text-white/35 tracking-wide">
             Not isolated chatbots. Orchestrated systems.
           </span>
