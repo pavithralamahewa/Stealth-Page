@@ -245,7 +245,7 @@ const HorizontalScrollAgents = () => {
         </div>
         
         {/* Cards area - uses container-grid left margin, overflow visible for scroll */}
-        <div className="container-grid !max-w-none !pr-0 flex-1 flex items-center mb-16 overflow-hidden">
+        <div className="container-grid !max-w-none !pr-0 flex-1 flex items-center mb-16">
           <motion.div 
             initial={{ x: 0 }}
             animate={{ x: "-20%" }}
