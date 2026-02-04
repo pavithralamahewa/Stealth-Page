@@ -244,17 +244,17 @@ const HorizontalScrollAgents = () => {
           </div>
         </div>
         
-        {/* Cards area - uses container-grid left margin, overflow visible for scroll */}
-        <div className="container-grid !max-w-none !pr-0 flex-1 flex items-center mb-16">
+        {/* Cards area - removed container-grid to allow full width usage */}
+        <div className="!max-w-none !pr-0 flex-1 flex items-center mb-16">
           <motion.div 
             initial={{ x: 0 }}
-            animate={{ x: "-20%" }}
+            animate={{ x: "-15%" }}
             transition={{ 
-              duration: 20, 
+              duration: 25, 
               ease: "linear",
               repeat: 0
             }}
-            className="flex gap-8 overflow-x-auto no-scrollbar pb-10 cursor-grab active:cursor-grabbing"
+            className="flex gap-10 overflow-x-auto no-scrollbar pb-10 cursor-grab active:cursor-grabbing px-[var(--gutter)]"
           >
             {agents.map((agent, i) => (
               <div
