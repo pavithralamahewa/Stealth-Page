@@ -194,19 +194,36 @@ const AgentIcon = ({ type }: { type: string }) => {
 
 const HorizontalScrollAgents = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [scrollRange, setScrollRange] = useState(0);
+  
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"]
   });
   
-  const numCards = 4;
-  const cardWidthVw = 55;
-  const gapVw = 3;
-  const startPaddingVw = 4;
-  const totalContentWidth = (numCards * cardWidthVw) + ((numCards - 1) * gapVw);
-  const translateEnd = -(totalContentWidth - 100 + startPaddingVw);
+  // Calculate scroll range dynamically based on actual DOM measurements
+  useEffect(() => {
+    const updateScrollRange = () => {
+      if (trackRef.current && containerRef.current) {
+        const trackWidth = trackRef.current.scrollWidth;
+        const containerWidth = containerRef.current.getBoundingClientRect().width;
+        const overflow = trackWidth - containerWidth;
+        // Only scroll if content overflows, clamp to 0 if no overflow
+        setScrollRange(overflow > 0 ? -overflow : 0);
+      }
+    };
+    
+    updateScrollRange();
+    // Use ResizeObserver for accurate tracking
+    const resizeObserver = new ResizeObserver(updateScrollRange);
+    if (trackRef.current) resizeObserver.observe(trackRef.current);
+    if (containerRef.current) resizeObserver.observe(containerRef.current);
+    
+    return () => resizeObserver.disconnect();
+  }, []);
   
-  const x = useTransform(scrollYProgress, [0, 1], ["0%", `${translateEnd}vw`]);
+  const x = useTransform(scrollYProgress, [0, 1], [0, scrollRange]);
   
   const agents = [
     { 
@@ -267,49 +284,41 @@ const HorizontalScrollAgents = () => {
         
         <div className="flex-1 flex items-center overflow-hidden py-4">
           <motion.div 
-            className="flex gap-[3vw] pl-[4vw]"
+            ref={trackRef}
+            className="flex gap-[4vw] pl-[4vw] pr-8 items-start"
             style={{ x }}
           >
             {agents.map((agent, i) => (
               <motion.div
                 key={i}
-                className="flex-shrink-0 w-[55vw] flex flex-col group cursor-pointer"
+                className="flex-shrink-0 w-[85vw] md:w-[70vw] lg:w-[55vw] min-w-[320px] flex flex-col group cursor-pointer"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                whileHover={{ y: -4, transition: { duration: 0.3 } }}
+                whileHover={{ y: -6, transition: { duration: 0.4, ease: [0.25, 0.1, 0.25, 1] } }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.06, duration: 0.5 }}
+                transition={{ delay: i * 0.08, duration: 0.6 }}
               >
-                {/* Browser chrome frame */}
-                <div className="bg-[#f5f3ef] rounded-lg overflow-hidden shadow-[0_8px_40px_rgba(0,0,0,0.15)] group-hover:shadow-[0_16px_60px_rgba(0,0,0,0.2)] transition-shadow duration-500">
-                  {/* Window title bar */}
-                  <div className="flex items-center gap-2 px-4 py-3 bg-[#e8e6e2] border-b border-black/5">
-                    <div className="flex gap-1.5">
-                      <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f57]" />
-                      <div className="w-2.5 h-2.5 rounded-full bg-[#febc2e]" />
-                      <div className="w-2.5 h-2.5 rounded-full bg-[#28c840]" />
-                    </div>
-                    <span className="ml-4 text-[10px] font-mono text-[#28281F]/40 tracking-wider uppercase">{agent.title} Agent</span>
-                  </div>
-                  {/* Screenshot container - fixed height, full width image */}
-                  <div className="relative bg-white">
-                    <img 
-                      src={agent.image} 
-                      alt={`${agent.title} agent interface`}
-                      className="w-auto h-[320px] lg:h-[380px] object-contain object-top transition-transform duration-500 ease-out group-hover:scale-[1.01]"
-                    />
-                  </div>
+                {/* Minimal elegant frame */}
+                <div className="relative rounded-xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.08),0_20px_60px_rgba(0,0,0,0.15),0_40px_80px_rgba(0,0,0,0.1)] group-hover:shadow-[0_8px_30px_rgba(0,0,0,0.12),0_30px_80px_rgba(0,0,0,0.2),0_50px_100px_rgba(0,0,0,0.12)] transition-all duration-700 ease-out">
+                  {/* Subtle border overlay */}
+                  <div className="absolute inset-0 rounded-xl border border-white/20 pointer-events-none z-10" />
+                  {/* Screenshot - full width, natural aspect ratio */}
+                  <img 
+                    src={agent.image} 
+                    alt={`${agent.title} agent interface`}
+                    className="w-full h-auto block transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+                  />
                 </div>
                 
-                {/* Label below card */}
-                <div className="mt-6 flex items-start gap-4">
-                  <div className="text-white/30 mt-0.5">
-                    <AgentIcon type={agent.type} />
+                {/* Elegant label below */}
+                <div className="mt-8 pl-1">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="text-accent/70">
+                      <AgentIcon type={agent.type} />
+                    </div>
+                    <h3 className="text-xl font-serif text-white/95 group-hover:text-accent transition-colors duration-500">{agent.title}</h3>
                   </div>
-                  <div className="flex-1">
-                    <h3 className="text-lg font-serif text-white/90 mb-2 group-hover:text-accent transition-colors duration-300">{agent.title}</h3>
-                    <p className="text-white/50 text-sm leading-relaxed max-w-sm">{agent.desc}</p>
-                  </div>
+                  <p className="text-white/45 text-[14px] leading-relaxed max-w-md">{agent.desc}</p>
                 </div>
               </motion.div>
             ))}
