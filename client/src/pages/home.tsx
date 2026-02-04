@@ -245,12 +245,12 @@ const HorizontalScrollAgents = () => {
         </div>
         
         {/* Cards area - removed container-grid to allow full width usage */}
-        <div className="!max-w-none !pr-0 flex-1 flex items-center mb-16">
+        <div className="w-full flex-1 flex items-center mb-16 overflow-visible">
           <motion.div 
             initial={{ x: 0 }}
-            animate={{ x: "-15%" }}
+            animate={{ x: "-30%" }}
             transition={{ 
-              duration: 25, 
+              duration: 15, 
               ease: "linear",
               repeat: 0
             }}
