@@ -465,7 +465,7 @@ export default function Home() {
               </motion.div>
             </div>
 
-            {/* Right: Hero Video - positioned to extend beyond viewport */}
+            {/* Right: Hero Image - positioned to extend beyond viewport */}
             <motion.div 
               initial={{ opacity: 0, x: 40 }}
               animate={{ opacity: 1, x: 0 }}
@@ -480,15 +480,11 @@ export default function Home() {
                 WebkitMaskComposite: 'source-in'
               }}
             >
-              <video 
-                autoPlay 
-                loop 
-                muted 
-                playsInline
+              <img 
+                src="/assets/hero-visual.png" 
+                alt="Vericora platform visualization"
                 className="w-full object-contain"
-              >
-                <source src="/assets/hero-video.mp4" type="video/mp4" />
-              </video>
+              />
             </motion.div>
           </div>
         </div>
