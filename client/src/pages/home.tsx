@@ -253,7 +253,7 @@ const HorizontalScrollAgents = () => {
           </div>
         </div>
         
-        {/* Cards area - starts at container edge, then animates */}
+        {/* Cards area - starts at same position as container-grid content */}
         <div className="w-full flex-1 flex items-center mb-16 overflow-x-auto no-scrollbar">
           <motion.div 
             initial={{ x: 0 }}
@@ -263,7 +263,7 @@ const HorizontalScrollAgents = () => {
               ease: "linear",
               repeat: 0
             }}
-            style={{ paddingLeft: 'var(--gutter)' }}
+            style={{ paddingLeft: 'max(var(--gutter), calc((100vw - var(--max-width)) / 2 + var(--gutter)))' }}
             className="flex gap-10 pb-10 cursor-grab active:cursor-grabbing pr-[50vw]"
           >
             {agents.map((agent, i) => (
