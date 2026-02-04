@@ -263,7 +263,8 @@ const HorizontalScrollAgents = () => {
               ease: "linear",
               repeat: 0
             }}
-            className="flex gap-10 pb-10 cursor-grab active:cursor-grabbing pl-[var(--gutter)] pr-[50vw]"
+            style={{ paddingLeft: 'var(--gutter)' }}
+            className="flex gap-10 pb-10 cursor-grab active:cursor-grabbing pr-[50vw]"
           >
             {agents.map((agent, i) => (
               <div
