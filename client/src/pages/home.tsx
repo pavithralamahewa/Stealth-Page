@@ -213,21 +213,25 @@ const HorizontalScrollAgents = () => {
       type: "instruction",
       title: "Instruction", 
       desc: "Deliver structured learning and guidance with pacing and context. These agents present content, respond to questions, and adapt delivery based on learner progress.",
+      image: "/assets/agent-instruction.png",
     },
     { 
       type: "evaluation",
       title: "Evaluation", 
       desc: "Measure readiness, mastery, and progress with consistent criteria. Agents assess understanding through varied formats while maintaining evaluation integrity.",
+      image: "/assets/agent-evaluation.png",
     },
     { 
       type: "guidance",
       title: "Guidance", 
       desc: "Support coaching, onboarding, and decision support within guardrails. These agents provide contextual help and navigate learners through complex processes.",
+      image: "/assets/agent-guidance.png",
     },
     { 
       type: "pathway",
       title: "Pathway", 
       desc: "Assemble learning journeys and progression logic for roles and outcomes. Agents orchestrate sequences and adapt paths based on demonstrated competency.",
+      image: "/assets/agent-pathway.png",
     },
   ];
 
@@ -288,8 +292,17 @@ const HorizontalScrollAgents = () => {
                   </div>
                   <p className="text-[#28281F]/60 leading-relaxed text-[15px] max-w-lg">{agent.desc}</p>
                 </div>
-                <div className="flex-1 bg-[#eae8e4] flex items-center justify-center text-[#28281F]/40 p-6 lg:p-10 min-h-[280px] group-hover:bg-[#e5e3df] transition-colors duration-300">
-                  <AgentWireframe type={agent.type} />
+                <div className="flex-1 relative overflow-hidden min-h-[280px]">
+                  {/* Gradient fade at top for seamless blend */}
+                  <div className="absolute inset-x-0 top-0 h-8 bg-gradient-to-b from-[#f5f3ef] to-transparent z-10 pointer-events-none" />
+                  {/* Subtle inner shadow for depth */}
+                  <div className="absolute inset-0 shadow-[inset_0_2px_8px_rgba(0,0,0,0.04)] z-10 pointer-events-none rounded-b-[3px]" />
+                  {/* Product screenshot */}
+                  <img 
+                    src={agent.image} 
+                    alt={`${agent.title} agent interface`}
+                    className="w-full h-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.02]"
+                  />
                 </div>
               </motion.div>
             ))}
