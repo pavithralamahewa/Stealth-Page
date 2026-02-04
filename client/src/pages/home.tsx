@@ -193,17 +193,6 @@ const AgentIcon = ({ type }: { type: string }) => {
 };
 
 const HorizontalScrollAgents = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
-  const cardsAreaRef = useRef<HTMLDivElement>(null);
-
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"],
-  });
-
-  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-25%"]);
-
   const agents = [
     { 
       type: "instruction",
@@ -232,8 +221,8 @@ const HorizontalScrollAgents = () => {
   ];
 
   return (
-    <section id="agents" ref={containerRef} className="relative h-[150vh] bg-[#28281F]">
-      <div className="sticky top-0 h-screen flex flex-col overflow-hidden">
+    <section id="agents" className="relative min-h-screen bg-[#28281F]">
+      <div className="flex flex-col min-h-screen">
         {/* Top header area with title - uses container-grid for consistent margins */}
         <div className="container-grid pt-24 lg:pt-32 pb-12 lg:pb-16">
           {/* Section label */}
@@ -256,12 +245,8 @@ const HorizontalScrollAgents = () => {
         </div>
         
         {/* Cards area - uses container-grid left margin, overflow visible for scroll */}
-        <div ref={cardsAreaRef} className="container-grid !max-w-none !pr-0 flex-1 flex items-center">
-          <motion.div 
-            ref={trackRef}
-            style={{ x }}
-            className="flex gap-8 items-end"
-          >
+        <div className="container-grid !max-w-none !pr-0 flex-1 flex items-center mb-16">
+          <div className="flex gap-8 overflow-x-auto no-scrollbar pb-10">
             {agents.map((agent, i) => (
               <div
                 key={i}
@@ -288,11 +273,11 @@ const HorizontalScrollAgents = () => {
                 </div>
               </div>
             ))}
-          </motion.div>
+          </div>
         </div>
         
         {/* Bottom tagline - uses container-grid for consistent margins */}
-        <div className="container-grid pb-12 lg:pb-16 pt-8">
+        <div className="container-grid pb-12 lg:pb-16">
           <span className="inline-block px-4 py-2 border border-white/10 rounded-full text-[10px] font-medium text-white/35 tracking-wide">
             Not isolated chatbots. Orchestrated systems.
           </span>
