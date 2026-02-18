@@ -277,7 +277,7 @@ const HorizontalScrollAgents = () => {
         <div className="w-full flex-1 flex items-center mb-16 overflow-x-auto no-scrollbar">
           <motion.div 
             initial={{ x: 0 }}
-            animate={inView ? { x: "-65%" } : { x: 0 }}
+            animate={inView ? { x: "-85%" } : { x: 0 }}
             transition={{ 
               duration: 20, 
               ease: "linear",
