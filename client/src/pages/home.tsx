@@ -295,7 +295,7 @@ const HorizontalScrollAgents = () => {
             initial={{ x: 0 }}
             animate={inView && scrollDistance > 0 ? { x: -scrollDistance } : { x: 0 }}
             transition={{ 
-              duration: 20, 
+              duration: 45, 
               ease: "linear",
               repeat: 0
             }}
