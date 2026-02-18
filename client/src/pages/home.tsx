@@ -243,7 +243,22 @@ const HorizontalScrollAgents = () => {
   ];
 
   const agentsRef = useRef(null);
+  const trackRef = useRef<HTMLDivElement>(null);
   const inView = useInView(agentsRef, { margin: "-10% 0px" });
+  const [scrollDistance, setScrollDistance] = useState(0);
+
+  useEffect(() => {
+    const measure = () => {
+      if (trackRef.current) {
+        const totalWidth = trackRef.current.scrollWidth;
+        const viewportWidth = window.innerWidth;
+        setScrollDistance(totalWidth - viewportWidth);
+      }
+    };
+    measure();
+    window.addEventListener('resize', measure);
+    return () => window.removeEventListener('resize', measure);
+  }, []);
 
   return (
     <section 
@@ -274,17 +289,18 @@ const HorizontalScrollAgents = () => {
         </div>
         
         {/* Cards area - starts at same position as container-grid content */}
-        <div className="w-full flex-1 flex items-center mb-16 overflow-x-auto no-scrollbar">
+        <div className="w-full flex-1 flex items-center mb-16 overflow-hidden">
           <motion.div 
+            ref={trackRef}
             initial={{ x: 0 }}
-            animate={inView ? { x: "-85%" } : { x: 0 }}
+            animate={inView && scrollDistance > 0 ? { x: -scrollDistance } : { x: 0 }}
             transition={{ 
               duration: 20, 
               ease: "linear",
               repeat: 0
             }}
             style={{ paddingLeft: 'max(var(--gutter), calc((100vw - var(--max-width)) / 2 + var(--gutter)))' }}
-            className="flex gap-10 pb-10 cursor-grab active:cursor-grabbing pr-[50vw]"
+            className="flex gap-10 pb-10 pr-[var(--gutter)]"
           >
             {agents.map((agent, i) => (
               <div
