@@ -246,6 +246,7 @@ const HorizontalScrollAgents = () => {
   const trackRef = useRef<HTMLDivElement>(null);
   const inView = useInView(agentsRef, { margin: "-10% 0px" });
   const [scrollDistance, setScrollDistance] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
     const measure = () => {
@@ -289,13 +290,17 @@ const HorizontalScrollAgents = () => {
         </div>
         
         {/* Cards area - starts at same position as container-grid content */}
-        <div className="w-full flex-1 flex items-center mb-16 overflow-hidden">
+        <div 
+          className="w-full flex-1 flex items-center mb-16 overflow-hidden"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
           <motion.div 
             ref={trackRef}
             initial={{ x: 0 }}
-            animate={inView && scrollDistance > 0 ? { x: -scrollDistance } : { x: 0 }}
+            animate={inView && scrollDistance > 0 && !isHovered ? { x: -scrollDistance } : undefined}
             transition={{ 
-              duration: 45, 
+              duration: 60, 
               ease: "linear",
               repeat: 0
             }}
