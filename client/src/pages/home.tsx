@@ -291,7 +291,7 @@ const HorizontalScrollAgents = () => {
         
         {/* Cards area - starts at same position as container-grid content */}
         <div 
-          className="w-full flex-1 flex items-center mb-16 overflow-hidden"
+          className="w-full flex-1 flex items-center mb-16 overflow-x-auto no-scrollbar"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
@@ -305,7 +305,7 @@ const HorizontalScrollAgents = () => {
               repeat: 0
             }}
             style={{ paddingLeft: 'max(var(--gutter), calc((100vw - var(--max-width)) / 2 + var(--gutter)))' }}
-            className="flex gap-10 pb-10 pr-[var(--gutter)]"
+            className="flex gap-10 pb-10 pr-[var(--gutter)] cursor-grab active:cursor-grabbing"
           >
             {agents.map((agent, i) => (
               <div
