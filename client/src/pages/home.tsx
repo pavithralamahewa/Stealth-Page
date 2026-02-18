@@ -199,22 +199,46 @@ const AgentIcon = ({ type }: { type: string }) => {
 const HorizontalScrollAgents = () => {
   const agents = [
     { 
-      type: "tutoring",
-      title: "Tutoring", 
-      desc: "Live, interactive 1-on-1 instruction with real-time guidance and feedback.",
-      image: "/assets/agent-tutoring.png",
+      domain: "K-12 Science",
+      title: "Ecosystems",
+      agent: "Discovery Agent",
+      image: "/assets/domain-k12-science.jpg",
     },
     { 
-      type: "builder",
-      title: "Builder", 
-      desc: "Create learning agents and lessons for educators and parents.",
-      image: "/assets/agent-evaluation.png",
+      domain: "Higher Ed",
+      title: "Quantum Computing Research",
+      agent: "Insight Agent",
+      image: "/assets/domain-higher-ed.jpg",
     },
     { 
-      type: "learning",
-      title: "Learning", 
-      desc: "Personalized learning experiences designed for students.",
-      image: "/assets/agent-guidance.png",
+      domain: "Test Prep",
+      title: "Precision Performance",
+      agent: "Performance Agent",
+      image: "/assets/domain-test-prep.jpg",
+    },
+    { 
+      domain: "Workforce Development",
+      title: "Career Pathing",
+      agent: "Career Agent",
+      image: "/assets/domain-workforce.jpg",
+    },
+    { 
+      domain: "Healthcare Training",
+      title: "Diagnostic Simulator",
+      agent: "Diagnostic Agent",
+      image: "/assets/domain-healthcare.jpg",
+    },
+    { 
+      domain: "Corporate L&D",
+      title: "Behavioral Role-play",
+      agent: "Analysis Agent",
+      image: "/assets/domain-corporate.jpg",
+    },
+    { 
+      domain: "Vocational Training",
+      title: "Technical Troubleshooting",
+      agent: "Technician Agent",
+      image: "/assets/domain-vocational.jpg",
     },
   ];
 
@@ -267,24 +291,22 @@ const HorizontalScrollAgents = () => {
                 key={i}
                 className="flex-shrink-0 group"
               >
-                {/* Card frame - sized by image, no overflow clipping */}
-                <div className="relative rounded-2xl shadow-[0_8px_40px_rgba(0,0,0,0.2),0_30px_80px_rgba(0,0,0,0.25)] group-hover:shadow-[0_12px_50px_rgba(0,0,0,0.25),0_40px_100px_rgba(0,0,0,0.3)] transition-all duration-700 ease-out">
-                  {/* Subtle border overlay */}
+                <div className="relative rounded-2xl shadow-[0_8px_40px_rgba(0,0,0,0.2),0_30px_80px_rgba(0,0,0,0.25)] group-hover:shadow-[0_12px_50px_rgba(0,0,0,0.25),0_40px_100px_rgba(0,0,0,0.3)] transition-all duration-700 ease-out overflow-hidden">
                   <div className="absolute inset-0 rounded-2xl border border-white/15 pointer-events-none z-10" />
-                  {/* Screenshot - fixed height, auto width, fully visible */}
                   <img 
                     src={agent.image} 
-                    alt={`${agent.title} agent interface`}
-                    className="h-[50vh] w-auto rounded-2xl transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+                    alt={`${agent.domain}: ${agent.title}`}
+                    className="w-[75vw] md:w-[60vw] lg:w-[50vw] h-auto rounded-2xl transition-transform duration-700 ease-out group-hover:scale-[1.02]"
                   />
                 </div>
                 
-                {/* Card label below */}
-                <div className="mt-4 flex items-center gap-3">
-                  <div className="text-white/40">
-                    <AgentIcon type={agent.type} />
+                <div className="mt-4 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[10px] font-mono text-white/35 tracking-wider uppercase">{agent.domain}</span>
+                    <span className="text-white/20">·</span>
+                    <span className="text-white/55 text-sm font-medium">{agent.title}</span>
                   </div>
-                  <span className="text-white/60 text-sm font-medium">{agent.title}</span>
+                  <span className="text-[11px] text-white/30 font-mono">{agent.agent}</span>
                 </div>
               </div>
             ))}
