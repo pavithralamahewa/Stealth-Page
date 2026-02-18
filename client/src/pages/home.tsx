@@ -300,13 +300,8 @@ const HorizontalScrollAgents = () => {
                   />
                 </div>
                 
-                <div className="mt-4 flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <span className="text-[10px] font-mono text-white/35 tracking-wider uppercase">{agent.domain}</span>
-                    <span className="text-white/20">·</span>
-                    <span className="text-white/55 text-sm font-medium">{agent.title}</span>
-                  </div>
-                  <span className="text-[11px] text-white/30 font-mono">{agent.agent}</span>
+                <div className="mt-4">
+                  <span className="text-[11px] font-mono text-white/40 tracking-wider uppercase">{agent.domain}</span>
                 </div>
               </div>
             ))}
