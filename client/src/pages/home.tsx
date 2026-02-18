@@ -277,12 +277,11 @@ const HorizontalScrollAgents = () => {
         <div className="w-full flex-1 flex items-center mb-16 overflow-x-auto no-scrollbar">
           <motion.div 
             initial={{ x: 0 }}
-            animate={{ x: "-65%" }}
+            animate={inView ? { x: "-65%" } : { x: 0 }}
             transition={{ 
               duration: 20, 
               ease: "linear",
-              repeat: Infinity,
-              repeatType: "loop" as const
+              repeat: 0
             }}
             style={{ paddingLeft: 'max(var(--gutter), calc((100vw - var(--max-width)) / 2 + var(--gutter)))' }}
             className="flex gap-10 pb-10 cursor-grab active:cursor-grabbing pr-[50vw]"
