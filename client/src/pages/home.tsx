@@ -841,6 +841,58 @@ export default function Home() {
         </div>
       </section>
 
+      {/* FOUNDER'S STORY */}
+      <section className="py-28 lg:py-36 overflow-hidden">
+        <div className="container-grid">
+          <ScrollReveal>
+            <h2 className="text-[clamp(2.5rem,5vw,4.5rem)] leading-[1] font-serif tracking-[-0.02em] mb-6">
+              Intelligence is everywhere.<br />
+              Execution is not.
+            </h2>
+            <p className="text-lg text-muted-foreground mb-16 max-w-xl">
+              Why we built the execution layer for learning
+            </p>
+          </ScrollReveal>
+
+          <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 mb-20">
+            <ScrollReveal className="lg:col-span-5">
+              <img
+                src="/assets/founder.jpg"
+                alt="Ramesh Balan, Founder of Vericora"
+                className="w-full object-cover rounded-lg"
+              />
+            </ScrollReveal>
+
+            <ScrollReveal delay={0.1} className="lg:col-span-7 flex flex-col justify-center">
+              <p className="text-[15px] font-serif italic text-muted-foreground/80 mb-6">Source: Sarif Peo</p>
+              <p className="text-[15px] text-muted-foreground leading-[1.8] mb-6">
+                Doreen Kanric Hount velboc ite primash. Wit slo Ioune praclctere the curetes slore in thiel iste woreli koogtrlust han fecetteed.
+              </p>
+              <p className="text-[15px] text-muted-foreground leading-[1.8] mb-6">
+                They tnure Rdlutons, Re Involire benaussons finnt lon, Relcooms thuod out boscnoute innft s ired tlad risk stome hode froaciosed ncsisitcrnler sist lnat/tluro dnt best bents.
+              </p>
+              <p className="text-[15px] text-muted-foreground leading-[1.8]">
+                Leoore Fallon. Wle Iinan tonheta os hls doerls ishoeid lisseat nentri its leliernsse, trose lucend poole rerun/inolite enolen lho trvof flnw lout,eze tal loulsto terentents.
+              </p>
+            </ScrollReveal>
+          </div>
+
+          <ScrollReveal>
+            <h2 className="text-[clamp(2.5rem,5vw,4.5rem)] leading-[1] font-serif tracking-[-0.02em] mb-12">
+              The bottleneck<br />
+              isn't intelligence.<br />
+              It's execution.
+            </h2>
+          </ScrollReveal>
+
+          <ScrollReveal delay={0.1}>
+            <p className="text-sm text-muted-foreground mb-2">Warmly,</p>
+            <p className="text-2xl font-serif italic mb-1" style={{ fontFamily: "'Source Serif 4', serif" }}>Ramesh Balan</p>
+            <p className="text-xs text-muted-foreground tracking-wide">Founder, Vericora</p>
+          </ScrollReveal>
+        </div>
+      </section>
+
       {/* STATUS + FOOTER */}
       <section id="status" className="pt-28 lg:pt-36 pb-16">
         <div className="container-grid">
