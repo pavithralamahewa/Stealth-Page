@@ -857,7 +857,7 @@ export default function Home() {
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 mb-20">
             <ScrollReveal className="lg:col-span-5">
               <img
-                src="/assets/founder.jpg"
+                src="/assets/founder.png"
                 alt="Ramesh Balan, Founder of Vericora"
                 className="w-full object-cover rounded-lg"
               />
@@ -886,8 +886,12 @@ export default function Home() {
           </ScrollReveal>
 
           <ScrollReveal delay={0.1}>
-            <p className="text-sm text-muted-foreground mb-2">Warmly,</p>
-            <p className="text-2xl font-serif italic mb-1" style={{ fontFamily: "'Source Serif 4', serif" }}>Ramesh Balan</p>
+            <p className="text-sm text-muted-foreground mb-4">Warmly,</p>
+            <img
+              src="/assets/founder-signature.png"
+              alt="Ramesh Balan signature"
+              className="h-10 w-auto mb-2"
+            />
             <p className="text-xs text-muted-foreground tracking-wide">Founder, Vericora</p>
           </ScrollReveal>
         </div>
