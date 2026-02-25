@@ -864,21 +864,29 @@ export default function Home() {
             </ScrollReveal>
 
             <ScrollReveal delay={0.1} className="lg:col-span-7 flex flex-col justify-center">
-              <p className="text-[15px] font-serif italic text-muted-foreground/80 mb-6">Source: Sarif Peo</p>
-              <p className="text-[15px] text-muted-foreground leading-[1.8] mb-6">
-                Doreen Kanric Hount velboc ite primash. Wit slo Ioune praclctere the curetes slore in thiel iste woreli koogtrlust han fecetteed.
+              <p className="text-[15px] font-serif italic text-muted-foreground/80 mb-6">
+                "For decades, we've tried to improve learning by adding better content, better tools, and now better AI. And yet, learning still doesn't scale reliably."
               </p>
               <p className="text-[15px] text-muted-foreground leading-[1.8] mb-6">
-                They tnure Rdlutons, Re Involire benaussons finnt lon, Relcooms thuod out boscnoute innft s ired tlad risk stome hode froaciosed ncsisitcrnler sist lnat/tluro dnt best bents.
+                I grew up in public education. My mother spent her career as a high school math teacher, a principal, and later a superintendent. I saw firsthand how much of learning depends on human effort—teachers carrying the last mile, stitching systems together, trying to make intent turn into outcomes.
               </p>
-              <p className="text-[15px] text-muted-foreground leading-[1.8]">
-                Leoore Fallon. Wle Iinan tonheta os hls doerls ishoeid lisseat nentri its leliernsse, trose lucend poole rerun/inolite enolen lho trvof flnw lout,eze tal loulsto terentents.
+              <p className="text-[15px] text-muted-foreground leading-[1.8] mb-6">
+                Even today, with powerful AI models, that hasn't changed. AI can explain. It can generate. But the hardest work—sequencing instruction, adapting in real time, enforcing guardrails, driving mastery—still falls on people.
+              </p>
+              <p className="text-[15px] text-muted-foreground leading-[1.8] mb-6">
+                In every other industry, when complexity outgrew human capacity, we built execution infrastructure. Learning never did.
+              </p>
+              <p className="text-[15px] font-serif italic text-muted-foreground/80 mb-6">
+                "Vericora exists to change that. We're building the execution layer for learning—so AI doesn't just explain learning, but reliably carries it from goals to outcomes, at scale."
+              </p>
+              <p className="text-[15px] font-serif italic text-muted-foreground/80">
+                "That's the shift—from AI in learning, to learning that actually works."
               </p>
             </ScrollReveal>
           </div>
 
           <ScrollReveal>
-            <p className="text-[clamp(1.2rem,2.5vw,1.8rem)] leading-[1.3] font-serif italic text-muted-foreground/70 tracking-[-0.01em] mb-12 max-w-2xl">
+            <p className="text-[clamp(1.5rem,3vw,2.2rem)] leading-[1.25] font-serif italic text-foreground tracking-[-0.01em] mb-12 max-w-2xl">
               The bottleneck isn't intelligence.<br />
               It's execution.
             </p>
